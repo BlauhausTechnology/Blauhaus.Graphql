@@ -1,17 +1,23 @@
-name: CI
-
-on: [push]
+name: Blauhaus Packages
+on:
+  push:
+    branches:
+    - release/*
 
 jobs:
+
   build:
-
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v1
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+     runs-on: ubuntu-latest
+     steps:
+     - uses: actions/checkout@v1
+     - name: Set Version
+       run: |
+        npm install @actions/core --save
+        node ./scripts/getversion.js
+     - name: Build NuGet Package
+       run: |
+        dotnet build ./src/Blauhaus.Graphql.sln --configuration Release
+        dotnet pack ./src/Blauhaus.Graphql.Generator/Blauhaus.Graphql.Generator.csproj -p:PackageVersion=${VERSION_NAME} --no-build --output ./ --configuration Release 
+     - name: Deploy NuGet Package
+       run:  |
+        dotnet nuget push /home/runner/work/Blauhaus.Graphql/Blauhaus.Graphql/Blauhaus.Graphql.Generator.${VERSION_NAME}.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
