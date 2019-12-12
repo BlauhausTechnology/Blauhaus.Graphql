@@ -11,6 +11,7 @@ namespace Blauhaus.Graphql.Generator.Runner
 
             var config = new GraphqlGeneratorConfig
             {
+                GenerateSchema = true,
                 DestinationPath = "C:\\Code\\",
                 Namespace = "Blauhaus.Graphql.Generator.Runner",
                 SchemaUrl = "https://reveye-development-graphapi.azurewebsites.net/api/graphql",

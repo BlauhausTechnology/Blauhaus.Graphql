@@ -51,13 +51,16 @@ namespace Blauhaus.Graphql.Generator
 
                 if (!response.IsSuccessStatusCode)
                     throw new InvalidOperationException($"Status code: {(int)response.StatusCode} ({response.StatusCode}); content: {schema}");
-                
-                var formattedSchema = JToken.Parse(schema).ToString(Formatting.Indented);
-                using var schemaWriter = File.CreateText(config.DestinationPath +"schema.graphql");
-                await schemaWriter.WriteAsync(formattedSchema);
+
+                if (config.GenerateSchema)
+                {
+                    var formattedSchema = JToken.Parse(schema).ToString(Formatting.Indented);
+                    using var schemaWriter = File.CreateText(config.DestinationPath +"schema.graphql");
+                    await schemaWriter.WriteAsync(formattedSchema);
+                }
+
 
                 var deserializedSchema = GraphQlGenerator.DeserializeGraphQlSchema(schema);
-
 
                 var builder = new StringBuilder();
 

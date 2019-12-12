@@ -4,6 +4,7 @@ namespace Blauhaus.Graphql.Generator
 {
     public class GraphqlGeneratorConfig
     {
+        public bool GenerateSchema { get; set; }
         public string SchemaUrl { get; set; }
         public string Namespace { get; set; }
         public string DestinationPath { get; set; }
