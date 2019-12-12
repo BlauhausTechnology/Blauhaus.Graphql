@@ -7,6 +7,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using GraphQlClientGenerator;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Blauhaus.Graphql.Generator
 {
@@ -38,18 +40,35 @@ namespace Blauhaus.Graphql.Generator
                     httpClient.DefaultRequestHeaders.Add(header.Key, header.Value);
                 }
 
-                var schema = await GraphqlQueryFetcher.RetrieveSchema(config.SchemaUrl, httpClient);
+                using var response =
+                    await httpClient.PostAsync(config.SchemaUrl,
+                        new StringContent(JsonConvert.SerializeObject(new { query = IntrospectionQuery.Text }), Encoding.UTF8, "application/json"));
+
+                var schema =
+                    response.Content == null
+                        ? "(no content)"
+                        : await response.Content.ReadAsStringAsync();
+
+                if (!response.IsSuccessStatusCode)
+                    throw new InvalidOperationException($"Status code: {(int)response.StatusCode} ({response.StatusCode}); content: {schema}");
+                
+                var formattedSchema = JToken.Parse(schema).ToString(Formatting.Indented);
+                using var schemaWriter = File.CreateText(config.DestinationPath +"schema.graphql");
+                await schemaWriter.WriteAsync(formattedSchema);
+
+                var deserializedSchema = GraphQlGenerator.DeserializeGraphQlSchema(schema);
+
 
                 var builder = new StringBuilder();
 
-                GraphQlGenerator.GenerateQueryBuilder(schema, builder);
+                GraphQlGenerator.GenerateQueryBuilder(deserializedSchema, builder);
 
                 builder.AppendLine();
                 builder.AppendLine();
 
-                GraphQlGenerator.GenerateDataClasses(schema, builder);
+                GraphQlGenerator.GenerateDataClasses(deserializedSchema, builder);
 
-                using var writer = File.CreateText(config.DestinationPath);
+                using var writer = File.CreateText(config.DestinationPath + "QueryBuilder.cs");
                 writer.WriteLine(GraphQlGenerator.RequiredNamespaces);
                 writer.WriteLine();
 
