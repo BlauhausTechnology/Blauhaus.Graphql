@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace Blauhaus.Graphql.Abstractions
+namespace Blauhaus.Graphql.Abstractions.GraphqlResults
 {
     public interface IGraphqlResult<TPayload>
     {
         TPayload Payload { get; set; }
-        List<string> UserErrors { get; set; }
+        List<GraphqlError> Errors { get; set; }
     }
 }
