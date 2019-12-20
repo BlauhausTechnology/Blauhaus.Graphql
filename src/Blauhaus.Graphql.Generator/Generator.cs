@@ -14,6 +14,9 @@ namespace Blauhaus.Graphql.Generator
 {
     public static class Generator
     {
+        internal const string RequiredNamespaces = "using System;\r\nusing System.Collections;\r\nusing System.Collections.Generic;\r\nusing System.ComponentModel;\r\nusing System.Globalization;\r\nusing System.Linq;\r\nusing System.Reflection;\r\nusing System.Runtime.Serialization;\r\nusing System.Text;\r\nusing System.Text.RegularExpressions;\r\nusing Newtonsoft.Json;\r\nusing Newtonsoft.Json.Linq;\r\n";
+
+
         public static async Task GeneratAsync(this GraphqlGeneratorConfig config)
         {
 
@@ -72,7 +75,7 @@ namespace Blauhaus.Graphql.Generator
                 GraphQlGenerator.GenerateDataClasses(deserializedSchema, builder);
 
                 using var writer = File.CreateText(config.DestinationPath + "QueryBuilder.cs");
-                writer.WriteLine(GraphQlGenerator.RequiredNamespaces);
+                writer.WriteLine(RequiredNamespaces);
                 writer.WriteLine();
 
                 writer.WriteLine($"namespace {config.Namespace}");
