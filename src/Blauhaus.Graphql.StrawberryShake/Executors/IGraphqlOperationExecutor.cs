@@ -4,11 +4,10 @@ using StrawberryShake;
 
 namespace Blauhaus.Graphql.StrawberryShake.Executors
 {
-    public interface IGraphqlOperationExecutor<TOperationResult, in TOperation, TResult>
-        where TOperationResult : class, IOperationResult<TResult>
+    public interface IGraphqlOperationExecutor<in TOperation, TResult>
         where TOperation  : IOperation<TResult>
         where TResult : class
     {
-        Task<TOperationResult> ExecuteAsync(TOperation operation, CancellationToken token);
+        Task<IOperationResult<TResult>> ExecuteAsync(TOperation operation, CancellationToken token);
     }
 }
