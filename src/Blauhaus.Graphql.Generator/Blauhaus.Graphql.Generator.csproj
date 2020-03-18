@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="GraphQlClientGenerator" Version="0.4.7" />
+    <PackageReference Include="GraphQlClientGenerator" Version="0.5.1" />
   </ItemGroup>
 
 </Project>

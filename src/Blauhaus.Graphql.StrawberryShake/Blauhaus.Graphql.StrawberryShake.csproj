@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="StrawberryShake" Version="11.0.0-preview.99" />
+    <PackageReference Include="StrawberryShake" Version="11.0.0-preview.113" />
   </ItemGroup>
 
 </Project>
