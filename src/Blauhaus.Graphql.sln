@@ -14,9 +14,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blauhaus.Graphql.Abstractions", "Blauhaus.Graphql.Abstractions\Blauhaus.Graphql.Abstractions.csproj", "{F484808B-0CFC-4639-AAD2-E3BBE45886FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blauhaus.Graphql.StrawberryShake", "Blauhaus.Graphql.StrawberryShake\Blauhaus.Graphql.StrawberryShake.csproj", "{1A8A300B-8FB4-491D-B969-86FE05ECEBE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blauhaus.Graphql.StrawberryShake", "Blauhaus.Graphql.StrawberryShake\Blauhaus.Graphql.StrawberryShake.csproj", "{1A8A300B-8FB4-491D-B969-86FE05ECEBE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blauhaus.Graphql.HotChocolate", "Blauhaus.Graphql.HotChocolate\Blauhaus.Graphql.HotChocolate.csproj", "{CBA7C04F-C6AC-4544-A6F5-12E8164886B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blauhaus.Graphql.HotChocolate", "Blauhaus.Graphql.HotChocolate\Blauhaus.Graphql.HotChocolate.csproj", "{CBA7C04F-C6AC-4544-A6F5-12E8164886B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blauhaus.Graphql.StrawberryShake.TestHelpers", "Blauhaus.Graphql.StrawberryShake.TestHelpers\Blauhaus.Graphql.StrawberryShake.TestHelpers.csproj", "{FD3AF99D-08A5-4483-B9EE-406F300DA9F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blauhaus.Graphql.Tests", "Blauhaus.Graphql.Tests\Blauhaus.Graphql.Tests.csproj", "{22E9DA99-C0CF-452E-A346-E9CE1411B9A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +48,14 @@ Global
 		{CBA7C04F-C6AC-4544-A6F5-12E8164886B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBA7C04F-C6AC-4544-A6F5-12E8164886B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBA7C04F-C6AC-4544-A6F5-12E8164886B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD3AF99D-08A5-4483-B9EE-406F300DA9F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD3AF99D-08A5-4483-B9EE-406F300DA9F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD3AF99D-08A5-4483-B9EE-406F300DA9F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD3AF99D-08A5-4483-B9EE-406F300DA9F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22E9DA99-C0CF-452E-A346-E9CE1411B9A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22E9DA99-C0CF-452E-A346-E9CE1411B9A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22E9DA99-C0CF-452E-A346-E9CE1411B9A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22E9DA99-C0CF-452E-A346-E9CE1411B9A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
