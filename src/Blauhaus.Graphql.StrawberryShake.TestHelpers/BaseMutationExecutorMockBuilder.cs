@@ -9,9 +9,9 @@ using StrawberryShake;
 
 namespace Blauhaus.Graphql.StrawberryShake.TestHelpers
 {
-    public abstract class BaseGraphqlOperationExecutorMockBuilder<TBuilder, TMock, TOperation, TResult> : BaseMockBuilder<TBuilder, TMock> 
-        where TMock : class, IGraphqlOperationExecutor<TOperation, TResult> 
-        where TBuilder : BaseGraphqlOperationExecutorMockBuilder<TBuilder, TMock, TOperation, TResult>
+    public abstract class BaseMutationExecutorMockBuilder<TBuilder, TMock, TOperation, TResult> : BaseMockBuilder<TBuilder, TMock> 
+        where TMock : class, IMutationExecutor<TOperation, TResult> 
+        where TBuilder : BaseMutationExecutorMockBuilder<TBuilder, TMock, TOperation, TResult>
         where TOperation  : IOperation<TResult>
         where TResult : class
     {
