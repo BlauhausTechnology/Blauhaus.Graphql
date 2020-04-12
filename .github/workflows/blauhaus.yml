@@ -19,7 +19,11 @@ jobs:
         dotnet build ./src/Blauhaus.Graphql.sln --configuration Release
         dotnet pack ./src/Blauhaus.Graphql.Generator/Blauhaus.Graphql.Generator.csproj -p:PackageVersion=${VERSION_NAME} --no-build --output ./ --configuration Release 
         dotnet pack ./src/Blauhaus.Graphql.Abstractions/Blauhaus.Graphql.Abstractions.csproj -p:PackageVersion=${VERSION_NAME} --no-build --output ./ --configuration Release 
+        dotnet pack ./src/Blauhaus.Graphql.StrawberryShake/Blauhaus.Graphql.StrawberryShake.csproj -p:PackageVersion=${VERSION_NAME} --no-build --output ./ --configuration Release 
+        dotnet pack ./src/Blauhaus.Graphql.HotChocolate/Blauhaus.Graphql.HotChocolate.csproj -p:PackageVersion=${VERSION_NAME} --no-build --output ./ --configuration Release 
      - name: Deploy NuGet Package
        run:  |
         dotnet nuget push /home/runner/work/Blauhaus.Graphql/Blauhaus.Graphql/Blauhaus.Graphql.Generator.${VERSION_NAME}.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
         dotnet nuget push /home/runner/work/Blauhaus.Graphql/Blauhaus.Graphql/Blauhaus.Graphql.Abstractions.${VERSION_NAME}.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+        dotnet nuget push /home/runner/work/Blauhaus.Graphql/Blauhaus.Graphql/Blauhaus.Graphql.StrawberryShake.${VERSION_NAME}.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+        dotnet nuget push /home/runner/work/Blauhaus.Graphql/Blauhaus.Graphql/Blauhaus.Graphql.HotChocolate.${VERSION_NAME}.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
