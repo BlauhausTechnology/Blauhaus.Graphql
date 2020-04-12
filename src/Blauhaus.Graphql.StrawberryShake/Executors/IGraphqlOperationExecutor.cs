@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using CSharpFunctionalExtensions;
 using StrawberryShake;
 
 namespace Blauhaus.Graphql.StrawberryShake.Executors
@@ -8,6 +9,6 @@ namespace Blauhaus.Graphql.StrawberryShake.Executors
         where TOperation  : IOperation<TPayload>
         where TPayload : class
     {
-        Task<IOperationResult<TPayload>> ExecuteAsync(TOperation operation, CancellationToken token);
+        Task<Result<TPayload>> ExecuteAsync(TOperation operation, CancellationToken token);
     }
 }
