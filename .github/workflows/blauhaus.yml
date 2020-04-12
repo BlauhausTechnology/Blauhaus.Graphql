@@ -27,5 +27,5 @@ jobs:
         dotnet nuget push /home/runner/work/Blauhaus.Graphql/Blauhaus.Graphql/Blauhaus.Graphql.Generator.${VERSION_NAME}.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
         dotnet nuget push /home/runner/work/Blauhaus.Graphql/Blauhaus.Graphql/Blauhaus.Graphql.Abstractions.${VERSION_NAME}.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
         dotnet nuget push /home/runner/work/Blauhaus.Graphql/Blauhaus.Graphql/Blauhaus.Graphql.StrawberryShake.${VERSION_NAME}.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
-        dotnet nuget push /home/runner/work/Blauhaus.Graphql/Blauhaus.Graphql/Blauhaus.Graphql.StrawberryShake.TestHelpers.${VERSION_NAME}.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
+        dotnet nuget push /home/runner/work/Blauhaus.Graphql/Blauhaus.Graphql/Blauhaus.Graphql.StrawberryShake.TestHelpers .${VERSION_NAME}.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
         dotnet nuget push /home/runner/work/Blauhaus.Graphql/Blauhaus.Graphql/Blauhaus.Graphql.HotChocolate.${VERSION_NAME}.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json

@@ -10,45 +10,43 @@ using StrawberryShake;
 
 namespace Blauhaus.Graphql.StrawberryShake.TestHelpers
 {
-    public abstract class BaseMutationExecutorMockBuilder<TBuilder, TMock, TOperation, TResult> : BaseMockBuilder<TBuilder, TMock> 
-        where TMock : class, IMutationExecutor<TOperation, TResult> 
-        where TBuilder : BaseMutationExecutorMockBuilder<TBuilder, TMock, TOperation, TResult>
-        where TOperation  : IOperation<TResult>
-        where TResult : class
+    public abstract class BaseMutationExecutorMockBuilder<TBuilder, TMock, TDto, TCommandInput> : BaseMockBuilder<TBuilder, TMock> 
+        where TMock : class, IMutationExecutor<TDto, TCommandInput> 
+        where TBuilder : BaseMutationExecutorMockBuilder<TBuilder, TMock, TDto, TCommandInput>
+
     {
 
-        public TBuilder Where_execute_returns_result(TResult result)
+        public TBuilder Where_execute_returns_result(TDto result)
         {
-            Mock.Setup(x => x.ExecuteAsync(It.IsAny<TOperation>(), It.IsAny<CancellationToken>()))
+            Mock.Setup(x => x.ExecuteAsync(It.IsAny<TCommandInput>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Result.Success(result));
             return this as TBuilder;
         }
 
-        public TBuilder Where_execute_returns_result(Result<TResult> result)
+        public TBuilder Where_execute_returns_result(Result<TDto> result)
         {
-            Mock.Setup(x => x.ExecuteAsync(It.IsAny<TOperation>(), It.IsAny<CancellationToken>()))
+            Mock.Setup(x => x.ExecuteAsync(It.IsAny<TCommandInput>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(result);
             return this as TBuilder;
         }
         
         public TBuilder Where_execute_returns_error(string errorMessage)
         {
-            Mock.Setup(x => x.ExecuteAsync(It.IsAny<TOperation>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Result.Failure<TResult>(errorMessage));
+            Mock.Setup(x => x.ExecuteAsync(It.IsAny<TCommandInput>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(Result.Failure<TDto>(errorMessage));
             return this as TBuilder;
         }
 
         public TBuilder Where_execute_throws_exception(Exception e)
         {
-            Mock.Setup(x => x.ExecuteAsync(It.IsAny<TOperation>(), It.IsAny<CancellationToken>()))
+            Mock.Setup(x => x.ExecuteAsync(It.IsAny<TCommandInput>(), It.IsAny<CancellationToken>()))
                 .ThrowsAsync(e);
             return this as TBuilder;
         }
 
-        public TBuilder Verify_Execute_called_with<TProperty>(Expression<Func<TOperation, bool>> expression)
+        public TBuilder Verify_Execute_called_with<TProperty>(Expression<Func<TCommandInput, bool>> expression)
         {
-            Mock.Verify(x => x.ExecuteAsync(It.Is<TOperation>(expression), It.IsAny<CancellationToken>()));
-
+            Mock.Verify(x => x.ExecuteAsync(It.Is<TCommandInput>(expression), It.IsAny<CancellationToken>()));
             return this as TBuilder;
         }
     }

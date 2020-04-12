@@ -13,18 +13,21 @@ namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests.MutationExecutorTest
     public class BaseMutationExecutorTests 
     {
         [Test]
-        public async Task IF_Mutation_executes_successfully_SHOULD_return_result()
+        public async Task IF_Mutation_executes_successfully_SHOULD_return_dto()
         {
             //Arrange
             var sut = new TestMutationExecutor()
-                .Where_GetResultAsync_returns(new OperationResultMockBuilder<TestPayload>()
-                    .With(x => x.Data, new TestPayload
+                .Where_GetResultAsync_returns(new OperationResultMockBuilder<TestResponse>()
+                    .With(x => x.Data, new TestResponse
                     {
-                        Name = "Fred!"
+                        Dto = new TestDto
+                        {
+                            Name = "Fred!"
+                        }
                     }).Object);
 
             //Act
-            var result = await sut.ExecuteAsync(new TestOperation(), CancellationToken.None);
+            var result = await sut.ExecuteAsync(new TestCommandInput(), CancellationToken.None);
 
             //Assert
             Assert.IsTrue(result.IsSuccess);
@@ -36,11 +39,11 @@ namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests.MutationExecutorTest
         {
             //Arrange
             var sut = new TestMutationExecutor()
-                .Where_GetResultAsync_returns(new OperationResultMockBuilder<TestPayload>()
+                .Where_GetResultAsync_returns(new OperationResultMockBuilder<TestResponse>()
                     .With_Exception(new Exception("oops")).Object);
 
             //Act
-            Assert.ThrowsAsync<Exception>(async () => await sut.ExecuteAsync(new TestOperation(), CancellationToken.None),
+            Assert.ThrowsAsync<Exception>(async () => await sut.ExecuteAsync(new TestCommandInput(), CancellationToken.None),
                 "oops");
 
         }
@@ -50,11 +53,11 @@ namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests.MutationExecutorTest
         {
             //Arrange
             var sut = new TestMutationExecutor()
-                .Where_GetResultAsync_returns(new OperationResultMockBuilder<TestPayload>()
+                .Where_GetResultAsync_returns(new OperationResultMockBuilder<TestResponse>()
                     .With_Error("oops").Object);
 
             //Act
-            var result = await sut.ExecuteAsync(new TestOperation(), CancellationToken.None);
+            var result = await sut.ExecuteAsync(new TestCommandInput(), CancellationToken.None);
 
             //Assert
             Assert.IsTrue(result.IsFailure);
