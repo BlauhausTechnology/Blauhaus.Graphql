@@ -20,6 +20,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blauhaus.Graphql.HotChocola
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blauhaus.Graphql.StrawberryShake.TestHelpers", "Blauhaus.Graphql.StrawberryShake.TestHelpers\Blauhaus.Graphql.StrawberryShake.TestHelpers.csproj", "{FD3AF99D-08A5-4483-B9EE-406F300DA9F7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blauhaus.Graphql.Tests", "Blauhaus.Graphql.Tests\Blauhaus.Graphql.Tests.csproj", "{22E9DA99-C0CF-452E-A346-E9CE1411B9A4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{FD3AF99D-08A5-4483-B9EE-406F300DA9F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD3AF99D-08A5-4483-B9EE-406F300DA9F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD3AF99D-08A5-4483-B9EE-406F300DA9F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22E9DA99-C0CF-452E-A346-E9CE1411B9A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22E9DA99-C0CF-452E-A346-E9CE1411B9A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22E9DA99-C0CF-452E-A346-E9CE1411B9A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22E9DA99-C0CF-452E-A346-E9CE1411B9A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

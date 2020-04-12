@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using System.Threading;
 using Blauhaus.Graphql.StrawberryShake.Executors;
+using Blauhaus.Graphql.StrawberryShake.MutationExecutors;
 using Blauhaus.TestHelpers.MockBuilders;
 using CSharpFunctionalExtensions;
 using Moq;
