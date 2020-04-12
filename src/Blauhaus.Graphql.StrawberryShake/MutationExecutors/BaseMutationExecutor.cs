@@ -8,12 +8,12 @@ using StrawberryShake;
 
 namespace Blauhaus.Graphql.StrawberryShake.MutationExecutors
 {
-    public abstract class BaseMutationExecutor<TDto, TResponse, TCommandInput> : IMutationExecutor<TDto, TCommandInput>
-        where TDto : class 
-        where TResponse : class
+    public abstract class BaseMutationExecutor<TModelTDto, TGraphqlResponse, TCommandDto> : IMutationExecutor<TModelTDto, TCommandDto>
+        where TModelTDto : class 
+        where TGraphqlResponse : class
     {
         
-        public async Task<Result<TDto>> ExecuteAsync(TCommandInput commandInput, CancellationToken token)
+        public async Task<Result<TModelTDto>> ExecuteAsync(TCommandDto commandInput, CancellationToken token)
         {
             var result = await GetResultAsync(commandInput, token);
             var error = result.Errors.FirstOrDefault();
@@ -24,13 +24,13 @@ namespace Blauhaus.Graphql.StrawberryShake.MutationExecutors
 
             if (error.Exception == null)
             {
-                return Result.Failure<TDto>(error.Message);
+                return Result.Failure<TModelTDto>(error.Message);
             }
 
             throw error.Exception;
         }
 
-        protected abstract Task<IOperationResult<TResponse>> GetResultAsync(TCommandInput operation, CancellationToken token);
-        protected abstract Result<TDto> ExtractDto(IOperationResult<TResponse> operationResult);
+        protected abstract Task<IOperationResult<TGraphqlResponse>> GetResultAsync(TCommandDto commandDto, CancellationToken token);
+        protected abstract Result<TModelTDto> ExtractDto(IOperationResult<TGraphqlResponse> operationResult);
     }
 }

@@ -4,8 +4,8 @@ using CSharpFunctionalExtensions;
 
 namespace Blauhaus.Graphql.StrawberryShake.MutationExecutors
 {
-    public interface IMutationExecutor<TDto, in TCommandInput>
+    public interface IMutationExecutor<TModelDto, in TCommandDto>
     {
-        Task<Result<TDto>> ExecuteAsync(TCommandInput commandInput, CancellationToken token);
+        Task<Result<TModelDto>> ExecuteAsync(TCommandDto commandInput, CancellationToken token);
     }
 }
