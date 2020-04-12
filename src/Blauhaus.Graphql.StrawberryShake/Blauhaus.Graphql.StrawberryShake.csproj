@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blauhaus.Analytics.Abstractions" Version="0.7.13" />
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.6.0" />
+    <PackageReference Include="StrawberryShake" Version="11.0.0-preview.113" />
+  </ItemGroup>
+
+</Project>
