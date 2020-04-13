@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Blauhaus.Common.ValueObjects.Extensions;
+using Blauhaus.Graphql.StrawberryShake.Exceptions;
 using Blauhaus.Graphql.StrawberryShake.Executors;
 using CSharpFunctionalExtensions;
 using StrawberryShake;
@@ -24,7 +26,11 @@ namespace Blauhaus.Graphql.StrawberryShake.MutationExecutors
 
             if (error.Exception == null)
             {
-                return Result.Failure<TModelTDto>(error.Message);
+                if (error.Message.IsError())
+                {
+                    return Result.Failure<TModelTDto>(error.Message);
+                }
+                throw new GraphqlException(error);
             }
 
             throw error.Exception;
