@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Blauhaus.Graphql.StrawberryShake.Exceptions;
 using Blauhaus.Graphql.StrawberryShake.TestHelpers;
 using Blauhaus.Graphql.Tests.TestObjects;
 using Blauhaus.Graphql.Tests.Tests._Base;
 using NUnit.Framework;
 using StrawberryShake;
+using Error = Blauhaus.Common.ValueObjects.Errors.Error;
 
 namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests.MutationExecutorTests
 {
@@ -43,13 +45,12 @@ namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests.MutationExecutorTest
                     .With_Exception(new Exception("oops")).Object);
 
             //Act
-            Assert.ThrowsAsync<Exception>(async () => await sut.ExecuteAsync(new TestCommandInput(), CancellationToken.None),
-                "oops");
+            Assert.ThrowsAsync<Exception>(async () => await sut.ExecuteAsync(new TestCommandInput(), CancellationToken.None), "oops");
 
         }
 
         [Test]
-        public async Task IF_Mutation_fails_without_Exception_SHOULD_return_Failure()
+        public void IF_Mutation_fails_with_non_Error_error_SHOULD_throw()
         {
             //Arrange
             var sut = new TestMutationExecutor()
@@ -57,12 +58,35 @@ namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests.MutationExecutorTest
                     .With_Error("oops").Object);
 
             //Act
+            Assert.ThrowsAsync<GraphqlException>(async () => await sut.ExecuteAsync(new TestCommandInput(), CancellationToken.None), "oops");
+        }
+
+        [Test]
+        public void IF_Mutation_fails_with_multiple_non_Error_error_SHOULD_throw()
+        {
+            //Arrange
+            var sut = new TestMutationExecutor()
+                .Where_GetResultAsync_returns(new OperationResultMockBuilder<TestResponse>()
+                    .With_Error("oops").Object);
+
+            //Act
+            Assert.ThrowsAsync<GraphqlException>(async () => await sut.ExecuteAsync(new TestCommandInput(), CancellationToken.None));
+        }
+
+        [Test]
+        public async Task IF_Mutation_fails_with_Error_SHOULD_return_failure()
+        {
+            //Arrange
+            var error = Error.Create("Bad Thing");
+            var sut = new TestMutationExecutor()
+                .Where_GetResultAsync_returns(new OperationResultMockBuilder<TestResponse>()
+                    .With_Error(error.ToString()).Object);
+
+            //Act
             var result = await sut.ExecuteAsync(new TestCommandInput(), CancellationToken.None);
 
             //Assert
-            Assert.IsTrue(result.IsFailure);
-            Assert.AreEqual("oops", result.Error);
-
+            Assert.AreEqual(error.ToString(), result.Error);
         }
 
     }
