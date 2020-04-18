@@ -1,14 +1,37 @@
-﻿using Blauhaus.TestHelpers.BaseTests;
+﻿using System;
+using System.Security.Claims;
+using Blauhaus.Analytics.Abstractions.Service;
+using Blauhaus.Analytics.TestHelpers;
+using Blauhaus.Auth.Abstractions.Builders;
+using Blauhaus.Auth.Abstractions.Services;
+using Blauhaus.Graphql.Tests.MockBuilders;
+using Blauhaus.TestHelpers.BaseTests;
+using HotChocolate.Resolvers;
+using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
 namespace Blauhaus.Graphql.Tests.Tests._Base
 {
-    public abstract class BaseGraphqlTest<TSut> : BaseUnitTest<TSut> where TSut : class
+    public abstract class BaseGraphqlTest<TSut> : BaseServiceTest<TSut> where TSut : class
     {
         [SetUp]
         public virtual void Setup()
         {
             Cleanup();
+
+            Services.AddSingleton(x => MockResolverContext.Object);
+            Services.AddSingleton(x => MockAnalyticsService.Object);
+            Services.AddSingleton(x => MockAzureAuthenticationServerService.Object);
+
+            ClaimsPrincipal = new ClaimsPrincipalBuilder()
+                .WithIsAuthenticatedTrue()
+                .With_UserObjectId(Guid.NewGuid()).Build();
         }
+
+        protected ClaimsPrincipal ClaimsPrincipal;
+
+        protected ResolverContextMockBuilder MockResolverContext => Mocks.AddMock<ResolverContextMockBuilder, IResolverContext>().Invoke();
+        protected AnalyticsServiceMockBuilder MockAnalyticsService => Mocks.AddMock<AnalyticsServiceMockBuilder, IAnalyticsService>().Invoke();
+        protected AzureAuthenticationServerServiceMockBuilder MockAzureAuthenticationServerService=> Mocks.AddMock<AzureAuthenticationServerServiceMockBuilder, IAzureAuthenticationServerService>().Invoke();
     }
 }

@@ -6,9 +6,9 @@
 
   <ItemGroup>
     <PackageReference Include="Blauhaus.Analytics.Abstractions" Version="0.7.13" />
-    <PackageReference Include="Blauhaus.Common.ValueObjects" Version="1.0.14" />
-    <PackageReference Include="CSharpFunctionalExtensions" Version="2.6.0" />
-    <PackageReference Include="StrawberryShake" Version="11.0.0-preview.123" />
+    <PackageReference Include="Blauhaus.Common.ValueObjects" Version="1.0.16" />
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.7.0" />
+    <PackageReference Include="StrawberryShake" Version="11.0.0-preview.127" />
   </ItemGroup>
 
 </Project>

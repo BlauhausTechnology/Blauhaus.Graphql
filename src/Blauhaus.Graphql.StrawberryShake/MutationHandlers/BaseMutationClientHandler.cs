@@ -1,16 +1,14 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Blauhaus.Common.ValueObjects.Extensions;
 using Blauhaus.Graphql.StrawberryShake.Exceptions;
-using Blauhaus.Graphql.StrawberryShake.Executors;
 using CSharpFunctionalExtensions;
 using StrawberryShake;
 
-namespace Blauhaus.Graphql.StrawberryShake.MutationExecutors
+namespace Blauhaus.Graphql.StrawberryShake.MutationHandlers
 {
-    public abstract class BaseMutationExecutor<TModelTDto, TGraphqlResponse, TCommandDto> : IMutationExecutor<TModelTDto, TCommandDto>
+    public abstract class BaseMutationClientHandler<TModelTDto, TGraphqlResponse, TCommandDto> : IMutationClientHandler<TModelTDto, TCommandDto>
         where TModelTDto : class 
         where TGraphqlResponse : class
     {

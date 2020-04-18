@@ -18,9 +18,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blauhaus.Graphql.Strawberry
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blauhaus.Graphql.HotChocolate", "Blauhaus.Graphql.HotChocolate\Blauhaus.Graphql.HotChocolate.csproj", "{CBA7C04F-C6AC-4544-A6F5-12E8164886B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blauhaus.Graphql.StrawberryShake.TestHelpers", "Blauhaus.Graphql.StrawberryShake.TestHelpers\Blauhaus.Graphql.StrawberryShake.TestHelpers.csproj", "{FD3AF99D-08A5-4483-B9EE-406F300DA9F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blauhaus.Graphql.StrawberryShake.TestHelpers", "Blauhaus.Graphql.StrawberryShake.TestHelpers\Blauhaus.Graphql.StrawberryShake.TestHelpers.csproj", "{FD3AF99D-08A5-4483-B9EE-406F300DA9F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blauhaus.Graphql.Tests", "Blauhaus.Graphql.Tests\Blauhaus.Graphql.Tests.csproj", "{22E9DA99-C0CF-452E-A346-E9CE1411B9A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blauhaus.Graphql.Tests", "Blauhaus.Graphql.Tests\Blauhaus.Graphql.Tests.csproj", "{22E9DA99-C0CF-452E-A346-E9CE1411B9A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blauhaus.Graphql.HotChocolate.TestHelpers", "Blauhaus.Graphql.HotChocolate.TestHelpers\Blauhaus.Graphql.HotChocolate.TestHelpers.csproj", "{8043793B-FAEB-42EF-B526-CD5BC40CD5CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,6 +58,10 @@ Global
 		{22E9DA99-C0CF-452E-A346-E9CE1411B9A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22E9DA99-C0CF-452E-A346-E9CE1411B9A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22E9DA99-C0CF-452E-A346-E9CE1411B9A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8043793B-FAEB-42EF-B526-CD5BC40CD5CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8043793B-FAEB-42EF-B526-CD5BC40CD5CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8043793B-FAEB-42EF-B526-CD5BC40CD5CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8043793B-FAEB-42EF-B526-CD5BC40CD5CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

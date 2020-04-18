@@ -1,18 +1,18 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Blauhaus.Graphql.StrawberryShake.Executors;
-using Blauhaus.Graphql.StrawberryShake.MutationExecutors;
+using Blauhaus.Graphql.StrawberryShake.MutationHandlers;
+using Blauhaus.Graphql.Tests.TestObjects;
 using Blauhaus.TestHelpers.MockBuilders;
 using CSharpFunctionalExtensions;
 using StrawberryShake;
 
-namespace Blauhaus.Graphql.Tests.TestObjects
+namespace Blauhaus.Graphql.Tests.Suts
 {
-    public class TestMutationExecutor : BaseMutationExecutor<TestDto, TestResponse, TestCommandInput>
+    public class TestMutationClientHandler : BaseMutationClientHandler<TestDto, TestResponse, TestCommandInput>
     {
         private IOperationResult<TestResponse> _result = new MockBuilder<IOperationResult<TestResponse>>().Object;
 
-        public TestMutationExecutor Where_GetResultAsync_returns(IOperationResult<TestResponse> result)
+        public TestMutationClientHandler Where_GetResultAsync_returns(IOperationResult<TestResponse> result)
         {
             _result = result;
             return this;
