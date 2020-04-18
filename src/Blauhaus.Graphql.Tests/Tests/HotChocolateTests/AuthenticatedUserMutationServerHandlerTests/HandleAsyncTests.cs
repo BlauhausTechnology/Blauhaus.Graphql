@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Blauhaus.Auth.Abstractions.Builders;
 using Blauhaus.Auth.Abstractions.CommandHandler;
 using Blauhaus.Graphql.HotChocolate.MutationHandlers;
+using Blauhaus.Graphql.HotChocolate.TestHelpers.MockBuilders;
 using Blauhaus.Graphql.Tests.MockBuilders;
 using Blauhaus.Graphql.Tests.TestObjects;
 using Blauhaus.Graphql.Tests.Tests._Base;

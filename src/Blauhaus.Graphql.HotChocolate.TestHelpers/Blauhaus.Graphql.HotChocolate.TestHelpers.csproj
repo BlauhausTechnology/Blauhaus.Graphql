@@ -10,4 +10,8 @@
     <PackageReference Include="Blauhaus.TestHelpers" Version="1.0.7" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Blauhaus.Graphql.HotChocolate\Blauhaus.Graphql.HotChocolate.csproj" />
+  </ItemGroup>
+
 </Project>

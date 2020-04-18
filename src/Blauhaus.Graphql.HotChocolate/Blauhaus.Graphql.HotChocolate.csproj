@@ -10,7 +10,7 @@
     <PackageReference Include="Blauhaus.Analytics.Abstractions" Version="0.7.13" />
     <PackageReference Include="Blauhaus.Auth.Abstractions" Version="0.8.1" />
     <PackageReference Include="HotChocolate" Version="11.0.0-preview.127" />
-    <PackageReference Include="HotChocolate.AspNetCore" Version="10.4.1" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="11.0.0-preview.127" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
   </ItemGroup>
 
