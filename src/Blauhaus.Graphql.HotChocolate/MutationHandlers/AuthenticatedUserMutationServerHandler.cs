@@ -28,7 +28,7 @@ namespace Blauhaus.Graphql.HotChocolate.MutationHandlers
             _azureAuthenticationService = azureAuthenticationService;
         }
 
-        public async Task<TPayload> HandleAsync<TCommand, TPayload>(IResolverContext context, CancellationToken token)
+        public async Task<TPayload> HandleAsync<TPayload, TCommand>(IResolverContext context, CancellationToken token)
         {
             try
             {

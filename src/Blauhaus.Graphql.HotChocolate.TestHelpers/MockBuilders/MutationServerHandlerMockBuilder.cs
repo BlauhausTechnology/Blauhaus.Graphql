@@ -11,13 +11,13 @@ namespace Blauhaus.Graphql.HotChocolate.TestHelpers.MockBuilders
     {
         public MutationServerHandlerMockBuilder Where_HandleAsync_returns<TCommand, TPayload>(TPayload payload)
         {
-            Mock.Setup(x => x.HandleAsync<TCommand, TPayload>(It.IsAny<IResolverContext>(), It.IsAny<CancellationToken>()))
+            Mock.Setup(x => x.HandleAsync<TPayload, TCommand>(It.IsAny<IResolverContext>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(payload);
             return this;
         }
         public MutationServerHandlerMockBuilder Where_HandleAsync_throws<TCommand, TPayload>(Exception e)
         {
-            Mock.Setup(x => x.HandleAsync<TCommand, TPayload>(It.IsAny<IResolverContext>(), It.IsAny<CancellationToken>()))
+            Mock.Setup(x => x.HandleAsync<TPayload, TCommand>(It.IsAny<IResolverContext>(), It.IsAny<CancellationToken>()))
                 .ThrowsAsync(e);
             return this;
         }
