@@ -5,11 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blauhaus.Auth.Abstractions" Version="0.8.4" />
+    <PackageReference Include="Blauhaus.Common.ValueObjects" Version="1.0.20" />
     <PackageReference Include="Blauhaus.TestHelpers" Version="1.0.7" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Blauhaus.Graphql.StrawberryShake\Blauhaus.Graphql.StrawberryShake.csproj" />
+    <ProjectReference Include="..\Blauhaus.Graphql.HotChocolate\Blauhaus.Graphql.HotChocolate.csproj" />
   </ItemGroup>
 
 </Project>

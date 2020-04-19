@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 
-namespace Blauhaus.Graphql.StrawberryShake.MutationExecutors
+namespace Blauhaus.Graphql.StrawberryShake.MutationHandlers
 {
-    public interface IMutationExecutor<TModelDto, in TCommandDto>
+    public interface IMutationClientHandler<TModelDto, in TCommandDto>
     {
         Task<Result<TModelDto>> ExecuteAsync(TCommandDto commandInput, CancellationToken token);
     }

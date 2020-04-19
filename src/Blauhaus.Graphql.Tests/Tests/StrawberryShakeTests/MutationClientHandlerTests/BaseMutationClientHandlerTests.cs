@@ -1,24 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Blauhaus.Graphql.StrawberryShake.Exceptions;
 using Blauhaus.Graphql.StrawberryShake.TestHelpers;
+using Blauhaus.Graphql.Tests.Suts;
 using Blauhaus.Graphql.Tests.TestObjects;
-using Blauhaus.Graphql.Tests.Tests._Base;
+using Moq;
 using NUnit.Framework;
-using StrawberryShake;
 using Error = Blauhaus.Common.ValueObjects.Errors.Error;
 
-namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests.MutationExecutorTests
+namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests.MutationClientHandlerTests
 {
-    public class BaseMutationExecutorTests 
+    public class BaseMutationClientHandlerTests 
     {
         [Test]
         public async Task IF_Mutation_executes_successfully_SHOULD_return_dto()
         {
             //Arrange
-            var sut = new TestMutationExecutor()
+            var sut = new TestMutationClientHandler()
                 .Where_GetResultAsync_returns(new OperationResultMockBuilder<TestResponse>()
                     .With(x => x.Data, new TestResponse
                     {
@@ -40,7 +39,7 @@ namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests.MutationExecutorTest
         public void IF_Mutation_fails_with_Exception_SHOULD_throw_exception()
         {
             //Arrange
-            var sut = new TestMutationExecutor()
+            var sut = new TestMutationClientHandler()
                 .Where_GetResultAsync_returns(new OperationResultMockBuilder<TestResponse>()
                     .With_Exception(new Exception("oops")).Object);
 
@@ -53,7 +52,7 @@ namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests.MutationExecutorTest
         public void IF_Mutation_fails_with_non_Error_error_SHOULD_throw()
         {
             //Arrange
-            var sut = new TestMutationExecutor()
+            var sut = new TestMutationClientHandler()
                 .Where_GetResultAsync_returns(new OperationResultMockBuilder<TestResponse>()
                     .With_Error("oops").Object);
 
@@ -62,10 +61,22 @@ namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests.MutationExecutorTest
         }
 
         [Test]
+        public void IF_Mutation_fails_with_IError_with_message_extension_SHOULD_use_it_as_message()
+        {
+            //Arrange
+            var sut = new TestMutationClientHandler()
+                .Where_GetResultAsync_returns(new OperationResultMockBuilder<TestResponse>()
+                    .WithExtension("message", "underlying errsor message").Object);
+
+            //Act
+            Assert.ThrowsAsync<GraphqlException>(async () => await sut.ExecuteAsync(new TestCommandInput(), CancellationToken.None));
+        }
+
+        [Test]
         public void IF_Mutation_fails_with_multiple_non_Error_error_SHOULD_throw()
         {
             //Arrange
-            var sut = new TestMutationExecutor()
+            var sut = new TestMutationClientHandler()
                 .Where_GetResultAsync_returns(new OperationResultMockBuilder<TestResponse>()
                     .With_Error("oops").Object);
 
@@ -78,7 +89,7 @@ namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests.MutationExecutorTest
         {
             //Arrange
             var error = Error.Create("Bad Thing");
-            var sut = new TestMutationExecutor()
+            var sut = new TestMutationClientHandler()
                 .Where_GetResultAsync_returns(new OperationResultMockBuilder<TestResponse>()
                     .With_Error(error.ToString()).Object);
 

@@ -22,6 +22,17 @@ namespace Blauhaus.Graphql.StrawberryShake.TestHelpers
             return this;
         }
 
+        public OperationResultMockBuilder<TPayload> WithExtension(string errorMessage, object value)
+        {
+            With(x => x.Errors, new List<IError>
+            {
+                new ErrorBuilder()
+                    .SetExtension(errorMessage, value)
+                    .SetMessage("error").Build()
+            });
+            return this;
+        }
+
         public OperationResultMockBuilder<TPayload> With_Exception(Exception exception)
         {
             With(x => x.Errors, new List<IError>

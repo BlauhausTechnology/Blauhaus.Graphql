@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Threading;
 using Blauhaus.Graphql.StrawberryShake.Executors;
-using Blauhaus.Graphql.StrawberryShake.MutationExecutors;
+using Blauhaus.Graphql.StrawberryShake.MutationHandlers;
 using Blauhaus.TestHelpers.MockBuilders;
 using CSharpFunctionalExtensions;
 using Moq;
@@ -11,7 +11,7 @@ using StrawberryShake;
 namespace Blauhaus.Graphql.StrawberryShake.TestHelpers
 {
     public abstract class BaseMutationExecutorMockBuilder<TBuilder, TMock, TDto, TCommandInput> : BaseMockBuilder<TBuilder, TMock> 
-        where TMock : class, IMutationExecutor<TDto, TCommandInput> 
+        where TMock : class, IMutationClientHandler<TDto, TCommandInput> 
         where TBuilder : BaseMutationExecutorMockBuilder<TBuilder, TMock, TDto, TCommandInput>
 
     {
