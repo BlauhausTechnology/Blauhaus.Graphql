@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using Blauhaus.Auth.Abstractions.Builders;
-using Blauhaus.Common.Utils.Extensions;
 using Blauhaus.TestHelpers.MockBuilders;
 using HotChocolate.Resolvers;
-using Microsoft.AspNetCore.Http;
 
-namespace Blauhaus.Graphql.Tests.MockBuilders
+namespace Blauhaus.Graphql.HotChocolate.TestHelpers.MockBuilders
 {
     public class ResolverContextMockBuilder : BaseMockBuilder<ResolverContextMockBuilder, IResolverContext>
     {

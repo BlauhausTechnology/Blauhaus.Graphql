@@ -5,6 +5,7 @@ using Blauhaus.Graphql.StrawberryShake.Exceptions;
 using Blauhaus.Graphql.StrawberryShake.TestHelpers;
 using Blauhaus.Graphql.Tests.Suts;
 using Blauhaus.Graphql.Tests.TestObjects;
+using Moq;
 using NUnit.Framework;
 using Error = Blauhaus.Common.ValueObjects.Errors.Error;
 
@@ -57,6 +58,18 @@ namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests.MutationClientHandle
 
             //Act
             Assert.ThrowsAsync<GraphqlException>(async () => await sut.ExecuteAsync(new TestCommandInput(), CancellationToken.None), "oops");
+        }
+
+        [Test]
+        public void IF_Mutation_fails_with_IError_with_message_extension_SHOULD_use_it_as_message()
+        {
+            //Arrange
+            var sut = new TestMutationClientHandler()
+                .Where_GetResultAsync_returns(new OperationResultMockBuilder<TestResponse>()
+                    .WithExtension("message", "underlying errsor message").Object);
+
+            //Act
+            Assert.ThrowsAsync<GraphqlException>(async () => await sut.ExecuteAsync(new TestCommandInput(), CancellationToken.None));
         }
 
         [Test]

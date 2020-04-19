@@ -1,10 +1,9 @@
 ﻿using System.Security.Claims;
 using Blauhaus.Auth.Abstractions.Builders;
-using Blauhaus.Common.Utils.Extensions;
 using Blauhaus.TestHelpers.MockBuilders;
 using Microsoft.AspNetCore.Http;
 
-namespace Blauhaus.Graphql.Tests.MockBuilders
+namespace Blauhaus.Graphql.HotChocolate.TestHelpers.MockBuilders
 {
     public class HttpContextMockBuilder : BaseMockBuilder<HttpContextMockBuilder, HttpContext>
     {

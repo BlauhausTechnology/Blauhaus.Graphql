@@ -4,6 +4,7 @@ using Blauhaus.Analytics.Abstractions.Service;
 using Blauhaus.Analytics.TestHelpers;
 using Blauhaus.Auth.Abstractions.Builders;
 using Blauhaus.Auth.Abstractions.Services;
+using Blauhaus.Graphql.HotChocolate.TestHelpers.MockBuilders;
 using Blauhaus.Graphql.Tests.MockBuilders;
 using Blauhaus.TestHelpers.BaseTests;
 using HotChocolate.Resolvers;

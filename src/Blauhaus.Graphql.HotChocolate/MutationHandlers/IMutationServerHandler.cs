@@ -6,6 +6,6 @@ namespace Blauhaus.Graphql.HotChocolate.MutationHandlers
 {
     public interface IMutationServerHandler
     {
-        Task<TPayload> HandleAsync<TCommand, TPayload>(IResolverContext context, CancellationToken token);
+        Task<TPayload> HandleAsync<TPayload, TCommand>(IResolverContext context, CancellationToken token);
     }
 }
