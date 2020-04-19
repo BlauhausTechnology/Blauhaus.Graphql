@@ -7,7 +7,7 @@ namespace Blauhaus.Graphql.HotChocolate._Ioc
     {
         public static IServiceCollection AddAuthenticatedUserMutationHandler(this IServiceCollection services)
         {
-            services.AddSingleton<IMutationServerHandler, AuthenticatedUserMutationServerHandler>();
+            services.AddScoped<IMutationServerHandler, AuthenticatedUserMutationServerHandler>();
             return services;
         }
     }
