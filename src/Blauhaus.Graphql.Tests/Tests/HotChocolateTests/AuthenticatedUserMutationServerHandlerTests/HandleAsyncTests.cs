@@ -5,6 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Blauhaus.Auth.Abstractions.Builders;
 using Blauhaus.Auth.Abstractions.CommandHandler;
+using Blauhaus.Auth.Abstractions.User;
+using Blauhaus.Common.Domain.CommandHandlers;
 using Blauhaus.Graphql.HotChocolate.MutationHandlers;
 using Blauhaus.Graphql.HotChocolate.TestHelpers.MockBuilders;
 using Blauhaus.Graphql.Tests.MockBuilders;
@@ -111,7 +113,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests.AuthenticatedUserMutati
         public async Task IF_command_handler_cannot_be_found_SHOULD_throw()
         {
             //Arrange
-            MockResolverContext.With_Service<IAuthenticatedUserCommandHandler<TestServerPayload, TestServerCommand>>(null);;
+            MockResolverContext.With_Service<IAuthenticatedCommandHandler<TestServerPayload, TestServerCommand, IAuthenticatedUser>>(null);;
 
             //Act
             Assert.ThrowsAsync<ArgumentException>(async () => 
@@ -144,7 +146,6 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests.AuthenticatedUserMutati
                 y.Message == "Oops")));
         }
 
-        
         [Test]
         public async Task IF_command_handler_throws_SHOULD_log_exception_and_rethrow()
         {
