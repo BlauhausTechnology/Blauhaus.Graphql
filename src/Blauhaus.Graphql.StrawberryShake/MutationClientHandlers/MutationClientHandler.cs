@@ -8,14 +8,14 @@ using CSharpFunctionalExtensions;
 
 namespace Blauhaus.Graphql.StrawberryShake.MutationClientHandlers
 {
-    public class MutationClientHandler<TModelDto, TGraphqlResponse, TCommandDto, TCommand> : IMutationClientHandler<TModelDto, TCommandDto>
+    public class MutationClientHandler<TModelDto, TMutationResult, TCommandDto, TCommand> : IMutationClientHandler<TModelDto, TCommandDto>
         where TModelDto : class 
-        where TGraphqlResponse : class
+        where TMutationResult : class
     {
-        private readonly IMutationClient<TModelDto, TGraphqlResponse, TCommandDto, TCommand> _graphqlClient;
+        private readonly IMutationClient<TModelDto, TMutationResult, TCommandDto, TCommand> _graphqlClient;
 
         public MutationClientHandler(
-            IMutationClient<TModelDto, TGraphqlResponse, TCommandDto, TCommand> graphqlClient)
+            IMutationClient<TModelDto, TMutationResult, TCommandDto, TCommand> graphqlClient)
         {
             _graphqlClient = graphqlClient;
         }
@@ -26,7 +26,7 @@ namespace Blauhaus.Graphql.StrawberryShake.MutationClientHandlers
             var error = result.Errors.FirstOrDefault();
             if (error == null)
             {
-                return _graphqlClient.Convert(result);
+                return Result.Success(_graphqlClient.GetDtoFromResult(result));
             }
 
             if (error.Exception == null)

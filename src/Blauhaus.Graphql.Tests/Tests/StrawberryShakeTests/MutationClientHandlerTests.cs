@@ -6,8 +6,6 @@ using Blauhaus.Graphql.StrawberryShake.TestHelpers;
 using Blauhaus.Graphql.Tests.TestObjects;
 using Blauhaus.TestHelpers.BaseTests;
 using Blauhaus.TestHelpers.MockBuilders;
-using CSharpFunctionalExtensions;
-using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using NUnit.Framework;
 using StrawberryShake;
@@ -38,7 +36,7 @@ namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests
                     Dto = _dto
                 }).Object;
 
-            MockGraphqlClient.Mock.Setup(x => x.Convert(_operationResult)).Returns(Result.Success(_dto));
+            MockGraphqlClient.Mock.Setup(x => x.GetDtoFromResult(_operationResult)).Returns(_dto);
             MockGraphqlClient.Mock.Setup(x => x.GetResultAsync(_commandDto, CancellationToken)).ReturnsAsync(_operationResult);
 
             AddService(x => MockGraphqlClient.Object);
@@ -118,18 +116,6 @@ namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests
             //Assert
             Assert.AreEqual(error.ToString(), result.Error);
         }
-        
-        protected Func<MockBuilder<TMock>> AddMock<TMock>() where TMock : class
-        {
-            return Mocks.AddMock<MockBuilder<TMock>, TMock>();
-        }
-        protected void AddService<T>(Func<IServiceProvider, T> func) where T : class
-        {
-            Services.AddSingleton<T>(func);
-        }
-        protected  void AddService<T>(T service) where T : class
-        {
-            Services.AddSingleton<T>(service);
-        }
+         
     }
 }

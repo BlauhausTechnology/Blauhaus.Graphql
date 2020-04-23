@@ -6,11 +6,12 @@ using StrawberryShake;
 
 namespace Blauhaus.Graphql.StrawberryShake.MutationClientHandlers
 {
-    public interface IMutationClient<TModelDto, TGraphqlResponse, TCommandDto, TCommand> : ICommandConverter<TCommandDto, TCommand>
-        where TGraphqlResponse : class
+    public interface IMutationClient<TModelDto, TMutationResponse, TCommandDto, TCommand> : ICommandConverter<TCommandDto, TCommand>
+        where TModelDto : class
+        where TMutationResponse : class
     {
 
-        Task<IOperationResult<TGraphqlResponse>> GetResultAsync(TCommandDto commandDto, CancellationToken token);
-        Result<TModelDto> Convert(IOperationResult<TGraphqlResponse> operationResult);
+        Task<IOperationResult<TMutationResponse>> GetResultAsync(TCommandDto commandDto, CancellationToken token);
+        TModelDto? GetDtoFromResult(IOperationResult<TMutationResponse> operationResult);
     }
 }
