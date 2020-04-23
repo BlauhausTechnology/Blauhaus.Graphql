@@ -9,16 +9,16 @@ namespace Blauhaus.Graphql.StrawberryShake._Ioc
     public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddClientEntityCommandHandler<
-            TModel, TModelDto, TGraphqlResponse, TCommandDto, TCommand, TMutationClient> 
+            TModel, TModelDto, TMutationResponse, TCommandDto, TCommand, TMutationClient> 
                 (this IServiceCollection services) 
             where TModel : class, IClientEntity 
-            where TGraphqlResponse : class
-            where TMutationClient : class, IMutationClient<TModelDto, TGraphqlResponse, TCommandDto, TCommand>
+            where TMutationResponse : class
+            where TMutationClient : class, IMutationClient<TModelDto, TMutationResponse, TCommandDto, TCommand>
             where TModelDto : class
         {
             services.AddTransient<ICommandClientHandler<TModel, TCommand>, ClientEntityCommandHandler<TModel, TModelDto, TCommandDto, TCommand>>();
-            services.AddTransient<IMutationClientHandler<TModelDto, TCommandDto>, MutationClientHandler<TModelDto, TGraphqlResponse, TCommandDto, TCommand>>();
-            services.AddTransient<IMutationClient<TModelDto, TGraphqlResponse, TCommandDto, TCommand>, TMutationClient>();
+            services.AddTransient<IMutationClientHandler<TModelDto, TCommandDto>, MutationClientHandler<TModelDto, TMutationResponse, TCommandDto, TCommand>>();
+            services.AddTransient<IMutationClient<TModelDto, TMutationResponse, TCommandDto, TCommand>, TMutationClient>();
             services.AddTransient<ICommandConverter<TCommandDto, TCommand>, TMutationClient>();
 
             return services;
