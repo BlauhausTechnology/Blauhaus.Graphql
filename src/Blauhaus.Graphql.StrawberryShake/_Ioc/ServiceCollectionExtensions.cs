@@ -17,7 +17,8 @@ namespace Blauhaus.Graphql.StrawberryShake._Ioc
             where TModelDto : class
         {
             services.AddTransient<ICommandClientHandler<TModel, TCommand>, ClientEntityCommandHandler<TModel, TModelDto, TCommandDto, TCommand>>();
-            services.AddTransient<IMutationClientHandler<TModelDto, TCommandDto>, MutationClientHandler<TModelDto, TMutationResponse, TCommandDto, TCommand>>();
+            services.AddTransient<ICommandClientHandler<TModelDto, TCommandDto>, MutationClientHandler<TModelDto, TMutationResponse, TCommandDto, TCommand>>();
+            services.AddTransient<ICommandHandler<TModelDto, TCommandDto>, MutationClientHandler<TModelDto, TMutationResponse, TCommandDto, TCommand>>();
             services.AddTransient<IMutationClient<TModelDto, TMutationResponse, TCommandDto, TCommand>, TMutationClient>();
             services.AddTransient<ICommandConverter<TCommandDto, TCommand>, TMutationClient>();
 

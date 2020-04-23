@@ -6,7 +6,7 @@ using StrawberryShake;
 
 namespace Blauhaus.Graphql.StrawberryShake.TestHelpers
 {
-    public abstract class BaseMutationClientMockBuilder<TBuilder, TMock, TModelDo, TMutationResult, TCommandDto, TCommand> : BaseMockBuilder<TBuilder, TMock>
+    public class MutationClientMockBuilder<TBuilder, TMock, TModelDo, TMutationResult, TCommandDto, TCommand> : BaseMockBuilder<TBuilder, TMock>
         where TMock : class, IMutationClient<TModelDo, TMutationResult, TCommandDto, TCommand> 
         where TBuilder : BaseMockBuilder<TBuilder, TMock>
         where TMutationResult : class

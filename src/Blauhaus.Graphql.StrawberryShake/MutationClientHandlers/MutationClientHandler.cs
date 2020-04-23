@@ -2,13 +2,14 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Blauhaus.Common.Domain.CommandHandlers;
+using Blauhaus.Common.Domain.CommandHandlers.Client;
 using Blauhaus.Common.ValueObjects.Extensions;
 using Blauhaus.Graphql.StrawberryShake.Exceptions;
 using CSharpFunctionalExtensions;
 
 namespace Blauhaus.Graphql.StrawberryShake.MutationClientHandlers
 {
-    public class MutationClientHandler<TModelDto, TMutationResult, TCommandDto, TCommand> : IMutationClientHandler<TModelDto, TCommandDto>
+    public class MutationClientHandler<TModelDto, TMutationResult, TCommandDto, TCommand> : ICommandClientHandler<TModelDto, TCommandDto>
         where TModelDto : class 
         where TMutationResult : class
     {
