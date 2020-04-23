@@ -8,12 +8,11 @@ using StrawberryShake;
 
 namespace Blauhaus.Graphql.Tests.Suts
 {
-    public class TestGraphqlDtoCommandHandler : MutationClientHandler<TestDto, TestGraphqlResponse, TestCommandDto>
+    public class TestGraphqlDtoCommandHandler : MutationClientHandler<TestModelDto, TestGraphqlResponse, TestCommandDto, TestCommand>
     {
         public TestGraphqlDtoCommandHandler(
-            IGraphqlClient<TestGraphqlResponse, TestCommandDto> graphqlClient, 
-            IOperationResultConverter<TestDto, TestGraphqlResponse> operationResultConverter) 
-                : base(graphqlClient, operationResultConverter)
+            IGraphqlClient<TestModelDto,  TestGraphqlResponse, TestCommandDto, TestCommand> graphqlClient) 
+                : base(graphqlClient)
         {
         }
     }

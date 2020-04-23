@@ -9,35 +9,32 @@ using StrawberryShake;
 
 namespace Blauhaus.Graphql.StrawberryShake.DtoCommandHandlers
 {
-    public class MutationClientHandler<TResponseDto, TGraphqlResponse, TCommandDto> : ICommandHandler<TResponseDto, TCommandDto>
-        where TResponseDto : class 
+    public class MutationClientHandler<TModelDto, TGraphqlResponse, TCommandDto, TCommand> : ICommandHandler<TModelDto, TCommandDto>
+        where TModelDto : class 
         where TGraphqlResponse : class
     {
-        private readonly IGraphqlClient<TGraphqlResponse, TCommandDto> _graphqlClient;
-        private readonly IOperationResultConverter<TResponseDto, TGraphqlResponse> _operationResultConverter;
+        private readonly IGraphqlClient<TModelDto, TGraphqlResponse, TCommandDto, TCommand> _graphqlClient;
 
         public MutationClientHandler(
-            IGraphqlClient<TGraphqlResponse, TCommandDto> graphqlClient,
-            IOperationResultConverter<TResponseDto, TGraphqlResponse> operationResultConverter)
+            IGraphqlClient<TModelDto, TGraphqlResponse, TCommandDto, TCommand> graphqlClient)
         {
             _graphqlClient = graphqlClient;
-            _operationResultConverter = operationResultConverter;
         }
 
-        public async Task<Result<TResponseDto>> HandleAsync(TCommandDto commandInput, CancellationToken token)
+        public async Task<Result<TModelDto>> HandleAsync(TCommandDto commandInput, CancellationToken token)
         {
             var result = await _graphqlClient.GetResultAsync(commandInput, token);
             var error = result.Errors.FirstOrDefault();
             if (error == null)
             {
-                return _operationResultConverter.Convert(result);
+                return _graphqlClient.Convert(result);
             }
 
             if (error.Exception == null)
             {
                 if (error.Message.IsError())
                 {
-                    return Result.Failure<TResponseDto>(error.Message);
+                    return Result.Failure<TModelDto>(error.Message);
                 }
                 throw new GraphqlException(error);
             }

@@ -9,7 +9,7 @@ using Blauhaus.TestHelpers.MockBuilders;
 namespace Blauhaus.Graphql.Tests.MockBuilders
 {
     public class TestCommandHandlerMockBuilder : BaseAuthenticatedCommandHandlerMockBuilder<TestCommandHandlerMockBuilder, 
-        ICommandServerHandler<TestServerPayload, TestServerCommand, IAuthenticatedUser>, TestServerPayload, TestServerCommand, IAuthenticatedUser>
+        ICommandServerHandler<TestServerPayload, TestCommand, IAuthenticatedUser>, TestServerPayload, TestCommand, IAuthenticatedUser>
     {
         
     }

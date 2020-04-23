@@ -2,6 +2,6 @@
 {
     public class TestGraphqlResponse
     {
-        public TestDto Dto { get; set; }
+        public TestModelDto Dto { get; set; }
     }
 }
