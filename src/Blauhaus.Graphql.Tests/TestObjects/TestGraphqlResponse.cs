@@ -1,6 +1,6 @@
 ﻿namespace Blauhaus.Graphql.Tests.TestObjects
 {
-    public class TestResponse
+    public class TestGraphqlResponse
     {
         public TestDto Dto { get; set; }
     }
