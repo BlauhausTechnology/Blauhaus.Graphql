@@ -5,18 +5,17 @@ using Blauhaus.Common.Domain.CommandHandlers;
 using Blauhaus.Common.ValueObjects.Extensions;
 using Blauhaus.Graphql.StrawberryShake.Exceptions;
 using CSharpFunctionalExtensions;
-using StrawberryShake;
 
-namespace Blauhaus.Graphql.StrawberryShake.DtoCommandHandlers
+namespace Blauhaus.Graphql.StrawberryShake.MutationClientHandlers
 {
-    public class MutationClientHandler<TModelDto, TGraphqlResponse, TCommandDto, TCommand> : ICommandHandler<TModelDto, TCommandDto>
+    public class MutationClientHandler<TModelDto, TGraphqlResponse, TCommandDto, TCommand> : IMutationClientHandler<TModelDto, TCommandDto>
         where TModelDto : class 
         where TGraphqlResponse : class
     {
-        private readonly IGraphqlClient<TModelDto, TGraphqlResponse, TCommandDto, TCommand> _graphqlClient;
+        private readonly IMutationClient<TModelDto, TGraphqlResponse, TCommandDto, TCommand> _graphqlClient;
 
         public MutationClientHandler(
-            IGraphqlClient<TModelDto, TGraphqlResponse, TCommandDto, TCommand> graphqlClient)
+            IMutationClient<TModelDto, TGraphqlResponse, TCommandDto, TCommand> graphqlClient)
         {
             _graphqlClient = graphqlClient;
         }

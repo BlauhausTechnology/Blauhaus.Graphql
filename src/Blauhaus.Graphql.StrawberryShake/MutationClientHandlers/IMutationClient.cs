@@ -4,9 +4,9 @@ using Blauhaus.Common.Domain.CommandHandlers.Client;
 using CSharpFunctionalExtensions;
 using StrawberryShake;
 
-namespace Blauhaus.Graphql.StrawberryShake.DtoCommandHandlers
+namespace Blauhaus.Graphql.StrawberryShake.MutationClientHandlers
 {
-    public interface IGraphqlClient<TModelDto, TGraphqlResponse, TCommandDto, TCommand> : ICommandConverter<TCommandDto, TCommand>
+    public interface IMutationClient<TModelDto, TGraphqlResponse, TCommandDto, TCommand> : ICommandConverter<TCommandDto, TCommand>
         where TGraphqlResponse : class
     {
 

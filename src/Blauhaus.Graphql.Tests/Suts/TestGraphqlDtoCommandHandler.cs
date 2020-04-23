@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Blauhaus.Graphql.StrawberryShake.DtoCommandHandlers;
+using Blauhaus.Graphql.StrawberryShake.MutationClientHandlers;
 using Blauhaus.Graphql.Tests.TestObjects;
 using Blauhaus.TestHelpers.MockBuilders;
 using CSharpFunctionalExtensions;
@@ -11,7 +11,7 @@ namespace Blauhaus.Graphql.Tests.Suts
     public class TestGraphqlDtoCommandHandler : MutationClientHandler<TestModelDto, TestGraphqlResponse, TestCommandDto, TestCommand>
     {
         public TestGraphqlDtoCommandHandler(
-            IGraphqlClient<TestModelDto,  TestGraphqlResponse, TestCommandDto, TestCommand> graphqlClient) 
+            IMutationClient<TestModelDto,  TestGraphqlResponse, TestCommandDto, TestCommand> graphqlClient) 
                 : base(graphqlClient)
         {
         }
