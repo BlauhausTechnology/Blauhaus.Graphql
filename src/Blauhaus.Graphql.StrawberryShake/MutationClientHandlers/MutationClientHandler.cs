@@ -9,7 +9,7 @@ using CSharpFunctionalExtensions;
 
 namespace Blauhaus.Graphql.StrawberryShake.MutationClientHandlers
 {
-    public class MutationClientHandler<TModelDto, TMutationResult, TCommandDto, TCommand> : ICommandClientHandler<TModelDto, TCommandDto>
+    public class MutationClientHandler<TModelDto, TMutationResult, TCommandDto, TCommand> : ICommandHandler<TModelDto, TCommandDto>
         where TModelDto : class 
         where TMutationResult : class
     {

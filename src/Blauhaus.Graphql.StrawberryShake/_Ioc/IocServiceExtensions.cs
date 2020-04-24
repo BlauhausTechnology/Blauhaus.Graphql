@@ -1,4 +1,5 @@
-﻿using Blauhaus.Common.Domain.CommandHandlers.Client;
+﻿using Blauhaus.Common.Domain.CommandHandlers;
+using Blauhaus.Common.Domain.CommandHandlers.Client;
 using Blauhaus.Common.Domain.Entities;
 using Blauhaus.Graphql.StrawberryShake.MutationClientHandlers;
 using Blauhaus.Ioc.Abstractions;
@@ -15,8 +16,8 @@ namespace Blauhaus.Graphql.StrawberryShake._Ioc
             where TMutationClient : class, IMutationClient<TModelDto, TMutationResponse, TCommandDto, TCommand>
             where TModelDto : class
         {
-            services.RegisterImplementation<ICommandClientHandler<TModel, TCommand>, ClientEntityCommandHandler<TModel, TModelDto, TCommandDto, TCommand>>();
-            services.RegisterImplementation<ICommandClientHandler<TModelDto, TCommandDto>, MutationClientHandler<TModelDto, TMutationResponse, TCommandDto, TCommand>>();
+            services.RegisterImplementation<ICommandHandler<TModel, TCommand>, ClientEntityCommandHandler<TModel, TModelDto, TCommandDto, TCommand>>();
+            services.RegisterImplementation<ICommandHandler<TModelDto, TCommandDto>, MutationClientHandler<TModelDto, TMutationResponse, TCommandDto, TCommand>>();
             services.RegisterImplementation<IMutationClient<TModelDto, TMutationResponse, TCommandDto, TCommand>, TMutationClient>();
             services.RegisterImplementation<ICommandConverter<TCommandDto, TCommand>, TMutationClient>();
 
