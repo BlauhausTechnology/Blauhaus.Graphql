@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
-using Blauhaus.Auth.Abstractions.Builders;
-using Blauhaus.Auth.Abstractions.User;
 using Blauhaus.Common.Domain.CommandHandlers;
 using Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Void;
 using Blauhaus.Graphql.HotChocolate.TestHelpers.MockBuilders;
@@ -18,17 +15,17 @@ using Microsoft.Extensions.Primitives;
 using Moq;
 using NUnit.Framework;
 
-namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests.VoidAuthenticatedUserMutationServerHandlerTests
+namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
 {
-    public class HandleAsyncTests : BaseGraphqlTest<VoidAuthenticatedUserMutationServerHandler>
+    public class VoidMutationServerHandlerTests : BaseGraphqlTest<VoidMutationServerHandler>
     {
 
-        private MockBuilder<IVoidAuthenticatedCommandHandler<TestCommand, IAuthenticatedUser>> MockCommandHandler => AddMock<IVoidAuthenticatedCommandHandler<TestCommand, IAuthenticatedUser>>().Invoke();
+        private MockBuilder<IVoidCommandHandler<TestCommand>> MockCommandHandler => AddMock<IVoidCommandHandler<TestCommand>>().Invoke();
 
         public override void Setup()
         {
             base.Setup();
-            MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<IAuthenticatedUser>(), It.IsAny<CancellationToken>()))
+            MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Result.Success());
             MockResolverContext.With_Service(MockCommandHandler.Object);
             MockResolverContext.With_Command_Argument(new TestCommand
@@ -57,33 +54,6 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests.VoidAuthenticatedUserMu
             MockAnalyticsService.VerifyStartRequestOperationProperty(x => x["HeaderOne"] == "HeaderOneValue");
             MockAnalyticsService.VerifyStartRequestOperationProperty(x => x["HeaderTwo"] == "HeaderTwoValue");
         }
-        
-        [Test]
-        public async Task SHOULD_extract_claims_principal_and_get_user()
-        {
-            //Arrange
-            MockResolverContext.With_ContextData("ClaimsPrincipal", new ClaimsPrincipalBuilder()
-                .With_NameIdentifier("Fred").Build()); 
-
-            //Act
-            await Sut.HandleAsync<TestCommand>(MockResolverContext.Object, CancellationToken.None);
-
-            //Assert
-            MockAzureAuthenticationServerService.Mock.Verify(x => x.ExtractUserFromClaimsPrincipal(It.Is<ClaimsPrincipal>(y => 
-                y.HasClaim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", "Fred"))));
-        }
-
-        [Test]
-        public async Task IF_ClaimsPrincipal_is_not_authenticated_SHOULD_return_error()
-        {
-            //Arrange
-            MockResolverContext.With_ContextData("ClaimsPrincipal", new ClaimsPrincipalBuilder()
-                .WithIsAuthenticatedFalse().Build()); 
-
-            //Act
-            Assert.ThrowsAsync<UnauthorizedAccessException>(async () => 
-                await Sut.HandleAsync<TestCommand>(MockResolverContext.Object, CancellationToken.None));
-        }
 
         [Test]
         public async Task SHOULD_extract_command_and_invoke_on_handler()
@@ -92,7 +62,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests.VoidAuthenticatedUserMu
             await Sut.HandleAsync<TestCommand>(MockResolverContext.Object, CancellationToken.None);
 
             //Assert
-            MockCommandHandler.Mock.Verify(x => x.HandleAsync(It.Is<TestCommand>(y => y.Name == "Piet"),It.IsAny<IAuthenticatedUser>(), It.IsAny<CancellationToken>()));
+            MockCommandHandler.Mock.Verify(x => x.HandleAsync(It.Is<TestCommand>(y => y.Name == "Piet"), It.IsAny<CancellationToken>()));
         }
 
         [Test]
@@ -110,7 +80,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests.VoidAuthenticatedUserMu
         public async Task IF_command_handler_cannot_be_found_SHOULD_throw()
         {
             //Arrange
-            MockResolverContext.With_Service<IVoidAuthenticatedCommandHandler<TestCommand, IAuthenticatedUser>>(null);
+            MockResolverContext.With_Service<IVoidCommandHandler<TestCommand>>(null);
 
             //Act
             Assert.ThrowsAsync<ArgumentException>(async () => 
@@ -132,7 +102,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests.VoidAuthenticatedUserMu
         public async Task IF_command_handler_fails_SHOULD_report_error()
         {
             //Arrange
-            MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<IAuthenticatedUser>(),It.IsAny<CancellationToken>()))
+            MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Result.Failure("Oops"));
 
             //Act
@@ -148,7 +118,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests.VoidAuthenticatedUserMu
         public async Task IF_command_handler_throws_SHOULD_log_exception_and_rethrow()
         {
             //Arrange
-            MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<IAuthenticatedUser>(),It.IsAny<CancellationToken>()))
+            MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<CancellationToken>()))
                 .ThrowsAsync(new Exception("Oops"));
 
             //Act
