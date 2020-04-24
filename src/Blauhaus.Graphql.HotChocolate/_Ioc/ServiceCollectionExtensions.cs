@@ -20,10 +20,5 @@ namespace Blauhaus.Graphql.HotChocolate._Ioc
             return services;
         } 
 
-        public static IServiceCollection AddVoidMutationServerHandler<TCommand>(this IServiceCollection services)
-        {
-            services.TryAddScoped<IVoidMutationServerHandler, VoidMutationServerHandler>();
-            return services;
-        } 
     }
 }
