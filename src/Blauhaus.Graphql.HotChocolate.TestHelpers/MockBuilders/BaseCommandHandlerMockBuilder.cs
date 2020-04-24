@@ -4,7 +4,6 @@ using System.Threading;
 using Blauhaus.Auth.Abstractions.CommandHandler;
 using Blauhaus.Auth.Abstractions.User;
 using Blauhaus.Common.Domain.CommandHandlers;
-using Blauhaus.Common.Domain.CommandHandlers.Server;
 using Blauhaus.Common.ValueObjects.Errors;
 using Blauhaus.TestHelpers.MockBuilders;
 using CSharpFunctionalExtensions;
@@ -13,7 +12,7 @@ using Moq;
 namespace Blauhaus.Graphql.HotChocolate.TestHelpers.MockBuilders
 {
     public abstract class BaseAuthenticatedCommandHandlerMockBuilder<TBuilder, TMock, TPayload, TCommand, TUser> : BaseMockBuilder<TBuilder, TMock>
-        where TMock : class, ICommandServerHandler<TPayload, TCommand, TUser>
+        where TMock : class, IAuthenticatedCommandHandler<TPayload, TCommand, TUser>
         where TBuilder : BaseAuthenticatedCommandHandlerMockBuilder<TBuilder, TMock, TPayload, TCommand, TUser> 
     {
         public TBuilder Where_HandleAsync_returns(Result<TPayload> value)

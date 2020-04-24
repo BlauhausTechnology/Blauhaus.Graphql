@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using Blauhaus.Analytics.Abstractions.Service;
-using Blauhaus.Auth.Abstractions.CommandHandler;
-using Blauhaus.Auth.Abstractions.Services;
 using Blauhaus.Common.Domain.CommandHandlers;
-using Blauhaus.Common.Domain.CommandHandlers.Server;
 using HotChocolate;
 using HotChocolate.Resolvers;
 using Microsoft.AspNetCore.Http;
@@ -51,7 +47,7 @@ namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base
                         throw new ArgumentException("Unable to extract command from resolver context");
                     }
 
-                    var commandHandler = context.Service<ICommandServerHandler<TPayload, TCommand, TUser>>();
+                    var commandHandler = context.Service<IAuthenticatedCommandHandler<TPayload, TCommand, TUser>>();
                     if (commandHandler == null)
                     {
                         throw new ArgumentException("No command handler found for command");
