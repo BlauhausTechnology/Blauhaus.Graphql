@@ -11,13 +11,21 @@ namespace Blauhaus.Graphql.HotChocolate.Extensions
             where TPayloadType : ObjectType<TPayload>
         {
             descriptor.Field(name)
-                .Authorize()
                 .Argument("command", d => d.Type<TInputType>())
                 .Type<TPayloadType>()
                 .Resolver((context, token) => context.Service<IMutationServerHandler>()
                     .HandleAsync<TPayload, TCommand>(context, token));
 
             return descriptor;
+        }
+
+        public static IObjectTypeDescriptor AddAuthorizedMutation<TPayload, TPayloadType, TInputType, TCommand>(this IObjectTypeDescriptor descriptor, string name)
+            where TInputType : InputObjectType<TCommand>
+            where TPayloadType : ObjectType<TPayload>
+        {
+
+            return descriptor.AddMutation<TPayload, TPayloadType, TInputType, TCommand>(name)
+                .Authorize();
         }
     }
 }

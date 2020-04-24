@@ -4,7 +4,7 @@ using StrawberryShake;
 
 namespace Blauhaus.Graphql.Tests.TestObjects
 {
-    public class TestCommandInput  
+    public class TestCommandDto  
     {
        
 

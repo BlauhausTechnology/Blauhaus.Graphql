@@ -1,6 +1,6 @@
 ﻿namespace Blauhaus.Graphql.Tests.TestObjects
 {
-    public class TestServerCommand
+    public class TestCommand
     {
         public string Name { get; set; }
     }
