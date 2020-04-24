@@ -7,9 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blauhaus.Analytics.Abstractions" Version="0.7.14" />
-    <PackageReference Include="Blauhaus.Common.ValueObjects" Version="1.0.20" />
-    <PackageReference Include="CSharpFunctionalExtensions" Version="2.7.0" />
+    <PackageReference Include="Blauhaus.Analytics.Abstractions" Version="0.7.16" />
+    <PackageReference Include="Blauhaus.Common.Domain" Version="1.1.4" />
+    <PackageReference Include="Blauhaus.Common.ValueObjects" Version="1.1.4" />
+    <PackageReference Include="Blauhaus.Ioc.Abstractions" Version="0.7.1" />
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.7.1" />
     <PackageReference Include="StrawberryShake" Version="11.0.0-preview.127" />
   </ItemGroup>
 
