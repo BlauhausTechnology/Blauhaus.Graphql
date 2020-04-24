@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Blauhaus.Common.Domain.CommandHandlers;
 using Blauhaus.Common.Domain.CommandHandlers.Client;
 using CSharpFunctionalExtensions;
 using StrawberryShake;

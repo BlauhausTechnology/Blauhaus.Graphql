@@ -8,7 +8,7 @@ namespace Blauhaus.Graphql.StrawberryShake._Ioc
 {
     public static class IocServiceExtensions
     {
-        public static IIocService AddClientEntityCommandHandler<
+        public static IIocService AddEntityCommandClientHandler<
             TModel, TModelDto, TMutationResponse, TCommandDto, TCommand, TMutationClient> 
                 (this IIocService services) 
             where TModel : class, IClientEntity 
@@ -16,7 +16,7 @@ namespace Blauhaus.Graphql.StrawberryShake._Ioc
             where TMutationClient : class, IMutationClient<TModelDto, TMutationResponse, TCommandDto, TCommand>
             where TModelDto : class
         {
-            services.RegisterImplementation<ICommandHandler<TModel, TCommand>, ClientEntityCommandHandler<TModel, TModelDto, TCommandDto, TCommand>>();
+            services.RegisterImplementation<ICommandHandler<TModel, TCommand>, EntityCommandClientHandler<TModel, TModelDto, TCommandDto, TCommand>>();
             services.RegisterImplementation<ICommandHandler<TModelDto, TCommandDto>, MutationClientHandler<TModelDto, TMutationResponse, TCommandDto, TCommand>>();
             services.RegisterImplementation<IMutationClient<TModelDto, TMutationResponse, TCommandDto, TCommand>, TMutationClient>();
             services.RegisterImplementation<ICommandConverter<TCommandDto, TCommand>, TMutationClient>();

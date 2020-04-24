@@ -4,24 +4,25 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Blauhaus.Analytics.Abstractions.Service;
-using Blauhaus.Common.Domain.CommandHandlers;
+using Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Payload._Base;
+using CSharpFunctionalExtensions;
 using HotChocolate;
 using HotChocolate.Resolvers;
 using Microsoft.AspNetCore.Http;
 
-namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base
+namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Void._Base
 {
-    public abstract class BaseMutationServerHandler<TUser> : IMutationServerHandler
+    public abstract class BaseVoidMutationServerHandler : IVoidMutationServerHandler
     {
         protected readonly IAnalyticsService AnalyticsService;
 
-        protected BaseMutationServerHandler(
+        protected BaseVoidMutationServerHandler(
             IAnalyticsService analyticsService)
         {
             AnalyticsService = analyticsService;
         }
 
-        public async Task<TPayload> HandleAsync<TPayload, TCommand>(IResolverContext context, CancellationToken token)
+        public async Task<bool> HandleAsync<TCommand>(IResolverContext context, CancellationToken token)
         {
             try
             {
@@ -35,25 +36,13 @@ namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base
 
                 using (var _ = AnalyticsService.StartRequestOperation(this, typeof(TCommand).Name, headers))
                 {
-
-                    if (!TryExtractUser(context, out var authenticatedUser))
-                    {
-                        throw new UnauthorizedAccessException();
-                    };
-
                     var command = context.Argument<TCommand>("command");
                     if (command == null)
                     {
                         throw new ArgumentException("Unable to extract command from resolver context");
                     }
 
-                    var commandHandler = context.Service<IAuthenticatedCommandHandler<TPayload, TCommand, TUser>>();
-                    if (commandHandler == null)
-                    {
-                        throw new ArgumentException("No command handler found for command");
-                    }
-
-                    var commandResult = await commandHandler.HandleAsync(command, authenticatedUser, token);
+                    var commandResult = await HandleCommandAsync<TCommand>(context, command, token);
                     if (commandResult.IsFailure)
                     {
                         
@@ -73,6 +62,7 @@ namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base
             }
         }
 
-        protected abstract bool TryExtractUser(IResolverContext resolverContext, out TUser user);
+        protected abstract Task<Result<bool>> HandleCommandAsync<TCommand>(IResolverContext context, TCommand command, CancellationToken token);
+
     }
 }

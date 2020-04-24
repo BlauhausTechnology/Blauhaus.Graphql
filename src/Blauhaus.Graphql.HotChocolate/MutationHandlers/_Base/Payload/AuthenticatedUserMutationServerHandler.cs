@@ -1,23 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Authentication;
-using System.Security.Claims;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Security.Claims;
 using Blauhaus.Analytics.Abstractions.Service;
-using Blauhaus.Auth.Abstractions.CommandHandler;
 using Blauhaus.Auth.Abstractions.Services;
 using Blauhaus.Auth.Abstractions.User;
-using Blauhaus.Graphql.HotChocolate.MutationHandlers._Base;
-using CSharpFunctionalExtensions;
-using HotChocolate;
+using Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Payload._Base;
 using HotChocolate.Resolvers;
-using Microsoft.AspNetCore.Http;
 
-namespace Blauhaus.Graphql.HotChocolate.MutationHandlers
+namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Payload
 {
-    public class AuthenticatedUserMutationServerHandler : BaseMutationServerHandler<IAuthenticatedUser>
+    public class AuthenticatedUserMutationServerHandler : BaseAuthenticatedMutationServerHandler<IAuthenticatedUser>
     {
         private readonly IAzureAuthenticationServerService _authenticationServerService;
 
