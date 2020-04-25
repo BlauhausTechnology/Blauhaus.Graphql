@@ -8,8 +8,9 @@
 
   <ItemGroup>
     <PackageReference Include="Blauhaus.Analytics.Abstractions" Version="0.7.16" />
-    <PackageReference Include="Blauhaus.Auth.Abstractions" Version="0.8.10" />
-    <PackageReference Include="Blauhaus.Common.Domain" Version="1.2.0" />
+    <PackageReference Include="Blauhaus.Auth.Abstractions" Version="0.8.11" />
+    <PackageReference Include="Blauhaus.Common.Domain" Version="1.2.2" />
+    <PackageReference Include="Blauhaus.Common.Results" Version="1.2.2" />
     <PackageReference Include="HotChocolate" Version="11.0.0-preview.127" />
     <PackageReference Include="HotChocolate.AspNetCore" Version="11.0.0-preview.127" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />

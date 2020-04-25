@@ -2,8 +2,11 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Blauhaus.Analytics.Abstractions.Service;
+using Blauhaus.Auth.Abstractions.Errors;
 using Blauhaus.Common.Domain.CommandHandlers;
+using Blauhaus.Common.Results;
 using CSharpFunctionalExtensions;
+using HotChocolate;
 using HotChocolate.Resolvers;
 
 namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Void._Base
@@ -18,7 +21,8 @@ namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Void._Base
         {
             if (!TryExtractUser(context, out var authenticatedUser))
             {
-                throw new UnauthorizedAccessException();
+                context.ReportError(new ErrorBuilder().SetMessage(AuthErrors.NotAuthenticated.ToString()).Build());
+                return AnalyticsService.TraceErrorResult<bool>(this, AuthErrors.NotAuthenticated);
             };
 
             var commandHandler = context.Service<IVoidAuthenticatedCommandHandler<TCommand, TUser>>();

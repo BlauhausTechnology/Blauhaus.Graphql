@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Blauhaus.Analytics.Abstractions.Extensions;
 using Blauhaus.Analytics.Abstractions.Service;
+using Blauhaus.Auth.Abstractions.Errors;
+using Blauhaus.Common.Results;
 using Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Payload._Base;
 using CSharpFunctionalExtensions;
 using HotChocolate;
@@ -54,6 +57,12 @@ namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Void._Base
 
 
                 }
+            }
+            catch (UnauthorizedAccessException)
+            {
+                context.ReportError(new ErrorBuilder().SetMessage(AuthErrors.NotAuthorized.ToString()).Build());
+                AnalyticsService.TraceError(this, AuthErrors.NotAuthorized);
+                return false;
             }
             catch (Exception e)
             {

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
+using Blauhaus.Analytics.Abstractions.Service;
 using Blauhaus.Auth.Abstractions.Builders;
+using Blauhaus.Auth.Abstractions.Errors;
 using Blauhaus.Auth.Abstractions.User;
 using Blauhaus.Common.Domain.CommandHandlers;
 using Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Void;
@@ -36,7 +38,6 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
                 Name = "Piet"
             }); 
         }
-
 
         [Test]
         public async Task SHOULD_extract_headers_and_start_request_operation()
@@ -81,8 +82,43 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
                 .WithIsAuthenticatedFalse().Build()); 
 
             //Act
-            Assert.ThrowsAsync<UnauthorizedAccessException>(async () => 
-                await Sut.HandleAsync<TestCommand>(MockResolverContext.Object, CancellationToken.None));
+            var result = await Sut.HandleAsync<TestCommand>(MockResolverContext.Object, CancellationToken.None);
+
+            //Assert
+            Assert.IsFalse(result);
+            MockResolverContext.Mock.Verify(x => x.ReportError(It.Is<IError>(y => y.Message == AuthErrors.NotAuthenticated.ToString())));
+            MockAnalyticsService.VerifyTrace(AuthErrors.NotAuthenticated.Code, LogSeverity.Error);
+        }
+
+        [Test]
+        public async Task IF_ClaimsPrincipal_is_bogus_return_error()
+        {
+            //Arrange
+            MockResolverContext.With_ContextData("ClaimsPrincipal", null); 
+
+            //Act
+            var result = await Sut.HandleAsync<TestCommand>(MockResolverContext.Object, CancellationToken.None);
+
+            //Assert
+            Assert.IsFalse(result);
+            MockResolverContext.Mock.Verify(x => x.ReportError(It.Is<IError>(y => y.Message == AuthErrors.NotAuthenticated.ToString())));
+            MockAnalyticsService.VerifyTrace(AuthErrors.NotAuthenticated.Code, LogSeverity.Error);
+        }
+        
+        [Test]
+        public async Task IF_command_handler_throws_UnauthorizedAccessException_SHOULD_log_exception_and_report_error()
+        {
+            //Arrange
+            MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<IAuthenticatedUser>(), It.IsAny<CancellationToken>()))
+                .ThrowsAsync(new UnauthorizedAccessException());
+
+            //Act
+            var result = await Sut.HandleAsync<TestCommand>(MockResolverContext.Object, CancellationToken.None);
+
+            //Asserrt
+            Assert.IsFalse(result);
+            MockResolverContext.Mock.Verify(x => x.ReportError(It.Is<IError>(y => y.Message == AuthErrors.NotAuthorized.ToString())));
+            MockAnalyticsService.VerifyTrace(AuthErrors.NotAuthorized.Code, LogSeverity.Error);
         }
 
         [Test]

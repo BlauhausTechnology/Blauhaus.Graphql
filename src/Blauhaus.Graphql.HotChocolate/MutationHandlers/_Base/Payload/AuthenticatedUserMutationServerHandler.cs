@@ -23,7 +23,7 @@ namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Payload
         protected override bool TryExtractUser(IResolverContext resolverContext, out IAuthenticatedUser user)
         {
             if (!resolverContext.ContextData.TryGetValue(nameof(ClaimsPrincipal), out var claimsPrincipal) ||
-                !((ClaimsPrincipal) claimsPrincipal).Identity.IsAuthenticated)
+                claimsPrincipal == null || !((ClaimsPrincipal) claimsPrincipal).Identity.IsAuthenticated)
             {
                 user = null;
                 return false;
