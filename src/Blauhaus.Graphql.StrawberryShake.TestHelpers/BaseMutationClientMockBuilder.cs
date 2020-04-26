@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using Blauhaus.Graphql.StrawberryShake.MutationClientHandlers;
+using Blauhaus.Graphql.StrawberryShake.MutationClientHandlers.Payload;
 using Blauhaus.TestHelpers.MockBuilders;
 using Moq;
 using StrawberryShake;

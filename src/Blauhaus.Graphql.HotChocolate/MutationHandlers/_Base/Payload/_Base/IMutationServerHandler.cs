@@ -1,8 +1,8 @@
-﻿using HotChocolate.Resolvers;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using HotChocolate.Resolvers;
 
-namespace Blauhaus.Graphql.HotChocolate.MutationHandlers
+namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Payload._Base
 {
     public interface IMutationServerHandler
     {

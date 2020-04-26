@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Blauhaus.Graphql.StrawberryShake.Exceptions;
 using Blauhaus.Graphql.StrawberryShake.MutationClientHandlers;
 using Blauhaus.Graphql.StrawberryShake.MutationClientHandlers.Payload;
+using Blauhaus.Graphql.StrawberryShake.MutationClientHandlers.Void;
 using Blauhaus.Graphql.StrawberryShake.TestHelpers;
 using Blauhaus.Graphql.Tests.TestObjects;
 using Blauhaus.TestHelpers.BaseTests;
@@ -14,15 +15,14 @@ using Error = Blauhaus.Common.ValueObjects.Errors.Error;
 
 namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests
 {
-    public class MutationClientHandlerTests : BaseServiceTest<MutationClientHandler<TestModelDto, TestGraphqlResponse, TestCommandDto, TestCommand>>
+    public class VoidMutationClientHandlerTests : BaseServiceTest<VoidMutationClientHandler<TestGraphqlResponse, TestCommandDto, TestCommand>>
     {
         private TestCommandDto _commandDto;
         private IOperationResult<TestGraphqlResponse> _operationResult;
-        private TestModelDto _dto;
 
 
-        private MockBuilder<IMutationClient<TestModelDto, TestGraphqlResponse, TestCommandDto, TestCommand>> MockGraphqlClient 
-            => AddMock<IMutationClient<TestModelDto, TestGraphqlResponse, TestCommandDto, TestCommand>>().Invoke();
+        private MockBuilder<IVoidMutationClient<TestGraphqlResponse, TestCommandDto, TestCommand>> MockGraphqlClient 
+            => AddMock<IVoidMutationClient<TestGraphqlResponse, TestCommandDto, TestCommand>>().Invoke();
 
         [SetUp]
         public void Setup()
@@ -30,28 +30,22 @@ namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests
             Cleanup();
 
             _commandDto = new TestCommandDto{Name = "Command"};
-            _dto = new TestModelDto{Name = "Dto"};
             _operationResult = new OperationResultMockBuilder<TestGraphqlResponse>()
-                .With(x => x.Data, new TestGraphqlResponse
-                {
-                    Dto = _dto
-                }).Object;
+                .With(x => x.Data, new TestGraphqlResponse()).Object;
 
-            MockGraphqlClient.Mock.Setup(x => x.GetDtoFromResult(_operationResult)).Returns(_dto);
             MockGraphqlClient.Mock.Setup(x => x.GetResultAsync(_commandDto, CancellationToken)).ReturnsAsync(_operationResult);
 
             AddService(x => MockGraphqlClient.Object);
         }
 
         [Test]
-        public async Task IF_Mutation_executes_successfully_SHOULD_convert_result_to_dto_and_returns()
+        public async Task IF_Mutation_executes_successfully_SHOULD_return_success()
         {
             //Act
             var result = await Sut.HandleAsync(_commandDto, CancellationToken);
 
             //Assert
             Assert.IsTrue(result.IsSuccess);
-            Assert.AreEqual(_dto, result.Value);
         }
 
         [Test]

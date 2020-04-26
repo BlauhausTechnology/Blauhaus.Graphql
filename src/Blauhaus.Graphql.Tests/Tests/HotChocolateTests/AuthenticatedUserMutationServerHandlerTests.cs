@@ -3,35 +3,34 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
+using Blauhaus.Analytics.Abstractions.Service;
 using Blauhaus.Auth.Abstractions.Builders;
-using Blauhaus.Auth.Abstractions.CommandHandler;
+using Blauhaus.Auth.Abstractions.Errors;
 using Blauhaus.Auth.Abstractions.User;
 using Blauhaus.Common.Domain.CommandHandlers;
-using Blauhaus.Common.Domain.CommandHandlers.Server;
-using Blauhaus.Graphql.HotChocolate.MutationHandlers;
+using Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Payload;
 using Blauhaus.Graphql.HotChocolate.TestHelpers.MockBuilders;
 using Blauhaus.Graphql.Tests.MockBuilders;
 using Blauhaus.Graphql.Tests.TestObjects;
 using Blauhaus.Graphql.Tests.Tests._Base;
 using HotChocolate;
-using HotChocolate.Resolvers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 using Moq;
 using NUnit.Framework;
 
-namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests.AuthenticatedUserMutationServerHandlerTests
+namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
 {
-    public class HandleAsyncTests : BaseGraphqlTest<AuthenticatedUserMutationServerHandler>
+    public class AuthenticatedUserMutationServerHandlerTests : BaseGraphqlTest<AuthenticatedUserMutationServerHandler>
     {
 
-        private TestCommandHandlerMockBuilder _mockTestCommandHandler;
+        private TestAuthenticatedUserCommandHandlerMockBuilder _mockTestCommandHandler;
 
         public override void Setup()
         {
             base.Setup();
-            _mockTestCommandHandler = new TestCommandHandlerMockBuilder()
+            _mockTestCommandHandler = new TestAuthenticatedUserCommandHandlerMockBuilder()
                 .Where_HandleAsync_returns(new TestServerPayload{Name = "Freddie"});
             MockResolverContext.With_Service(_mockTestCommandHandler.Object);
             MockResolverContext.With_Command_Argument(new TestCommand
@@ -85,8 +84,43 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests.AuthenticatedUserMutati
                 .WithIsAuthenticatedFalse().Build()); 
 
             //Act
-            Assert.ThrowsAsync<UnauthorizedAccessException>(async () => 
-                await Sut.HandleAsync<TestServerPayload, TestCommand>(MockResolverContext.Object, CancellationToken.None));
+            var result = await Sut.HandleAsync<TestServerPayload, TestCommand>(MockResolverContext.Object, CancellationToken.None);
+
+            //Assert
+            Assert.IsNull(result);
+            MockResolverContext.Mock.Verify(x => x.ReportError(It.Is<IError>(y => y.Message == AuthErrors.NotAuthenticated.ToString())));
+            MockAnalyticsService.VerifyTrace(AuthErrors.NotAuthenticated.Code, LogSeverity.Error);
+        }
+
+        [Test]
+        public async Task IF_ClaimsPrincipal_is_bogus_return_error()
+        {
+            //Arrange
+            MockResolverContext.With_ContextData("ClaimsPrincipal", null); 
+
+            //Act
+            var result = await Sut.HandleAsync<TestServerPayload, TestCommand>(MockResolverContext.Object, CancellationToken.None);
+
+            //Assert
+            Assert.IsNull(result);
+            MockResolverContext.Mock.Verify(x => x.ReportError(It.Is<IError>(y => y.Message == AuthErrors.NotAuthenticated.ToString())));
+            MockAnalyticsService.VerifyTrace(AuthErrors.NotAuthenticated.Code, LogSeverity.Error);
+        }
+        
+        [Test]
+        public async Task IF_command_handler_throws_UnauthorizedAccessException_SHOULD_log_exception_and_report_error()
+        {
+            //Arrange
+            _mockTestCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<IAuthenticatedUser>(), It.IsAny<CancellationToken>()))
+                .ThrowsAsync(new UnauthorizedAccessException());
+
+            //Act
+            var result = await Sut.HandleAsync<TestServerPayload, TestCommand>(MockResolverContext.Object, CancellationToken.None);
+
+            //Asserrt
+            Assert.IsNull(result);
+            MockResolverContext.Mock.Verify(x => x.ReportError(It.Is<IError>(y => y.Message == AuthErrors.NotAuthorized.ToString())));
+            MockAnalyticsService.VerifyTrace(AuthErrors.NotAuthorized.Code, LogSeverity.Error);
         }
 
         [Test]
@@ -114,7 +148,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests.AuthenticatedUserMutati
         public async Task IF_command_handler_cannot_be_found_SHOULD_throw()
         {
             //Arrange
-            MockResolverContext.With_Service<ICommandServerHandler<TestServerPayload, TestCommand, IAuthenticatedUser>>(null);;
+            MockResolverContext.With_Service<IAuthenticatedCommandHandler<TestServerPayload, TestCommand, IAuthenticatedUser>>(null);;
 
             //Act
             Assert.ThrowsAsync<ArgumentException>(async () => 

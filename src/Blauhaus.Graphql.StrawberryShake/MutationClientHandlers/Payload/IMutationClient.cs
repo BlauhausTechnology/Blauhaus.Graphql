@@ -1,10 +1,9 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Blauhaus.Common.Domain.CommandHandlers.Client;
-using CSharpFunctionalExtensions;
+using Blauhaus.Common.Domain.CommandHandlers;
 using StrawberryShake;
 
-namespace Blauhaus.Graphql.StrawberryShake.MutationClientHandlers
+namespace Blauhaus.Graphql.StrawberryShake.MutationClientHandlers.Payload
 {
     public interface IMutationClient<TModelDto, TMutationResponse, TCommandDto, TCommand> : ICommandConverter<TCommandDto, TCommand>
         where TModelDto : class

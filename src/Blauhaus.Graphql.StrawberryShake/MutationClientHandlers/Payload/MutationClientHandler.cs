@@ -2,26 +2,25 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Blauhaus.Common.Domain.CommandHandlers;
-using Blauhaus.Common.Domain.CommandHandlers.Client;
 using Blauhaus.Common.ValueObjects.Extensions;
 using Blauhaus.Graphql.StrawberryShake.Exceptions;
 using CSharpFunctionalExtensions;
 
-namespace Blauhaus.Graphql.StrawberryShake.MutationClientHandlers
+namespace Blauhaus.Graphql.StrawberryShake.MutationClientHandlers.Payload
 {
-    public class MutationClientHandler<TModelDto, TMutationResult, TCommandDto, TCommand> : ICommandClientHandler<TModelDto, TCommandDto>
-        where TModelDto : class 
+    public class MutationClientHandler<TResultDto, TMutationResult, TCommandDto, TCommand> : ICommandHandler<TResultDto, TCommandDto>
+        where TResultDto : class 
         where TMutationResult : class
     {
-        private readonly IMutationClient<TModelDto, TMutationResult, TCommandDto, TCommand> _graphqlClient;
+        private readonly IMutationClient<TResultDto, TMutationResult, TCommandDto, TCommand> _graphqlClient;
 
         public MutationClientHandler(
-            IMutationClient<TModelDto, TMutationResult, TCommandDto, TCommand> graphqlClient)
+            IMutationClient<TResultDto, TMutationResult, TCommandDto, TCommand> graphqlClient)
         {
             _graphqlClient = graphqlClient;
         }
 
-        public async Task<Result<TModelDto>> HandleAsync(TCommandDto commandInput, CancellationToken token)
+        public async Task<Result<TResultDto>> HandleAsync(TCommandDto commandInput, CancellationToken token)
         {
             var result = await _graphqlClient.GetResultAsync(commandInput, token);
             var error = result.Errors.FirstOrDefault();
@@ -34,7 +33,7 @@ namespace Blauhaus.Graphql.StrawberryShake.MutationClientHandlers
             {
                 if (error.Message.IsError())
                 {
-                    return Result.Failure<TModelDto>(error.Message);
+                    return Result.Failure<TResultDto>(error.Message);
                 }
                 throw new GraphqlException(error);
             }
