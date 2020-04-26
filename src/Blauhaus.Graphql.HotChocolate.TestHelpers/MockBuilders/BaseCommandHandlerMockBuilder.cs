@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Threading;
-using Blauhaus.Auth.Abstractions.CommandHandler;
 using Blauhaus.Auth.Abstractions.User;
 using Blauhaus.Common.Domain.CommandHandlers;
 using Blauhaus.Common.ValueObjects.Errors;

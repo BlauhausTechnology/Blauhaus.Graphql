@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Blauhaus.Analytics.Abstractions.Extensions;
 using Blauhaus.Analytics.Abstractions.Service;
-using Blauhaus.Common.Domain.CommandHandlers;
+using Blauhaus.Auth.Abstractions.Errors;
+using CSharpFunctionalExtensions;
 using HotChocolate;
 using HotChocolate.Resolvers;
 using Microsoft.AspNetCore.Http;
 
-namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base
+namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Payload._Base
 {
-    public abstract class BaseMutationServerHandler<TUser> : IMutationServerHandler
+    public abstract class BaseMutationServerHandler : IMutationServerHandler
     {
         protected readonly IAnalyticsService AnalyticsService;
 
@@ -35,25 +37,13 @@ namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base
 
                 using (var _ = AnalyticsService.StartRequestOperation(this, typeof(TCommand).Name, headers))
                 {
-
-                    if (!TryExtractUser(context, out var authenticatedUser))
-                    {
-                        throw new UnauthorizedAccessException();
-                    };
-
                     var command = context.Argument<TCommand>("command");
                     if (command == null)
                     {
                         throw new ArgumentException("Unable to extract command from resolver context");
                     }
 
-                    var commandHandler = context.Service<IAuthenticatedCommandHandler<TPayload, TCommand, TUser>>();
-                    if (commandHandler == null)
-                    {
-                        throw new ArgumentException("No command handler found for command");
-                    }
-
-                    var commandResult = await commandHandler.HandleAsync(command, authenticatedUser, token);
+                    var commandResult = await HandleCommandAsync<TPayload, TCommand>(context, command, token);
                     if (commandResult.IsFailure)
                     {
                         
@@ -62,9 +52,13 @@ namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base
                     }
                     
                     return commandResult.Value;
-
-
                 }
+            }
+            catch (UnauthorizedAccessException)
+            {
+                context.ReportError(new ErrorBuilder().SetMessage(AuthErrors.NotAuthorized.ToString()).Build());
+                AnalyticsService.TraceError(this, AuthErrors.NotAuthorized);
+                return default;
             }
             catch (Exception e)
             {
@@ -73,6 +67,7 @@ namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base
             }
         }
 
-        protected abstract bool TryExtractUser(IResolverContext resolverContext, out TUser user);
+        protected abstract Task<Result<TPayload>> HandleCommandAsync<TPayload, TCommand>(IResolverContext context, TCommand command, CancellationToken token);
+
     }
 }
