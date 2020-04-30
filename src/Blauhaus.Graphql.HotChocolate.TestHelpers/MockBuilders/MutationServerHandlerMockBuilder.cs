@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Threading;
-using Blauhaus.Graphql.HotChocolate.MutationHandlers;
-using Blauhaus.Graphql.HotChocolate.MutationHandlers._Base;
-using Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Payload._Base;
+using Blauhaus.Graphql.HotChocolate.MutationHandlers.Payload._Base;
 using Blauhaus.TestHelpers.MockBuilders;
 using HotChocolate.Resolvers;
 using Moq;

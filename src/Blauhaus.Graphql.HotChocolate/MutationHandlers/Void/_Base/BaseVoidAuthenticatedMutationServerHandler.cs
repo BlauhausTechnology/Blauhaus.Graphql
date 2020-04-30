@@ -9,7 +9,7 @@ using CSharpFunctionalExtensions;
 using HotChocolate;
 using HotChocolate.Resolvers;
 
-namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Void._Base
+namespace Blauhaus.Graphql.HotChocolate.MutationHandlers.Void._Base
 {
     public abstract class BaseVoidAuthenticatedMutationServerHandler<TUser> : BaseVoidMutationServerHandler
     {

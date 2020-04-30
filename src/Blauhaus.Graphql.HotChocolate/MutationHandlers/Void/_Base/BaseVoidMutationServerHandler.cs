@@ -11,19 +11,19 @@ using HotChocolate;
 using HotChocolate.Resolvers;
 using Microsoft.AspNetCore.Http;
 
-namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Payload._Base
+namespace Blauhaus.Graphql.HotChocolate.MutationHandlers.Void._Base
 {
-    public abstract class BaseMutationServerHandler : IMutationServerHandler
+    public abstract class BaseVoidMutationServerHandler : IVoidMutationServerHandler
     {
         protected readonly IAnalyticsService AnalyticsService;
 
-        protected BaseMutationServerHandler(
+        protected BaseVoidMutationServerHandler(
             IAnalyticsService analyticsService)
         {
             AnalyticsService = analyticsService;
         }
 
-        public async Task<TPayload> HandleAsync<TPayload, TCommand>(IResolverContext context, CancellationToken token)
+        public async Task<bool> HandleAsync<TCommand>(IResolverContext context, CancellationToken token)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Payload._Base
                         throw new ArgumentException("Unable to extract command from resolver context");
                     }
 
-                    var commandResult = await HandleCommandAsync<TPayload, TCommand>(context, command, token);
+                    var commandResult = await HandleCommandAsync<TCommand>(context, command, token);
                     if (commandResult.IsFailure)
                     {
                         
@@ -52,13 +52,15 @@ namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Payload._Base
                     }
                     
                     return commandResult.Value;
+
+
                 }
             }
             catch (UnauthorizedAccessException)
             {
                 context.ReportError(new ErrorBuilder().SetMessage(AuthErrors.NotAuthorized.ToString()).Build());
                 AnalyticsService.TraceError(this, AuthErrors.NotAuthorized);
-                return default;
+                return false;
             }
             catch (Exception e)
             {
@@ -67,7 +69,7 @@ namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Payload._Base
             }
         }
 
-        protected abstract Task<Result<TPayload>> HandleCommandAsync<TPayload, TCommand>(IResolverContext context, TCommand command, CancellationToken token);
+        protected abstract Task<Result<bool>> HandleCommandAsync<TCommand>(IResolverContext context, TCommand command, CancellationToken token);
 
     }
 }

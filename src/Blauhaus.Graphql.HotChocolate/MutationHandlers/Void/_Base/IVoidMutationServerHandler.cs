@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using HotChocolate.Resolvers;
 
-namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Void._Base
+namespace Blauhaus.Graphql.HotChocolate.MutationHandlers.Void._Base
 {
     public interface IVoidMutationServerHandler
     {
