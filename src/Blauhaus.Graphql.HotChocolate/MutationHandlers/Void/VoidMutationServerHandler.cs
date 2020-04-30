@@ -3,12 +3,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using Blauhaus.Analytics.Abstractions.Service;
 using Blauhaus.Common.Domain.CommandHandlers;
-using Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Payload._Base;
-using Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Void._Base;
+using Blauhaus.Graphql.HotChocolate.MutationHandlers.Void._Base;
 using CSharpFunctionalExtensions;
 using HotChocolate.Resolvers;
 
-namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Void
+namespace Blauhaus.Graphql.HotChocolate.MutationHandlers.Void
 {
     public class VoidMutationServerHandler : BaseVoidMutationServerHandler
     { 

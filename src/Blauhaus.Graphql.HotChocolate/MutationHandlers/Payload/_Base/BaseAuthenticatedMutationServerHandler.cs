@@ -5,12 +5,11 @@ using Blauhaus.Analytics.Abstractions.Service;
 using Blauhaus.Auth.Abstractions.Errors;
 using Blauhaus.Common.Domain.CommandHandlers;
 using Blauhaus.Common.Results;
-using Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Void._Base;
 using CSharpFunctionalExtensions;
 using HotChocolate;
 using HotChocolate.Resolvers;
 
-namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Payload._Base
+namespace Blauhaus.Graphql.HotChocolate.MutationHandlers.Payload._Base
 {
     public abstract class BaseAuthenticatedMutationServerHandler<TUser> : BaseMutationServerHandler
     {
