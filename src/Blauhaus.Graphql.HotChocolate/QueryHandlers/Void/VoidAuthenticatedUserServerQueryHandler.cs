@@ -2,16 +2,16 @@
 using Blauhaus.Analytics.Abstractions.Service;
 using Blauhaus.Auth.Abstractions.Services;
 using Blauhaus.Auth.Abstractions.User;
-using Blauhaus.Graphql.HotChocolate.MutationHandlers.Void._Base;
+using Blauhaus.Graphql.HotChocolate.QueryHandlers.Void._Base;
 using HotChocolate.Resolvers;
 
-namespace Blauhaus.Graphql.HotChocolate.MutationHandlers.Void
+namespace Blauhaus.Graphql.HotChocolate.QueryHandlers.Void
 {
-    public class VoidAuthenticatedUserMutationServerHandler : BaseVoidAuthenticatedMutationServerHandler<IAuthenticatedUser>
+    public class VoidAuthenticatedUserServerQueryHandler : BaseVoidAuthenticatedServerQueryHandler<IAuthenticatedUser>
     {
         private readonly IAzureAuthenticationServerService _authenticationServerService;
 
-        public VoidAuthenticatedUserMutationServerHandler(
+        public VoidAuthenticatedUserServerQueryHandler(
             IAnalyticsService analyticsService,
             IAzureAuthenticationServerService authenticationServerService) 
                 : base(analyticsService)

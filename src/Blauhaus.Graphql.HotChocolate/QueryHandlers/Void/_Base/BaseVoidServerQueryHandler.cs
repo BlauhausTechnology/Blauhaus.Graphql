@@ -11,13 +11,13 @@ using HotChocolate;
 using HotChocolate.Resolvers;
 using Microsoft.AspNetCore.Http;
 
-namespace Blauhaus.Graphql.HotChocolate.MutationHandlers.Void._Base
+namespace Blauhaus.Graphql.HotChocolate.QueryHandlers.Void._Base
 {
-    public abstract class BaseVoidMutationServerHandler : IVoidMutationServerHandler
+    public abstract class BaseVoidServerQueryHandler : IVoidServerQueryHandler
     {
         protected readonly IAnalyticsService AnalyticsService;
 
-        protected BaseVoidMutationServerHandler(
+        protected BaseVoidServerQueryHandler(
             IAnalyticsService analyticsService)
         {
             AnalyticsService = analyticsService;

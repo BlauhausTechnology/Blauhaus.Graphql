@@ -1,9 +1,8 @@
 ﻿using Blauhaus.Common.Domain.CommandHandlers;
 using Blauhaus.Common.Domain.CommandHandlers.Client;
 using Blauhaus.Common.Domain.Entities;
-using Blauhaus.Graphql.StrawberryShake.MutationClientHandlers;
-using Blauhaus.Graphql.StrawberryShake.MutationClientHandlers.Payload;
-using Blauhaus.Graphql.StrawberryShake.MutationClientHandlers.Void;
+using Blauhaus.Graphql.StrawberryShake.QueryHandlers.Payload;
+using Blauhaus.Graphql.StrawberryShake.QueryHandlers.Void;
 using Blauhaus.Ioc.Abstractions;
 
 namespace Blauhaus.Graphql.StrawberryShake._Ioc
@@ -15,12 +14,12 @@ namespace Blauhaus.Graphql.StrawberryShake._Ioc
                 (this IIocService services) 
             where TModel : class, IClientEntity 
             where TMutationResponse : class
-            where TMutationClient : class, IMutationClient<TModelDto, TMutationResponse, TCommandDto, TCommand>
+            where TMutationClient : class, IGraphqlClient<TModelDto, TMutationResponse, TCommandDto, TCommand>
             where TModelDto : class
         {
             services.RegisterImplementation<ICommandHandler<TModel, TCommand>, EntityCommandClientHandler<TModel, TModelDto, TCommandDto, TCommand>>();
-            services.RegisterImplementation<ICommandHandler<TModelDto, TCommandDto>, MutationClientHandler<TModelDto, TMutationResponse, TCommandDto, TCommand>>();
-            services.RegisterImplementation<IMutationClient<TModelDto, TMutationResponse, TCommandDto, TCommand>, TMutationClient>();
+            services.RegisterImplementation<ICommandHandler<TModelDto, TCommandDto>, ClientQueryHandler<TModelDto, TMutationResponse, TCommandDto, TCommand>>();
+            services.RegisterImplementation<IGraphqlClient<TModelDto, TMutationResponse, TCommandDto, TCommand>, TMutationClient>();
             services.RegisterImplementation<ICommandConverter<TCommandDto, TCommand>, TMutationClient>();
 
             return services;
@@ -29,11 +28,11 @@ namespace Blauhaus.Graphql.StrawberryShake._Ioc
         public static IIocService AddVoidMutationClientHandler<TMutationResponse, TCommandDto, TCommand, TMutationClient> 
             (this IIocService services) 
             where TMutationResponse : class
-            where TMutationClient : class, IVoidMutationClient<TMutationResponse, TCommandDto, TCommand>
+            where TMutationClient : class, IVoidGraphqlClient<TMutationResponse, TCommandDto, TCommand>
         {
             services.RegisterImplementation<IVoidCommandHandler<TCommand>, VoidCommandClientHandler<TCommandDto, TCommand>>();
-            services.RegisterImplementation<IVoidCommandHandler<TCommandDto>, VoidMutationClientHandler<TMutationResponse, TCommandDto, TCommand>>();
-            services.RegisterImplementation<IVoidMutationClient<TMutationResponse, TCommandDto, TCommand>, TMutationClient>();
+            services.RegisterImplementation<IVoidCommandHandler<TCommandDto>, VoidClientQueryHandler<TMutationResponse, TCommandDto, TCommand>>();
+            services.RegisterImplementation<IVoidGraphqlClient<TMutationResponse, TCommandDto, TCommand>, TMutationClient>();
             services.RegisterImplementation<ICommandConverter<TCommandDto, TCommand>, TMutationClient>();
 
             return services;
