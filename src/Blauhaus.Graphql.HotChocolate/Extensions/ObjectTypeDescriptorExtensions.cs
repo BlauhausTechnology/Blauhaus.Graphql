@@ -1,5 +1,5 @@
-﻿using Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Payload;
-using Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Void;
+﻿using Blauhaus.Graphql.HotChocolate.MutationHandlers.Payload;
+using Blauhaus.Graphql.HotChocolate.MutationHandlers.Void;
 using HotChocolate.Types;
 
 namespace Blauhaus.Graphql.HotChocolate.Extensions

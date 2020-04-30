@@ -1,9 +1,5 @@
-﻿using Blauhaus.Graphql.HotChocolate.MutationHandlers;
-using Blauhaus.Graphql.HotChocolate.MutationHandlers._Base;
-using Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Payload;
-using Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Payload._Base;
-using Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Void;
-using Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Void._Base;
+﻿using Blauhaus.Graphql.HotChocolate.MutationHandlers.Payload;
+using Blauhaus.Graphql.HotChocolate.MutationHandlers.Void;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 

@@ -2,16 +2,16 @@
 using Blauhaus.Analytics.Abstractions.Service;
 using Blauhaus.Auth.Abstractions.Services;
 using Blauhaus.Auth.Abstractions.User;
-using Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Payload._Base;
+using Blauhaus.Graphql.HotChocolate.MutationHandlers.Void._Base;
 using HotChocolate.Resolvers;
 
-namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Payload
+namespace Blauhaus.Graphql.HotChocolate.MutationHandlers.Void
 {
-    public class AuthenticatedUserMutationServerHandler : BaseAuthenticatedMutationServerHandler<IAuthenticatedUser>
+    public class VoidAuthenticatedUserMutationServerHandler : BaseVoidAuthenticatedMutationServerHandler<IAuthenticatedUser>
     {
         private readonly IAzureAuthenticationServerService _authenticationServerService;
 
-        public AuthenticatedUserMutationServerHandler(
+        public VoidAuthenticatedUserMutationServerHandler(
             IAnalyticsService analyticsService,
             IAzureAuthenticationServerService authenticationServerService) 
                 : base(analyticsService)
@@ -23,7 +23,8 @@ namespace Blauhaus.Graphql.HotChocolate.MutationHandlers._Base.Payload
         protected override bool TryExtractUser(IResolverContext resolverContext, out IAuthenticatedUser user)
         {
             if (!resolverContext.ContextData.TryGetValue(nameof(ClaimsPrincipal), out var claimsPrincipal) ||
-                claimsPrincipal == null || !((ClaimsPrincipal) claimsPrincipal).Identity.IsAuthenticated)
+                claimsPrincipal == null ||
+                !((ClaimsPrincipal) claimsPrincipal).Identity.IsAuthenticated)
             {
                 user = null;
                 return false;
