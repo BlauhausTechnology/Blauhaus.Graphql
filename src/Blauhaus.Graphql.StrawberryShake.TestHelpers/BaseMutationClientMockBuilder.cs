@@ -2,7 +2,6 @@
 using Blauhaus.Graphql.StrawberryShake.QueryHandlers.Payload;
 using Blauhaus.TestHelpers.MockBuilders;
 using Moq;
-using StrawberryShake;
 
 namespace Blauhaus.Graphql.StrawberryShake.TestHelpers
 {

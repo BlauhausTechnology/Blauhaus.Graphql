@@ -1,10 +1,5 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Blauhaus.Graphql.StrawberryShake.QueryHandlers.Payload;
+﻿using Blauhaus.Graphql.StrawberryShake.QueryHandlers.Payload;
 using Blauhaus.Graphql.Tests.TestObjects;
-using Blauhaus.TestHelpers.MockBuilders;
-using CSharpFunctionalExtensions;
-using StrawberryShake;
 
 namespace Blauhaus.Graphql.Tests.Suts
 {
