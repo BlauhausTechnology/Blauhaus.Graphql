@@ -1,11 +1,11 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Blauhaus.Common.Domain.CommandHandlers;
+using Blauhaus.Domain.Client.CommandHandlers;
 using StrawberryShake;
 
-namespace Blauhaus.Graphql.StrawberryShake.MutationClientHandlers.Payload
+namespace Blauhaus.Graphql.StrawberryShake.QueryHandlers.Payload
 {
-    public interface IMutationClient<TModelDto, TMutationResponse, TCommandDto, TCommand> : ICommandConverter<TCommandDto, TCommand>
+    public interface IGraphqlClient<TModelDto, TMutationResponse, TCommandDto, TCommand> : ICommandConverter<TCommandDto, TCommand>
         where TModelDto : class
         where TMutationResponse : class
     {

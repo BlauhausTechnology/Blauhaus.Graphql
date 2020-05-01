@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Blauhaus.Graphql.StrawberryShake.Exceptions;
-using Blauhaus.Graphql.StrawberryShake.MutationClientHandlers;
-using Blauhaus.Graphql.StrawberryShake.MutationClientHandlers.Payload;
+using Blauhaus.Graphql.StrawberryShake.QueryHandlers.Payload;
 using Blauhaus.Graphql.StrawberryShake.TestHelpers;
 using Blauhaus.Graphql.Tests.TestObjects;
 using Blauhaus.TestHelpers.BaseTests;
@@ -14,15 +13,15 @@ using Error = Blauhaus.Common.ValueObjects.Errors.Error;
 
 namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests
 {
-    public class MutationClientHandlerTests : BaseServiceTest<MutationClientHandler<TestModelDto, TestGraphqlResponse, TestCommandDto, TestCommand>>
+    public class ClientQueryHandlerTests : BaseServiceTest<ClientQueryHandler<TestModelDto, TestGraphqlResponse, TestCommandDto, TestCommand>>
     {
         private TestCommandDto _commandDto;
         private IOperationResult<TestGraphqlResponse> _operationResult;
         private TestModelDto _dto;
 
 
-        private MockBuilder<IMutationClient<TestModelDto, TestGraphqlResponse, TestCommandDto, TestCommand>> MockGraphqlClient 
-            => AddMock<IMutationClient<TestModelDto, TestGraphqlResponse, TestCommandDto, TestCommand>>().Invoke();
+        private MockBuilder<IGraphqlClient<TestModelDto, TestGraphqlResponse, TestCommandDto, TestCommand>> MockGraphqlClient 
+            => AddMock<IGraphqlClient<TestModelDto, TestGraphqlResponse, TestCommandDto, TestCommand>>().Invoke();
 
         [SetUp]
         public void Setup()

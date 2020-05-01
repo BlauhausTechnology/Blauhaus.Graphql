@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using HotChocolate.Resolvers;
 
-namespace Blauhaus.Graphql.HotChocolate.MutationHandlers.Payload._Base
+namespace Blauhaus.Graphql.HotChocolate.QueryHandlers.Payload._Base
 {
-    public interface IMutationServerHandler
+    public interface IServerQueryHandler
     {
         Task<TPayload> HandleAsync<TPayload, TCommand>(IResolverContext context, CancellationToken token);
     }

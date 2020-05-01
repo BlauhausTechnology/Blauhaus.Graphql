@@ -9,13 +9,13 @@ using CSharpFunctionalExtensions;
 using HotChocolate;
 using HotChocolate.Resolvers;
 
-namespace Blauhaus.Graphql.HotChocolate.MutationHandlers.Payload._Base
+namespace Blauhaus.Graphql.HotChocolate.QueryHandlers.Payload._Base
 {
-    public abstract class BaseAuthenticatedMutationServerHandler<TUser> : BaseMutationServerHandler
+    public abstract class BaseAuthenticatedServerQueryHandler<TUser> : BaseServerQueryHandler
     {
  
         
-        protected BaseAuthenticatedMutationServerHandler(IAnalyticsService analyticsService) : base(analyticsService)
+        protected BaseAuthenticatedServerQueryHandler(IAnalyticsService analyticsService) : base(analyticsService)
         {
         }
 

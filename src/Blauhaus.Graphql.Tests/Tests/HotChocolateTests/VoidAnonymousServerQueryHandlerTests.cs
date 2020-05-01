@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Blauhaus.Common.Domain.CommandHandlers;
-using Blauhaus.Graphql.HotChocolate.MutationHandlers.Void;
+using Blauhaus.Graphql.HotChocolate.QueryHandlers.Void;
 using Blauhaus.Graphql.HotChocolate.TestHelpers.MockBuilders;
 using Blauhaus.Graphql.Tests.TestObjects;
 using Blauhaus.Graphql.Tests.Tests._Base;
@@ -17,7 +17,7 @@ using NUnit.Framework;
 
 namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
 {
-    public class VoidMutationServerHandlerTests : BaseGraphqlTest<VoidMutationServerHandler>
+    public class VoidAnonymousServerQueryHandlerTests : BaseGraphqlTest<VoidAnonymousServerQueryHandler>
     {
 
         private MockBuilder<IVoidCommandHandler<TestCommand>> MockCommandHandler => AddMock<IVoidCommandHandler<TestCommand>>().Invoke();

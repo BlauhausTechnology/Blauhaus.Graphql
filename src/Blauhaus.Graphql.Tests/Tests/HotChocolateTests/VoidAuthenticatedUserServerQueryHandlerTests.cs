@@ -8,7 +8,7 @@ using Blauhaus.Auth.Abstractions.Builders;
 using Blauhaus.Auth.Abstractions.Errors;
 using Blauhaus.Auth.Abstractions.User;
 using Blauhaus.Common.Domain.CommandHandlers;
-using Blauhaus.Graphql.HotChocolate.MutationHandlers.Void;
+using Blauhaus.Graphql.HotChocolate.QueryHandlers.Void;
 using Blauhaus.Graphql.HotChocolate.TestHelpers.MockBuilders;
 using Blauhaus.Graphql.Tests.TestObjects;
 using Blauhaus.Graphql.Tests.Tests._Base;
@@ -22,7 +22,7 @@ using NUnit.Framework;
 
 namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
 {
-    public class VoidAuthenticatedUserMutationServerHandlerTests : BaseGraphqlTest<VoidAuthenticatedUserMutationServerHandler>
+    public class VoidAuthenticatedUserServerQueryHandlerTests : BaseGraphqlTest<VoidAuthenticatedUserServerQueryHandler>
     {
 
         private MockBuilder<IVoidAuthenticatedCommandHandler<TestCommand, IAuthenticatedUser>> MockCommandHandler => AddMock<IVoidAuthenticatedCommandHandler<TestCommand, IAuthenticatedUser>>().Invoke();

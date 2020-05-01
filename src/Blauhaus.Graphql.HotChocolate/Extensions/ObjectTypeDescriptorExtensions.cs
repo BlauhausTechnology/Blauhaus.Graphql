@@ -1,5 +1,5 @@
-﻿using Blauhaus.Graphql.HotChocolate.MutationHandlers.Payload;
-using Blauhaus.Graphql.HotChocolate.MutationHandlers.Void;
+﻿using Blauhaus.Graphql.HotChocolate.QueryHandlers.Payload;
+using Blauhaus.Graphql.HotChocolate.QueryHandlers.Void;
 using HotChocolate.Types;
 
 namespace Blauhaus.Graphql.HotChocolate.Extensions
@@ -14,7 +14,7 @@ namespace Blauhaus.Graphql.HotChocolate.Extensions
             descriptor.Field(name)
                 .Argument("command", d => d.Type<TInputType>())
                 .Type<TPayloadType>()
-                .Resolver((context, token) => context.Service<MutationServerHandler>()
+                .Resolver((context, token) => context.Service<AnonymousServerQueryHandler>()
                     .HandleAsync<TPayload, TCommand>(context, token));
 
             return descriptor;
@@ -27,7 +27,7 @@ namespace Blauhaus.Graphql.HotChocolate.Extensions
             descriptor.Field(name)
                 .Argument("command", d => d.Type<TInputType>())
                 .Type<BooleanType>()
-                .Resolver((context, token) => context.Service<VoidMutationServerHandler>()
+                .Resolver((context, token) => context.Service<VoidAnonymousServerQueryHandler>()
                     .HandleAsync<TCommand>(context, token));
 
             return descriptor;
@@ -42,7 +42,7 @@ namespace Blauhaus.Graphql.HotChocolate.Extensions
                 .Argument("command", d => d.Type<TInputType>())
                 .Type<TPayloadType>()
                 .Authorize()
-                .Resolver((context, token) => context.Service<AuthenticatedUserMutationServerHandler>()
+                .Resolver((context, token) => context.Service<AuthenticatedUserServerQueryHandler>()
                     .HandleAsync<TPayload, TCommand>(context, token));
             return descriptor;
         }
@@ -55,7 +55,7 @@ namespace Blauhaus.Graphql.HotChocolate.Extensions
                 .Argument("command", d => d.Type<TInputType>())
                 .Type<BooleanType>()
                 .Authorize()
-                .Resolver((context, token) => context.Service<VoidAuthenticatedUserMutationServerHandler>()
+                .Resolver((context, token) => context.Service<VoidAuthenticatedUserServerQueryHandler>()
                     .HandleAsync<TCommand>(context, token));
 
             return descriptor;

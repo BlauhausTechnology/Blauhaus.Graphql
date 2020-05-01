@@ -1,21 +1,22 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Blauhaus.Common.Domain.CommandHandlers;
 using Blauhaus.Common.ValueObjects.Extensions;
+using Blauhaus.Domain.Common.CommandHandlers;
 using Blauhaus.Graphql.StrawberryShake.Exceptions;
 using CSharpFunctionalExtensions;
 
-namespace Blauhaus.Graphql.StrawberryShake.MutationClientHandlers.Payload
+namespace Blauhaus.Graphql.StrawberryShake.QueryHandlers.Payload
 {
-    public class MutationClientHandler<TResultDto, TMutationResult, TCommandDto, TCommand> : ICommandHandler<TResultDto, TCommandDto>
+    public class ClientQueryHandler<TResultDto, TMutationResult, TCommandDto, TCommand> : ICommandHandler<TResultDto, TCommandDto>
         where TResultDto : class 
         where TMutationResult : class
+        where TCommandDto : notnull
     {
-        private readonly IMutationClient<TResultDto, TMutationResult, TCommandDto, TCommand> _graphqlClient;
+        private readonly IGraphqlClient<TResultDto, TMutationResult, TCommandDto, TCommand> _graphqlClient;
 
-        public MutationClientHandler(
-            IMutationClient<TResultDto, TMutationResult, TCommandDto, TCommand> graphqlClient)
+        public ClientQueryHandler(
+            IGraphqlClient<TResultDto, TMutationResult, TCommandDto, TCommand> graphqlClient)
         {
             _graphqlClient = graphqlClient;
         }

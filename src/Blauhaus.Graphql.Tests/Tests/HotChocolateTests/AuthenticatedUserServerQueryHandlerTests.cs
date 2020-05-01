@@ -8,7 +8,7 @@ using Blauhaus.Auth.Abstractions.Builders;
 using Blauhaus.Auth.Abstractions.Errors;
 using Blauhaus.Auth.Abstractions.User;
 using Blauhaus.Common.Domain.CommandHandlers;
-using Blauhaus.Graphql.HotChocolate.MutationHandlers.Payload;
+using Blauhaus.Graphql.HotChocolate.QueryHandlers.Payload;
 using Blauhaus.Graphql.HotChocolate.TestHelpers.MockBuilders;
 using Blauhaus.Graphql.Tests.MockBuilders;
 using Blauhaus.Graphql.Tests.TestObjects;
@@ -22,7 +22,7 @@ using NUnit.Framework;
 
 namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
 {
-    public class AuthenticatedUserMutationServerHandlerTests : BaseGraphqlTest<AuthenticatedUserMutationServerHandler>
+    public class AuthenticatedUserServerQueryHandlerTests : BaseGraphqlTest<AuthenticatedUserServerQueryHandler>
     {
 
         private TestAuthenticatedUserCommandHandlerMockBuilder _mockTestCommandHandler;
