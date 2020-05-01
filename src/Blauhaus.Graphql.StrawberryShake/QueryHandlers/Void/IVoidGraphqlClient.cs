@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
-using Blauhaus.Common.Domain.CommandHandlers;
+using Blauhaus.Domain.Client.CommandHandlers;
 using StrawberryShake;
 
 namespace Blauhaus.Graphql.StrawberryShake.QueryHandlers.Void

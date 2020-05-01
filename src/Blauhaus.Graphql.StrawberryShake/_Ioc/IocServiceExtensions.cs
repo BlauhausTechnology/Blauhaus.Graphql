@@ -1,6 +1,6 @@
-﻿using Blauhaus.Common.Domain.CommandHandlers;
-using Blauhaus.Common.Domain.CommandHandlers.Client;
-using Blauhaus.Common.Domain.Entities;
+﻿using Blauhaus.Domain.Client.CommandHandlers;
+using Blauhaus.Domain.Common.CommandHandlers;
+using Blauhaus.Domain.Common.Entities;
 using Blauhaus.Graphql.StrawberryShake.QueryHandlers.Payload;
 using Blauhaus.Graphql.StrawberryShake.QueryHandlers.Void;
 using Blauhaus.Ioc.Abstractions;
@@ -16,6 +16,8 @@ namespace Blauhaus.Graphql.StrawberryShake._Ioc
             where TMutationResponse : class
             where TMutationClient : class, IGraphqlClient<TModelDto, TMutationResponse, TCommandDto, TCommand>
             where TModelDto : class
+            where TCommand : notnull
+            where TCommandDto : notnull
         {
             services.RegisterImplementation<ICommandHandler<TModel, TCommand>, EntityCommandClientHandler<TModel, TModelDto, TCommandDto, TCommand>>();
             services.RegisterImplementation<ICommandHandler<TModelDto, TCommandDto>, ClientQueryHandler<TModelDto, TMutationResponse, TCommandDto, TCommand>>();
@@ -29,6 +31,8 @@ namespace Blauhaus.Graphql.StrawberryShake._Ioc
             (this IIocService services) 
             where TMutationResponse : class
             where TMutationClient : class, IVoidGraphqlClient<TMutationResponse, TCommandDto, TCommand>
+            where TCommand : notnull
+            where TCommandDto : notnull
         {
             services.RegisterImplementation<IVoidCommandHandler<TCommand>, VoidCommandClientHandler<TCommandDto, TCommand>>();
             services.RegisterImplementation<IVoidCommandHandler<TCommandDto>, VoidClientQueryHandler<TMutationResponse, TCommandDto, TCommand>>();

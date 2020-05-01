@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blauhaus.Analytics.TestHelpers" Version="0.7.16" />
+    <PackageReference Include="Blauhaus.Analytics.TestHelpers" Version="0.7.17" />
     <PackageReference Include="Blauhaus.TestHelpers" Version="1.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="nunit" Version="3.12.0" />

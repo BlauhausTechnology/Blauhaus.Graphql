@@ -1,6 +1,6 @@
-﻿using Blauhaus.Common.Domain.CommandHandlers;
-using Blauhaus.Common.Domain.CommandHandlers.Client;
-using Blauhaus.Common.Domain.Entities;
+﻿using Blauhaus.Domain.Client.CommandHandlers;
+using Blauhaus.Domain.Common.CommandHandlers;
+using Blauhaus.Domain.Common.Entities;
 using Blauhaus.Graphql.StrawberryShake.QueryHandlers.Payload;
 using Blauhaus.Graphql.StrawberryShake.QueryHandlers.Void;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +16,8 @@ namespace Blauhaus.Graphql.StrawberryShake._Ioc
             where TMutationResponse : class
             where TMutationClient : class, IGraphqlClient<TModelDto, TMutationResponse, TCommandDto, TCommand>
             where TModelDto : class
+            where TCommand : notnull
+            where TCommandDto : notnull
         {
             services.AddTransient<ICommandHandler<TModel, TCommand>, EntityCommandClientHandler<TModel, TModelDto, TCommandDto, TCommand>>();
             services.AddTransient<ICommandHandler<TModelDto, TCommandDto>, ClientQueryHandler<TModelDto, TMutationResponse, TCommandDto, TCommand>>();
@@ -29,6 +31,8 @@ namespace Blauhaus.Graphql.StrawberryShake._Ioc
             (this IServiceCollection services) 
             where TMutationResponse : class
             where TMutationClient : class, IVoidGraphqlClient<TMutationResponse, TCommandDto, TCommand>
+            where TCommand : notnull
+            where TCommandDto : notnull
         {
             services.AddTransient<IVoidCommandHandler<TCommand>, VoidCommandClientHandler<TCommandDto, TCommand>>();
             services.AddTransient<IVoidCommandHandler<TCommandDto>, VoidClientQueryHandler<TMutationResponse, TCommandDto, TCommand>>();
