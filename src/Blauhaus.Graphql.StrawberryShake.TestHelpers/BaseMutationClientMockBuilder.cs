@@ -1,6 +1,5 @@
 ﻿using System.Threading;
-using Blauhaus.Graphql.StrawberryShake.MutationClientHandlers;
-using Blauhaus.Graphql.StrawberryShake.MutationClientHandlers.Payload;
+using Blauhaus.Graphql.StrawberryShake.QueryHandlers.Payload;
 using Blauhaus.TestHelpers.MockBuilders;
 using Moq;
 using StrawberryShake;
@@ -8,7 +7,7 @@ using StrawberryShake;
 namespace Blauhaus.Graphql.StrawberryShake.TestHelpers
 {
     public class MutationClientMockBuilder<TBuilder, TMock, TModelDo, TMutationResult, TCommandDto, TCommand> : BaseMockBuilder<TBuilder, TMock>
-        where TMock : class, IMutationClient<TModelDo, TMutationResult, TCommandDto, TCommand> 
+        where TMock : class, IGraphqlClient<TModelDo, TMutationResult, TCommandDto, TCommand> 
         where TBuilder : BaseMockBuilder<TBuilder, TMock>
         where TMutationResult : class
         where TModelDo : class

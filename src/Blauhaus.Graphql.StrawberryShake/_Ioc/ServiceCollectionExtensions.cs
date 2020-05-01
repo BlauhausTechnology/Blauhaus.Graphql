@@ -1,39 +1,42 @@
-﻿using Blauhaus.Common.Domain.CommandHandlers;
-using Blauhaus.Common.Domain.CommandHandlers.Client;
-using Blauhaus.Common.Domain.Entities;
-using Blauhaus.Graphql.StrawberryShake.MutationClientHandlers;
-using Blauhaus.Graphql.StrawberryShake.MutationClientHandlers.Payload;
-using Blauhaus.Graphql.StrawberryShake.MutationClientHandlers.Void;
+﻿using Blauhaus.Domain.Client.CommandHandlers;
+using Blauhaus.Domain.Common.CommandHandlers;
+using Blauhaus.Domain.Common.Entities;
+using Blauhaus.Graphql.StrawberryShake.QueryHandlers.Payload;
+using Blauhaus.Graphql.StrawberryShake.QueryHandlers.Void;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Blauhaus.Graphql.StrawberryShake._Ioc
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection AddEntityMutationClientHandler<
+        public static IServiceCollection AddEntityClientQueryHandler<
             TModel, TModelDto, TMutationResponse, TCommandDto, TCommand, TMutationClient> 
                 (this IServiceCollection services) 
             where TModel : class, IClientEntity 
             where TMutationResponse : class
-            where TMutationClient : class, IMutationClient<TModelDto, TMutationResponse, TCommandDto, TCommand>
+            where TMutationClient : class, IGraphqlClient<TModelDto, TMutationResponse, TCommandDto, TCommand>
             where TModelDto : class
+            where TCommand : notnull
+            where TCommandDto : notnull
         {
             services.AddTransient<ICommandHandler<TModel, TCommand>, EntityCommandClientHandler<TModel, TModelDto, TCommandDto, TCommand>>();
-            services.AddTransient<ICommandHandler<TModelDto, TCommandDto>, MutationClientHandler<TModelDto, TMutationResponse, TCommandDto, TCommand>>();
-            services.AddTransient<IMutationClient<TModelDto, TMutationResponse, TCommandDto, TCommand>, TMutationClient>();
+            services.AddTransient<ICommandHandler<TModelDto, TCommandDto>, ClientQueryHandler<TModelDto, TMutationResponse, TCommandDto, TCommand>>();
+            services.AddTransient<IGraphqlClient<TModelDto, TMutationResponse, TCommandDto, TCommand>, TMutationClient>();
             services.AddTransient<ICommandConverter<TCommandDto, TCommand>, TMutationClient>();
 
             return services;
         }
 
-        public static IServiceCollection AddVoidMutationClientHandler<TMutationResponse, TCommandDto, TCommand, TMutationClient> 
+        public static IServiceCollection AddVoidClientQueryHandler<TMutationResponse, TCommandDto, TCommand, TMutationClient> 
             (this IServiceCollection services) 
             where TMutationResponse : class
-            where TMutationClient : class, IVoidMutationClient<TMutationResponse, TCommandDto, TCommand>
+            where TMutationClient : class, IVoidGraphqlClient<TMutationResponse, TCommandDto, TCommand>
+            where TCommand : notnull
+            where TCommandDto : notnull
         {
             services.AddTransient<IVoidCommandHandler<TCommand>, VoidCommandClientHandler<TCommandDto, TCommand>>();
-            services.AddTransient<IVoidCommandHandler<TCommandDto>, VoidMutationClientHandler<TMutationResponse, TCommandDto, TCommand>>();
-            services.AddTransient<IVoidMutationClient<TMutationResponse, TCommandDto, TCommand>, TMutationClient>();
+            services.AddTransient<IVoidCommandHandler<TCommandDto>, VoidClientQueryHandler<TMutationResponse, TCommandDto, TCommand>>();
+            services.AddTransient<IVoidGraphqlClient<TMutationResponse, TCommandDto, TCommand>, TMutationClient>();
             services.AddTransient<ICommandConverter<TCommandDto, TCommand>, TMutationClient>();
 
             return services;

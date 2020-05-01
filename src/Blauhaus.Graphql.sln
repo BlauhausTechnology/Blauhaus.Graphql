@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29519.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blauhaus.Graphql.Generator", "Blauhaus.Graphql.Generator\Blauhaus.Graphql.Generator.csproj", "{7E2EE9D3-0D41-41B5-B5D6-344A432C5B83}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blauhaus.Graphql.Generator.Runner", "Blauhaus.Graphql.Generator.Runner\Blauhaus.Graphql.Generator.Runner.csproj", "{57F003D9-C847-4235-88C5-A0B26593E191}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A91D2009-F72F-4DB2-82C6-EE7CB70306CA}"
 	ProjectSection(SolutionItems) = preProject
 		..\.github\workflows\blauhaus.yml = ..\.github\workflows\blauhaus.yml
@@ -22,7 +18,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blauhaus.Graphql.Strawberry
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blauhaus.Graphql.Tests", "Blauhaus.Graphql.Tests\Blauhaus.Graphql.Tests.csproj", "{22E9DA99-C0CF-452E-A346-E9CE1411B9A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blauhaus.Graphql.HotChocolate.TestHelpers", "Blauhaus.Graphql.HotChocolate.TestHelpers\Blauhaus.Graphql.HotChocolate.TestHelpers.csproj", "{8043793B-FAEB-42EF-B526-CD5BC40CD5CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blauhaus.Graphql.HotChocolate.TestHelpers", "Blauhaus.Graphql.HotChocolate.TestHelpers\Blauhaus.Graphql.HotChocolate.TestHelpers.csproj", "{8043793B-FAEB-42EF-B526-CD5BC40CD5CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,14 +26,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7E2EE9D3-0D41-41B5-B5D6-344A432C5B83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7E2EE9D3-0D41-41B5-B5D6-344A432C5B83}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7E2EE9D3-0D41-41B5-B5D6-344A432C5B83}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7E2EE9D3-0D41-41B5-B5D6-344A432C5B83}.Release|Any CPU.Build.0 = Release|Any CPU
-		{57F003D9-C847-4235-88C5-A0B26593E191}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{57F003D9-C847-4235-88C5-A0B26593E191}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{57F003D9-C847-4235-88C5-A0B26593E191}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{57F003D9-C847-4235-88C5-A0B26593E191}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F484808B-0CFC-4639-AAD2-E3BBE45886FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F484808B-0CFC-4639-AAD2-E3BBE45886FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F484808B-0CFC-4639-AAD2-E3BBE45886FF}.Release|Any CPU.ActiveCfg = Release|Any CPU

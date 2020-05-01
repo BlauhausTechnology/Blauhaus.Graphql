@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using HotChocolate.Resolvers;
 
-namespace Blauhaus.Graphql.HotChocolate.MutationHandlers.Void._Base
+namespace Blauhaus.Graphql.HotChocolate.QueryHandlers.Void._Base
 {
-    public interface IVoidMutationServerHandler
+    public interface IVoidServerQueryHandler
     {
         Task<bool> HandleAsync<TCommand>(IResolverContext context, CancellationToken token);
     }
