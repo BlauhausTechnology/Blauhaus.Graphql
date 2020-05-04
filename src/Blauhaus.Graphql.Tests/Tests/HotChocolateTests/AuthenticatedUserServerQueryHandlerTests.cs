@@ -7,7 +7,7 @@ using Blauhaus.Analytics.Abstractions.Service;
 using Blauhaus.Auth.Abstractions.Builders;
 using Blauhaus.Auth.Abstractions.Errors;
 using Blauhaus.Auth.Abstractions.User;
-using Blauhaus.Common.Domain.CommandHandlers;
+using Blauhaus.Domain.Common.CommandHandlers;
 using Blauhaus.Graphql.HotChocolate.QueryHandlers.Payload;
 using Blauhaus.Graphql.HotChocolate.TestHelpers.MockBuilders;
 using Blauhaus.Graphql.Tests.MockBuilders;
