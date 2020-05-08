@@ -41,7 +41,7 @@ namespace Blauhaus.Graphql.HotChocolate.Extensions
             descriptor.Field(name)
                 .Argument("command", d => d.Type<TInputType>())
                 .Type<TPayloadType>()
-                .Authorize()
+                //.Authorize()
                 .Resolver((context, token) => context.Service<AuthenticatedUserServerQueryHandler>()
                     .HandleAsync<TPayload, TCommand>(context, token));
             return descriptor;
@@ -54,7 +54,7 @@ namespace Blauhaus.Graphql.HotChocolate.Extensions
             descriptor.Field(name)
                 .Argument("command", d => d.Type<TInputType>())
                 .Type<BooleanType>()
-                .Authorize()
+                //.Authorize()
                 .Resolver((context, token) => context.Service<VoidAuthenticatedUserServerQueryHandler>()
                     .HandleAsync<TCommand>(context, token));
 
