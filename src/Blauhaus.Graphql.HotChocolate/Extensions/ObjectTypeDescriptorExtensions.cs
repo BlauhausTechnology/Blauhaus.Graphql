@@ -7,7 +7,7 @@ namespace Blauhaus.Graphql.HotChocolate.Extensions
     public static class ObjectTypeDescriptorExtensions
     {
         //Unauthenticated with return type
-        public static IObjectTypeDescriptor AddMutation<TPayload, TPayloadType, TInputType, TCommand>(this IObjectTypeDescriptor descriptor, string name)
+        public static IObjectTypeDescriptor AddAnonymousQueryHandler<TPayload, TPayloadType, TInputType, TCommand>(this IObjectTypeDescriptor descriptor, string name)
             where TInputType : InputObjectType<TCommand>
             where TPayloadType : ObjectType<TPayload>
         {
@@ -21,7 +21,7 @@ namespace Blauhaus.Graphql.HotChocolate.Extensions
         }
         
         //Unauthenticated with no return type
-        public static IObjectTypeDescriptor AddVoidMutation<TInputType, TCommand>(this IObjectTypeDescriptor descriptor, string name)
+        public static IObjectTypeDescriptor AddVoidAnonymousQueryHandler<TInputType, TCommand>(this IObjectTypeDescriptor descriptor, string name)
             where TInputType : InputObjectType<TCommand>
         {
             descriptor.Field(name)
@@ -34,7 +34,7 @@ namespace Blauhaus.Graphql.HotChocolate.Extensions
         }
         
         //Authenticated with return type
-        public static IObjectTypeDescriptor AddAuthenticatedUserMutation<TPayload, TPayloadType, TInputType, TCommand>(this IObjectTypeDescriptor descriptor, string name)
+        public static IObjectTypeDescriptor AddAuthenticatedUserQueryHandler<TPayload, TPayloadType, TInputType, TCommand>(this IObjectTypeDescriptor descriptor, string name)
             where TInputType : InputObjectType<TCommand>
             where TPayloadType : ObjectType<TPayload>
         {
@@ -48,7 +48,7 @@ namespace Blauhaus.Graphql.HotChocolate.Extensions
         }
         
         //Authenticated with no return type
-        public static IObjectTypeDescriptor AddVoidAuthenticatedUserMutation<TInputType, TCommand>(this IObjectTypeDescriptor descriptor, string name)
+        public static IObjectTypeDescriptor AddVoidAuthenticatedUserQueryHandler<TInputType, TCommand>(this IObjectTypeDescriptor descriptor, string name)
             where TInputType : InputObjectType<TCommand>
         {
             descriptor.Field(name)
