@@ -6,7 +6,7 @@ using Moq;
 namespace Blauhaus.Graphql.StrawberryShake.TestHelpers
 {
     public class MutationClientMockBuilder<TBuilder, TMock, TModelDo, TMutationResult, TCommandDto, TCommand> : BaseMockBuilder<TBuilder, TMock>
-        where TMock : class, IGraphqlClient<TModelDo, TMutationResult, TCommandDto, TCommand> 
+        where TMock : class, IGraphqlQueryConverter<TModelDo, TMutationResult, TCommandDto, TCommand> 
         where TBuilder : BaseMockBuilder<TBuilder, TMock>
         where TMutationResult : class
         where TModelDo : class

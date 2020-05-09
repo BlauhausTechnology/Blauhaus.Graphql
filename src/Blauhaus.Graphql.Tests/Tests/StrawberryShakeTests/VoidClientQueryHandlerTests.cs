@@ -19,8 +19,8 @@ namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests
         private IOperationResult<TestGraphqlResponse> _operationResult;
 
 
-        private MockBuilder<IVoidGraphqlClient<TestGraphqlResponse, TestCommandDto, TestCommand>> MockGraphqlClient 
-            => AddMock<IVoidGraphqlClient<TestGraphqlResponse, TestCommandDto, TestCommand>>().Invoke();
+        private MockBuilder<IVoidQueryConverter<TestGraphqlResponse, TestCommandDto, TestCommand>> MockGraphqlClient 
+            => AddMock<IVoidQueryConverter<TestGraphqlResponse, TestCommandDto, TestCommand>>().Invoke();
 
         [SetUp]
         public void Setup()
