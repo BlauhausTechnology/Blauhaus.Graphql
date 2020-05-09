@@ -14,14 +14,14 @@ namespace Blauhaus.Graphql.StrawberryShake._Ioc
                 (this IServiceCollection services) 
             where TModel : class, IClientEntity 
             where TMutationResponse : class
-            where TMutationClient : class, IGraphqlQueryConverter<TModelDto, TMutationResponse, TCommandDto, TCommand>
+            where TMutationClient : class, IQueryConverter<TModelDto, TMutationResponse, TCommandDto, TCommand>
             where TModelDto : class
             where TCommand : notnull
             where TCommandDto : notnull
         {
             services.AddTransient<ICommandHandler<TModel, TCommand>, EntityCommandClientHandler<TModel, TModelDto, TCommandDto, TCommand>>();
             services.AddTransient<ICommandHandler<TModelDto, TCommandDto>, ClientQueryHandler<TModelDto, TMutationResponse, TCommandDto, TCommand>>();
-            services.AddTransient<IGraphqlQueryConverter<TModelDto, TMutationResponse, TCommandDto, TCommand>, TMutationClient>();
+            services.AddTransient<IQueryConverter<TModelDto, TMutationResponse, TCommandDto, TCommand>, TMutationClient>();
             services.AddTransient<ICommandConverter<TCommandDto, TCommand>, TMutationClient>();
 
             return services;

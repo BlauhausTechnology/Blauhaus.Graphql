@@ -13,10 +13,10 @@ namespace Blauhaus.Graphql.StrawberryShake.QueryHandlers.Payload
         where TMutationResult : class
         where TCommandDto : notnull
     {
-        private readonly IGraphqlQueryConverter<TResultDto, TMutationResult, TCommandDto, TCommand> _graphqlClient;
+        private readonly IQueryConverter<TResultDto, TMutationResult, TCommandDto, TCommand> _graphqlClient;
 
         public ClientQueryHandler(
-            IGraphqlQueryConverter<TResultDto, TMutationResult, TCommandDto, TCommand> graphqlClient)
+            IQueryConverter<TResultDto, TMutationResult, TCommandDto, TCommand> graphqlClient)
         {
             _graphqlClient = graphqlClient;
         }
