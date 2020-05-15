@@ -5,7 +5,7 @@ using StrawberryShake;
 
 namespace Blauhaus.Graphql.StrawberryShake.QueryHandlers.Void
 {
-    public interface IVoidGraphqlClient<TMutationResponse, TCommandDto, TCommand> : ICommandConverter<TCommandDto, TCommand>
+    public interface IVoidQueryConverter<TMutationResponse, TCommandDto, TCommand> : ICommandConverter<TCommandDto, TCommand>
         where TMutationResponse : class
     {
         Task<IOperationResult<TMutationResponse>> GetResultAsync(TCommandDto commandDto, CancellationToken token);
