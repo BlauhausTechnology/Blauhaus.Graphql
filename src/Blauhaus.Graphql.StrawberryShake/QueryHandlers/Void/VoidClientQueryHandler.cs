@@ -10,9 +10,9 @@ namespace Blauhaus.Graphql.StrawberryShake.QueryHandlers.Void
 {
     public class VoidClientQueryHandler<TMutationResult, TCommandDto, TCommand> : IVoidCommandHandler<TCommandDto> where TMutationResult : class
     {
-        private readonly IVoidGraphqlClient<TMutationResult, TCommandDto, TCommand> _mutationClient;
+        private readonly IVoidQueryConverter<TMutationResult, TCommandDto, TCommand> _mutationClient;
 
-        public VoidClientQueryHandler(IVoidGraphqlClient<TMutationResult, TCommandDto, TCommand> mutationClient)
+        public VoidClientQueryHandler(IVoidQueryConverter<TMutationResult, TCommandDto, TCommand> mutationClient)
         {
             _mutationClient = mutationClient;
         }

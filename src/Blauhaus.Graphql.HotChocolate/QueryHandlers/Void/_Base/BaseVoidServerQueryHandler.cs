@@ -46,7 +46,6 @@ namespace Blauhaus.Graphql.HotChocolate.QueryHandlers.Void._Base
                     var commandResult = await HandleCommandAsync<TCommand>(context, command, token);
                     if (commandResult.IsFailure)
                     {
-                        
                         context.ReportError(new ErrorBuilder().SetMessage(commandResult.Error).Build());
                         return default;
                     }

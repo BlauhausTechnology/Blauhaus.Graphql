@@ -5,7 +5,7 @@ using StrawberryShake;
 
 namespace Blauhaus.Graphql.StrawberryShake.QueryHandlers.Payload
 {
-    public interface IGraphqlClient<TModelDto, TMutationResponse, TCommandDto, TCommand> : ICommandConverter<TCommandDto, TCommand>
+    public interface IQueryConverter<TModelDto, TMutationResponse, TCommandDto, TCommand> : ICommandConverter<TCommandDto, TCommand>
         where TModelDto : class
         where TMutationResponse : class
     {
