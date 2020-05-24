@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using Blauhaus.Common.Utils.Extensions;
 using HotChocolate.Types;
@@ -6,54 +7,79 @@ using HotChocolate.Types;
 namespace Blauhaus.Graphql.HotChocolate.Extensions
 {
     public static class InputObjectTypeDescriptorFieldExtensions
-    {
-        
-        public static IInputFieldDescriptor AddField<TProperty, TOutputType, T>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, TProperty>> expression) where TOutputType : class, IInputType
+    { 
+        public static IInputFieldDescriptor AddField<TProperty, TInputType, T>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, TProperty>> expression) where TInputType : class, IInputType
         {
-            return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<TOutputType>();
+            return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<TInputType>();
         }
+        
+        #region Bool
+        public static IInputFieldDescriptor AddBoolField<T>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, bool>> expression)
+        {
+            return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<NonNullType<BooleanType>>();
+        } 
+        public static IInputFieldDescriptor AddNullableBoolField<T>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, bool?>> expression)
+        {
+            return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<BooleanType>();
+        } 
+        #endregion
 
-        //Id
+        #region Uuid
+        public static IInputFieldDescriptor AddUuidField<T>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, Guid>> expression)
+        {
+            return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<NonNullType<UuidType>>();
+        } 
+        public static IInputFieldDescriptor AddNullableUuidField<T>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, Guid?>> expression)
+        {
+            return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<UuidType>();
+        } 
+        #endregion
+
+        #region Id
         public static IInputFieldDescriptor AddIdField<T>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, Guid>> expression)
         {
             return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<NonNullType<IdType>>();
-        }
-        public static IInputFieldDescriptor AddIdField<T>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, Guid?>> expression)
+        } 
+        public static IInputFieldDescriptor AddNullableIdField<T>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, Guid?>> expression)
         {
             return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<IdType>();
-        }
+        } 
+        #endregion
         
-        //String
+        #region String
         public static IInputFieldDescriptor AddStringField<T>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, string>> expression)
         {
             return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<NonNullType<StringType>>();
-        }
+        } 
         public static IInputFieldDescriptor AddNullableStringField<T>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, string?>> expression)
         {
             return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<StringType>();
-        }
+        } 
+        #endregion
 
-        //Int
+        #region Int
         public static IInputFieldDescriptor AddIntField<T>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, int>> expression)
         {
             return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<NonNullType<IntType>>();
-        }
-        public static IInputFieldDescriptor AddIntField<T>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, int?>> expression)
+        } 
+        public static IInputFieldDescriptor AddNullableIntField<T>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, int?>> expression)
         {
             return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<IntType>();
-        }
+        } 
+        #endregion
         
-        //Long
+        #region Long
         public static IInputFieldDescriptor AddLongField<T>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, long>> expression)
         {
             return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<NonNullType<LongType>>();
-        }
+        } 
         public static IInputFieldDescriptor AddNullableLongField<T>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, long?>> expression)
         {
             return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<LongType>();
-        }
+        } 
+        #endregion
 
-        //Float
+        #region Float
         public static IInputFieldDescriptor AddFloatField<T>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, float>> expression)
         {
             return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<NonNullType<FloatType>>();
@@ -61,7 +87,8 @@ namespace Blauhaus.Graphql.HotChocolate.Extensions
         public static IInputFieldDescriptor AddFloatField<T>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, double>> expression)
         {
             return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<NonNullType<FloatType>>();
-        }
+        }  
+
         public static IInputFieldDescriptor AddNullableFloatField<T>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, float?>> expression)
         {
             return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<FloatType>();
@@ -69,6 +96,21 @@ namespace Blauhaus.Graphql.HotChocolate.Extensions
         public static IInputFieldDescriptor AddNullableFloatField<T>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, double?>> expression)
         {
             return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<FloatType>();
-        }
+        } 
+        #endregion
+
+        #region List
+        public static IInputFieldDescriptor AddListField<T, TListItem, TType>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, IEnumerable<TListItem>>> expression) 
+            where TType : IType
+        {
+            return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<NonNullType<ListType<TType>>>();
+        } 
+        public static IInputFieldDescriptor AddNullableListField<T, TListItem, TType>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, IEnumerable<TListItem>?>> expression) 
+            where TType : IType
+        {
+            return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<ListType<TType>>();
+        } 
+        #endregion
+
     }
 }
