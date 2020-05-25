@@ -26,17 +26,16 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
     {
 
         private TestAuthenticatedUserCommandHandlerMockBuilder _mockTestCommandHandler;
+        private TestCommand _command;
 
         public override void Setup()
         {
             base.Setup();
+            _command = new TestCommand  { Name = "Piet" };
             _mockTestCommandHandler = new TestAuthenticatedUserCommandHandlerMockBuilder()
                 .Where_HandleAsync_returns(new TestServerPayload{Name = "Freddie"});
             MockResolverContext.With_Service(_mockTestCommandHandler.Object);
-            MockResolverContext.With_Command_Argument(new TestCommand
-            {
-                Name = "Piet"
-            });
+            MockResolverContext.With_Command_Argument(_command);
             Services.AddSingleton(_mockTestCommandHandler.Object);
         }
 
@@ -131,6 +130,17 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
 
             //Assert
             _mockTestCommandHandler.VerifyHandleCalledWithCommandProperty(x => x.Name == "Piet");
+        }
+        
+        [Test]
+        public async Task SHOULD_extract_command_and_log_with_analytics()
+        {
+            //Act
+            await Sut.HandleAsync<TestServerPayload, TestCommand>(MockResolverContext.Object, CancellationToken.None);
+
+            //Assert 
+            MockAnalyticsService.VerifyTrace("Command received");
+            MockAnalyticsService.VerifyTraceProperty("TestCommand", _command);
         }
 
         [Test]
