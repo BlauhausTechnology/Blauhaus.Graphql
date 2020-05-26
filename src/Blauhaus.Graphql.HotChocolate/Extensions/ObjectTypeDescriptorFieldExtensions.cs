@@ -185,5 +185,24 @@ namespace Blauhaus.Graphql.HotChocolate.Extensions
             return descriptor.Field(name).Type<ListType<TType>>().Resolver(context => resolverExpression.Compile().Invoke(context));
         }
         #endregion
+
+        #region DateTime
+        public static IObjectFieldDescriptor AddDateTimeField<T>(this IObjectTypeDescriptor<T> descriptor, Expression<Func<T, DateTime>> expression)
+        {
+            return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<NonNullType<DateTimeType>>();
+        }
+        public static IObjectFieldDescriptor AddDateTimeField<T>(this IObjectTypeDescriptor<T> descriptor, string name, Expression<Func<IResolverContext, DateTime>> resolverExpression)
+        {
+            return descriptor.Field(name).Type<NonNullType<DateTimeType>>().Resolver(context => resolverExpression.Compile().Invoke(context));
+        }
+        public static IObjectFieldDescriptor AddNullableDateTimeField<T>(this IObjectTypeDescriptor<T> descriptor, Expression<Func<T, DateTime?>> expression)
+        {
+            return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<DateTimeType>();
+        }
+        public static IObjectFieldDescriptor AddNullableDateTimeField<T>(this IObjectTypeDescriptor<T> descriptor, string name, Expression<Func<IResolverContext, DateTime?>> resolverExpression)
+        {
+            return descriptor.Field(name).Type<DateTimeType>().Resolver(context => resolverExpression.Compile().Invoke(context));
+        }
+        #endregion
     }
 }

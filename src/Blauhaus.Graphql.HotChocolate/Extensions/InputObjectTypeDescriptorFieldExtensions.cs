@@ -112,5 +112,18 @@ namespace Blauhaus.Graphql.HotChocolate.Extensions
         } 
         #endregion
 
+        #region DateTime
+
+        public static IInputFieldDescriptor AddDateTimeField<T>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, DateTime>> expression)
+        {
+            return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<NonNullType<DateTimeType>>();
+        } 
+        public static IInputFieldDescriptor AddNullableDateTimeField<T>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, DateTime?>> expression)
+        {
+            return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<DateTimeType>();
+        } 
+
+        #endregion
+
     }
 }
