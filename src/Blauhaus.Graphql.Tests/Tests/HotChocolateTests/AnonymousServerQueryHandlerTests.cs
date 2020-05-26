@@ -19,19 +19,21 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
 {
     public class AnonymousServerQueryHandlerTests : BaseGraphqlTest<AnonymousServerQueryHandler>
     {
+        private TestCommand _command;
 
         private MockBuilder<ICommandHandler<TestServerPayload, TestCommand>> MockCommandHandler => AddMock<ICommandHandler<TestServerPayload, TestCommand>>().Invoke();
 
         public override void Setup()
         {
             base.Setup();
+            _command = new TestCommand
+            {
+                Name = "Piet"
+            };
             MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Result.Success(new TestServerPayload{Name = "Freddie"}));
             MockResolverContext.With_Service(MockCommandHandler.Object);
-            MockResolverContext.With_Command_Argument(new TestCommand
-            {
-                Name = "Piet"
-            }); 
+            MockResolverContext.With_Command_Argument(_command); 
         }
 
 
@@ -53,6 +55,18 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
             MockAnalyticsService.VerifyStartRequestOperation("TestCommand");
             MockAnalyticsService.VerifyStartRequestOperationProperty(x => x["HeaderOne"] == "HeaderOneValue");
             MockAnalyticsService.VerifyStartRequestOperationProperty(x => x["HeaderTwo"] == "HeaderTwoValue");
+        }
+        
+        [Test]
+        public async Task SHOULD_extract_command_and_log_with_analytics()
+        {
+            //Act
+            await Sut.HandleAsync<TestServerPayload, TestCommand>(MockResolverContext.Object, CancellationToken.None);
+
+            //Assert
+            MockCommandHandler.Mock.Verify(x => x.HandleAsync(It.Is<TestCommand>(y => y.Name == "Piet"), It.IsAny<CancellationToken>()));
+            MockAnalyticsService.VerifyTrace("Command received");
+            MockAnalyticsService.VerifyTraceProperty("TestCommand", _command);
         }
 
         [Test]

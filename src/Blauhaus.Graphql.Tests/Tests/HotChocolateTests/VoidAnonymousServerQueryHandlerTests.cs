@@ -19,19 +19,19 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
 {
     public class VoidAnonymousServerQueryHandlerTests : BaseGraphqlTest<VoidAnonymousServerQueryHandler>
     {
+        private TestCommand _command;
 
         private MockBuilder<IVoidCommandHandler<TestCommand>> MockCommandHandler => AddMock<IVoidCommandHandler<TestCommand>>().Invoke();
 
         public override void Setup()
         {
             base.Setup();
+
+            _command = new TestCommand {Name = "Piet"};
             MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Result.Success());
             MockResolverContext.With_Service(MockCommandHandler.Object);
-            MockResolverContext.With_Command_Argument(new TestCommand
-            {
-                Name = "Piet"
-            }); 
+            MockResolverContext.With_Command_Argument(_command); 
         }
 
 
@@ -64,6 +64,19 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
             //Assert
             MockCommandHandler.Mock.Verify(x => x.HandleAsync(It.Is<TestCommand>(y => y.Name == "Piet"), It.IsAny<CancellationToken>()));
         }
+
+        
+        [Test]
+        public async Task SHOULD_extract_command_and_log_with_analytics()
+        {
+            //Act
+            await Sut.HandleAsync<TestCommand>(MockResolverContext.Object, CancellationToken.None);
+
+            //Assert 
+            MockAnalyticsService.VerifyTrace("Command received");
+            MockAnalyticsService.VerifyTraceProperty("TestCommand", _command);
+        }
+
 
         [Test]
         public async Task IF_command_cannot_be_found_SHOULD_throw()

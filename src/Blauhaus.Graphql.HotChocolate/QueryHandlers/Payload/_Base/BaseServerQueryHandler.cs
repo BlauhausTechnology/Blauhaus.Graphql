@@ -43,6 +43,8 @@ namespace Blauhaus.Graphql.HotChocolate.QueryHandlers.Payload._Base
                         throw new ArgumentException("Unable to extract command from resolver context");
                     }
 
+                    AnalyticsService.TraceVerbose(this, "Command received", command.ToObjectDictionary());
+
                     var commandResult = await HandleCommandAsync<TPayload, TCommand>(context, command, token);
                     if (commandResult.IsFailure)
                     {
