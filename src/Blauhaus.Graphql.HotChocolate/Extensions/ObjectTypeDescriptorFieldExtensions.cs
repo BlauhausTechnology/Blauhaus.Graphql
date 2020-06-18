@@ -10,7 +10,7 @@ namespace Blauhaus.Graphql.HotChocolate.Extensions
     public static class ObjectTypeDescriptorFieldExtensions
     {
         
-        public static IObjectFieldDescriptor AddField<TProperty, TOutputType, T>(this IObjectTypeDescriptor<T> descriptor, Expression<Func<T, TProperty>> expression) where TOutputType : class, IOutputType
+        public static IObjectFieldDescriptor AddField<T, TProperty, TOutputType>(this IObjectTypeDescriptor<T> descriptor, Expression<Func<T, TProperty>> expression) where TOutputType : class, IOutputType
         {
             return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<TOutputType>();
         }
