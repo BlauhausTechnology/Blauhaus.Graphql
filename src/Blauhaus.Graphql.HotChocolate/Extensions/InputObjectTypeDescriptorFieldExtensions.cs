@@ -8,7 +8,11 @@ namespace Blauhaus.Graphql.HotChocolate.Extensions
 {
     public static class InputObjectTypeDescriptorFieldExtensions
     { 
-        public static IInputFieldDescriptor AddField<T, TProperty, TInputType>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, TProperty>> expression) where TInputType : class, IInputType
+        public static IInputFieldDescriptor AddField<T, TProperty, TInputType>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, TProperty>> expression) where TInputType : class, IInputType where TProperty : notnull
+        {
+            return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<NonNullType<TInputType>>();
+        }
+        public static IInputFieldDescriptor AddNullableField<T, TProperty, TInputType>(this IInputObjectTypeDescriptor<T> descriptor, Expression<Func<T, TProperty>> expression) where TInputType : class, IInputType 
         {
             return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<TInputType>();
         }
