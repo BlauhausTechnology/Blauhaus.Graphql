@@ -27,6 +27,7 @@ namespace Blauhaus.Graphql.StrawberryShake.QueryHandlers.Payload
             var error = result.Errors.FirstOrDefault();
             if (error == null)
             {
+                //todo fail if null?
                 return Result.Success(_graphqlClient.GetDtoFromResult(result));
             }
 
