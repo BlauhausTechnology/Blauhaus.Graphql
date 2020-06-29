@@ -8,18 +8,20 @@ using CSharpFunctionalExtensions;
 
 namespace Blauhaus.Graphql.StrawberryShake.QueryHandlers.Void
 {
-    public class VoidClientQueryHandler<TMutationResult, TCommandDto, TCommand> : IVoidCommandHandler<TCommandDto> where TMutationResult : class
+    public class VoidClientQueryHandler<TMutationResult, TCommandDto, TCommand> : IVoidCommandHandler<TCommandDto> 
+        where TMutationResult : class
+        where TCommandDto : notnull
     {
-        private readonly IVoidQueryConverter<TMutationResult, TCommandDto, TCommand> _mutationClient;
+        private readonly IVoidQueryConverter<TMutationResult, TCommandDto, TCommand> _queryConverter;
 
-        public VoidClientQueryHandler(IVoidQueryConverter<TMutationResult, TCommandDto, TCommand> mutationClient)
+        public VoidClientQueryHandler(IVoidQueryConverter<TMutationResult, TCommandDto, TCommand> queryConverter)
         {
-            _mutationClient = mutationClient;
+            _queryConverter = queryConverter;
         }
 
         public async Task<Result> HandleAsync(TCommandDto commandInput, CancellationToken token)
         {
-            var result = await _mutationClient.GetResultAsync(commandInput, token);
+            var result = await _queryConverter.GetResultAsync(commandInput, token);
             var error = result.Errors.FirstOrDefault();
             if (error == null)
             {
