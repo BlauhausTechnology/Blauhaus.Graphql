@@ -9,7 +9,7 @@ using Blauhaus.TestHelpers.MockBuilders;
 using Moq;
 using NUnit.Framework;
 using StrawberryShake;
-using Error = Blauhaus.Common.ValueObjects.Errors.Error;
+using Error = Blauhaus.Errors.Error;
 
 namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests
 {
