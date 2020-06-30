@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Threading;
-using Blauhaus.Common.ValueObjects.Errors;
 using Blauhaus.Domain.Common.CommandHandlers;
+using Blauhaus.Errors;
 using Blauhaus.TestHelpers.MockBuilders;
 using CSharpFunctionalExtensions;
 using Moq;
