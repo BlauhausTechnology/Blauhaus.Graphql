@@ -19,8 +19,8 @@ namespace Blauhaus.Graphql.StrawberryShake._Ioc
             where TCommand : notnull
             where TCommandDto : notnull
         {
-            services.RegisterImplementation<ICommandHandler<TModel, TCommand>, EntityCommandClientHandler<TModel, TModelDto, TCommandDto, TCommand>>();
-            services.RegisterImplementation<ICommandHandler<TModelDto, TCommandDto>, ClientQueryHandler<TModelDto, TMutationResponse, TCommandDto, TCommand>>();
+            services.RegisterImplementation<ICommandHandler<TModel, TCommand>, EntityCommandClientHandler<TModel, TModelDto, TCommandDto, TCommand>>(IocLifetime.Singleton);
+            services.RegisterImplementation<ICommandHandler<TModelDto, TCommandDto>, ClientQueryHandler<TModelDto, TMutationResponse, TCommandDto, TCommand>>(IocLifetime.Singleton);
             services.RegisterImplementation<IQueryConverter<TModelDto, TMutationResponse, TCommandDto, TCommand>, TMutationClient>();
             services.RegisterImplementation<ICommandConverter<TCommandDto, TCommand>, TMutationClient>();
 
@@ -34,8 +34,8 @@ namespace Blauhaus.Graphql.StrawberryShake._Ioc
             where TCommand : notnull
             where TCommandDto : notnull
         {
-            services.RegisterImplementation<IVoidCommandHandler<TCommand>, VoidCommandClientHandler<TCommandDto, TCommand>>();
-            services.RegisterImplementation<IVoidCommandHandler<TCommandDto>, VoidClientQueryHandler<TMutationResponse, TCommandDto, TCommand>>();
+            services.RegisterImplementation<IVoidCommandHandler<TCommand>, VoidCommandClientHandler<TCommandDto, TCommand>>(IocLifetime.Singleton);
+            services.RegisterImplementation<IVoidCommandHandler<TCommandDto>, VoidClientQueryHandler<TMutationResponse, TCommandDto, TCommand>>(IocLifetime.Singleton);
             services.RegisterImplementation<IVoidQueryConverter<TMutationResponse, TCommandDto, TCommand>, TMutationClient>();
             services.RegisterImplementation<ICommandConverter<TCommandDto, TCommand>, TMutationClient>();
 
