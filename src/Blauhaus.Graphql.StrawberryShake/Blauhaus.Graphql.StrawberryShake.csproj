@@ -8,11 +8,11 @@
 
   <ItemGroup>
     <PackageReference Include="Blauhaus.Analytics.Abstractions" Version="0.8.6" />
-    <PackageReference Include="Blauhaus.Common.ValueObjects" Version="1.5.1" />
-    <PackageReference Include="Blauhaus.Domain.Client" Version="0.6.11" />
-    <PackageReference Include="Blauhaus.Domain.Common" Version="0.6.11" />
-    <PackageReference Include="Blauhaus.Ioc.Abstractions" Version="0.7.1" />
-    <PackageReference Include="CSharpFunctionalExtensions" Version="2.8.2" />
+    <PackageReference Include="Blauhaus.Common.ValueObjects" Version="1.5.3" />
+    <PackageReference Include="Blauhaus.Domain.Client" Version="0.8.11" />
+    <PackageReference Include="Blauhaus.Domain.Common" Version="0.8.11" />
+    <PackageReference Include="Blauhaus.Ioc.Abstractions" Version="0.8.2" />
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.11.1" />
     <PackageReference Include="StrawberryShake" Version="11.0.0-preview.137" />
   </ItemGroup>
 
