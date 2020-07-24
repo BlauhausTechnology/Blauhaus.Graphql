@@ -7,8 +7,8 @@
 
   <ItemGroup>
     <PackageReference Include="Blauhaus.Auth.Abstractions" Version="0.8.17" />
-    <PackageReference Include="Blauhaus.Common.ValueObjects" Version="1.5.1" />
-    <PackageReference Include="Blauhaus.TestHelpers" Version="1.0.17" />
+    <PackageReference Include="Blauhaus.Common.ValueObjects" Version="1.5.3" />
+    <PackageReference Include="Blauhaus.TestHelpers" Version="1.0.22" />
     <PackageReference Include="NUnit" Version="3.12.0" />
   </ItemGroup>
 

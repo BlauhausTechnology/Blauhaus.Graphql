@@ -19,8 +19,8 @@ namespace Blauhaus.Graphql.StrawberryShake._Ioc
             where TCommand : notnull
             where TCommandDto : notnull
         {
-            services.AddTransient<ICommandHandler<TModel, TCommand>, EntityCommandClientHandler<TModel, TModelDto, TCommandDto, TCommand>>();
-            services.AddTransient<ICommandHandler<TModelDto, TCommandDto>, ClientQueryHandler<TModelDto, TMutationResponse, TCommandDto, TCommand>>();
+            services.AddScoped<ICommandHandler<TModel, TCommand>, EntityCommandClientHandler<TModel, TModelDto, TCommandDto, TCommand>>();
+            services.AddScoped<ICommandHandler<TModelDto, TCommandDto>, ClientQueryHandler<TModelDto, TMutationResponse, TCommandDto, TCommand>>();
             services.AddTransient<IQueryConverter<TModelDto, TMutationResponse, TCommandDto, TCommand>, TMutationClient>();
             services.AddTransient<ICommandConverter<TCommandDto, TCommand>, TMutationClient>();
 
@@ -34,8 +34,8 @@ namespace Blauhaus.Graphql.StrawberryShake._Ioc
             where TCommand : notnull
             where TCommandDto : notnull
         {
-            services.AddTransient<IVoidCommandHandler<TCommand>, VoidCommandClientHandler<TCommandDto, TCommand>>();
-            services.AddTransient<IVoidCommandHandler<TCommandDto>, VoidClientQueryHandler<TMutationResponse, TCommandDto, TCommand>>();
+            services.AddScoped<IVoidCommandHandler<TCommand>, VoidCommandClientHandler<TCommandDto, TCommand>>();
+            services.AddScoped<IVoidCommandHandler<TCommandDto>, VoidClientQueryHandler<TMutationResponse, TCommandDto, TCommand>>();
             services.AddTransient<IVoidQueryConverter<TMutationResponse, TCommandDto, TCommand>, TMutationClient>();
             services.AddTransient<ICommandConverter<TCommandDto, TCommand>, TMutationClient>();
 
