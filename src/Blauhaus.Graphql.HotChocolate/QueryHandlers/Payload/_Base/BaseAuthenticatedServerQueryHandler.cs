@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Blauhaus.Analytics.Abstractions.Extensions;
 using Blauhaus.Analytics.Abstractions.Service;
-using Blauhaus.Auth.Abstractions.Errors; 
-using Blauhaus.Common.Results;
+using Blauhaus.Auth.Abstractions.Errors;
 using Blauhaus.Domain.Common.CommandHandlers;
 using CSharpFunctionalExtensions;
 using HotChocolate;
