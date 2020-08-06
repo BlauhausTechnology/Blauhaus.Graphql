@@ -10,9 +10,14 @@ namespace Blauhaus.Graphql.HotChocolate.Extensions
     public static class ObjectTypeDescriptorFieldExtensions
     {
         
+        #region Complex types
         public static IObjectFieldDescriptor AddField<T, TProperty, TOutputType>(this IObjectTypeDescriptor<T> descriptor, Expression<Func<T, TProperty>> expression) where TOutputType : class, IOutputType where TProperty : notnull
         {
             return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<NonNullType<TOutputType>>();
+        }
+        public static IObjectFieldDescriptor AddField<T, TProperty, TOutputType>(this IObjectTypeDescriptor<T> descriptor, string name, Expression<Func<IResolverContext, TProperty>> resolverExpression) where TOutputType : class, IOutputType where TProperty : notnull
+        {
+            return descriptor.Field(name).Type<NonNullType<TOutputType>>().Resolver(context => resolverExpression.Compile().Invoke(context));
         }
 
         public static IObjectFieldDescriptor AddNullableField<T, TProperty, TOutputType>(this IObjectTypeDescriptor<T> descriptor, Expression<Func<T, TProperty>> expression) where TOutputType : class, IOutputType
@@ -20,6 +25,13 @@ namespace Blauhaus.Graphql.HotChocolate.Extensions
             return descriptor.Field(expression).Name(expression.ToPropertyName()).Type<TOutputType>();
         }
         
+        public static IObjectFieldDescriptor AddNullableField<T, TProperty, TOutputType>(this IObjectTypeDescriptor<T> descriptor, string name, Expression<Func<IResolverContext, TProperty>> resolverExpression) where TOutputType : class, IOutputType
+        {
+            return descriptor.Field(name).Type<TOutputType>().Resolver(context => resolverExpression.Compile().Invoke(context));
+        }
+
+        #endregion
+
         #region Bool
         public static IObjectFieldDescriptor AddBoolField<T>(this IObjectTypeDescriptor<T> descriptor, Expression<Func<T, bool>> expression)
         {
