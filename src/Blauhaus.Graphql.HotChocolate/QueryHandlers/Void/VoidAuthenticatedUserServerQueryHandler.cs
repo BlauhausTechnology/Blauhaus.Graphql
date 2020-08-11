@@ -9,28 +9,35 @@ namespace Blauhaus.Graphql.HotChocolate.QueryHandlers.Void
 {
     public class VoidAuthenticatedUserServerQueryHandler : BaseVoidAuthenticatedServerQueryHandler<IAuthenticatedUser>
     {
-        private readonly IAzureAuthenticationServerService _authenticationServerService;
+        private readonly IAuthenticatedUserFactory _userFactory;
 
         public VoidAuthenticatedUserServerQueryHandler(
             IAnalyticsService analyticsService,
-            IAzureAuthenticationServerService authenticationServerService) 
+            IAuthenticatedUserFactory authenticatedUserFactory) 
                 : base(analyticsService)
         {
-            _authenticationServerService = authenticationServerService;
+            _userFactory = authenticatedUserFactory;
         }
 
  
         protected override bool TryExtractUser(IResolverContext resolverContext, out IAuthenticatedUser user)
         {
+            
+            user = null!;
+
             if (!resolverContext.ContextData.TryGetValue(nameof(ClaimsPrincipal), out var claimsPrincipal) ||
                 claimsPrincipal == null ||
                 !((ClaimsPrincipal) claimsPrincipal).Identity.IsAuthenticated)
             {
-                user = null;
                 return false;
             }
-
-            user = _authenticationServerService.ExtractUserFromClaimsPrincipal((ClaimsPrincipal) claimsPrincipal);
+            var extractUser = _userFactory.Create((ClaimsPrincipal) claimsPrincipal);
+            if (extractUser.IsFailure)
+            {
+                return false;
+            }
+            
+            user = extractUser.Value;
             return true;
         }
 

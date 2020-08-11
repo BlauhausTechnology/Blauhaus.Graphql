@@ -71,7 +71,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
             await Sut.HandleAsync<TestServerPayload, TestCommand>(MockResolverContext.Object, CancellationToken.None);
 
             //Assert
-            MockAzureAuthenticationServerService.Mock.Verify(x => x.ExtractUserFromClaimsPrincipal(It.Is<ClaimsPrincipal>(y => 
+            MockAuthenticatedUserFactory.Mock.Verify(x => x.Create(It.Is<ClaimsPrincipal>(y => 
                 y.HasClaim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier", "Fred"))));
         }
 
