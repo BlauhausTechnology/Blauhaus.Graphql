@@ -4,6 +4,7 @@ using Blauhaus.Analytics.Abstractions.Service;
 using Blauhaus.Analytics.TestHelpers;
 using Blauhaus.Auth.Abstractions.Builders;
 using Blauhaus.Auth.Abstractions.Services;
+using Blauhaus.Auth.TestHelpers.MockBuilders;
 using Blauhaus.Graphql.HotChocolate.TestHelpers.MockBuilders;
 using Blauhaus.Graphql.Tests.MockBuilders;
 using Blauhaus.TestHelpers.BaseTests;
@@ -22,7 +23,7 @@ namespace Blauhaus.Graphql.Tests.Tests._Base
 
             Services.AddSingleton(x => MockResolverContext.Object);
             Services.AddSingleton(x => MockAnalyticsService.Object);
-            Services.AddSingleton(x => MockAzureAuthenticationServerService.Object);
+            Services.AddSingleton(x => MockAuthenticatedUserFactory.Object);
 
             ClaimsPrincipal = new ClaimsPrincipalBuilder()
                 .WithIsAuthenticatedTrue()
@@ -33,6 +34,7 @@ namespace Blauhaus.Graphql.Tests.Tests._Base
 
         protected ResolverContextMockBuilder MockResolverContext => Mocks.AddMock<ResolverContextMockBuilder, IResolverContext>().Invoke();
         protected AnalyticsServiceMockBuilder MockAnalyticsService => Mocks.AddMock<AnalyticsServiceMockBuilder, IAnalyticsService>().Invoke();
-        protected AzureAuthenticationServerServiceMockBuilder MockAzureAuthenticationServerService=> Mocks.AddMock<AzureAuthenticationServerServiceMockBuilder, IAzureAuthenticationServerService>().Invoke();
+        protected AuthenticatedUserFactoryMockBuilder MockAuthenticatedUserFactory => Mocks.AddMock<AuthenticatedUserFactoryMockBuilder, IAuthenticatedUserFactory>().Invoke();
+
     }
 }
