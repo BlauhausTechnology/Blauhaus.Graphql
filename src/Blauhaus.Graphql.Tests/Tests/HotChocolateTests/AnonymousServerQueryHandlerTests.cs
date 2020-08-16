@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks; 
-using Blauhaus.Domain.Common.CommandHandlers;
+using System.Threading.Tasks;
+using Blauhaus.Domain.Abstractions.CommandHandlers;
 using Blauhaus.Graphql.HotChocolate.QueryHandlers.Payload;
 using Blauhaus.Graphql.HotChocolate.TestHelpers.MockBuilders;
 using Blauhaus.Graphql.Tests.TestObjects;

@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blauhaus.Auth.Abstractions" Version="0.9.1" />
+    <PackageReference Include="Blauhaus.Auth.Abstractions" Version="0.9.2" />
     <PackageReference Include="Blauhaus.Common.ValueObjects" Version="1.7.5" />
     <PackageReference Include="Blauhaus.TestHelpers" Version="1.0.25" />
     <PackageReference Include="NUnit" Version="3.12.0" />

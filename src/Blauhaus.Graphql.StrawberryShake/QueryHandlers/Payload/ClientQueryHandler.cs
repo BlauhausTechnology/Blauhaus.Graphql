@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Blauhaus.Domain.Common.CommandHandlers;
+using Blauhaus.Domain.Abstractions.CommandHandlers;
 using Blauhaus.Errors.Extensions;
 using Blauhaus.Graphql.StrawberryShake.Exceptions;
 using CSharpFunctionalExtensions;
