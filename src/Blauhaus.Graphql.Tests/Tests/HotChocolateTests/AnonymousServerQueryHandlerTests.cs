@@ -65,7 +65,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
 
             //Assert
             MockCommandHandler.Mock.Verify(x => x.HandleAsync(It.Is<TestCommand>(y => y.Name == "Piet"), It.IsAny<CancellationToken>()));
-            MockAnalyticsService.VerifyTrace("Command received");
+            MockAnalyticsService.VerifyTrace("TestCommand received");
             MockAnalyticsService.VerifyTraceProperty("TestCommand", _command);
         }
 

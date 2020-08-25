@@ -139,7 +139,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
             await Sut.HandleAsync<TestServerPayload, TestCommand>(MockResolverContext.Object, CancellationToken.None);
 
             //Assert 
-            MockAnalyticsService.VerifyTrace("Command received");
+            MockAnalyticsService.VerifyTrace("TestCommand received");
             MockAnalyticsService.VerifyTraceProperty("TestCommand", _command);
         }
 
