@@ -11,7 +11,7 @@ namespace Blauhaus.Graphql.StrawberryShake.HttpClients
     {
         private readonly IAuthenticatedAccessToken _authenticatedAccessToken;
         private readonly IAnalyticsService _analyticsService;
-        private readonly IGraphqlClientConfig _config;
+        private readonly HttpClient _httpClient;
 
         public HttpClientHolder(
             IAuthenticatedAccessToken authenticatedAccessToken,
@@ -20,33 +20,30 @@ namespace Blauhaus.Graphql.StrawberryShake.HttpClients
         {
             _authenticatedAccessToken = authenticatedAccessToken;
             _analyticsService = analyticsService;
-            _config = config;
+            _httpClient = new HttpClient {BaseAddress = new Uri(config.GraphqlEndpoint)};
         }
 
         public HttpClient CreateClient(string name)
         {
-            //todo we have to make new clients all the time because we cannot change default request headers after a client has been used.
-            //todo a better approach for analytics might be to add the properties to the dto itself
-
-            var httpClient = new HttpClient {BaseAddress = new Uri(_config.GraphqlEndpoint)};
-            httpClient.DefaultRequestHeaders.Clear();
+            
+            _httpClient.DefaultRequestHeaders.Clear();
 
             foreach (var appInsightsAnalyticsOperationHeader in _analyticsService.AnalyticsOperationHeaders)
             {
-                httpClient.DefaultRequestHeaders.Add(appInsightsAnalyticsOperationHeader.Key, appInsightsAnalyticsOperationHeader.Value);
+                _httpClient.DefaultRequestHeaders.Add(appInsightsAnalyticsOperationHeader.Key, appInsightsAnalyticsOperationHeader.Value);
             }
 
             foreach (var accessTokenAdditionalHeader in _authenticatedAccessToken.AdditionalHeaders)
             {
-                httpClient.DefaultRequestHeaders.Add(accessTokenAdditionalHeader.Key, accessTokenAdditionalHeader.Value);
+                _httpClient.DefaultRequestHeaders.Add(accessTokenAdditionalHeader.Key, accessTokenAdditionalHeader.Value);
             }
 
             if (!string.IsNullOrEmpty(_authenticatedAccessToken.Scheme))
             {
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(_authenticatedAccessToken.Scheme, _authenticatedAccessToken.Token);
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(_authenticatedAccessToken.Scheme, _authenticatedAccessToken.Token);
             }
 
-            return httpClient;
+            return _httpClient;
         }
     }
 }
