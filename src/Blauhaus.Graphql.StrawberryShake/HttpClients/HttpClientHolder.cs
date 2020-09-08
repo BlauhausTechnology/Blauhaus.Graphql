@@ -25,7 +25,8 @@ namespace Blauhaus.Graphql.StrawberryShake.HttpClients
 
         public HttpClient CreateClient(string name)
         {
-            
+            //todo this is problematic because the client should not be altered after use. We should maybe use a specific kind of DTO instead. 
+
             _httpClient.DefaultRequestHeaders.Clear();
 
             foreach (var appInsightsAnalyticsOperationHeader in _analyticsService.AnalyticsOperationHeaders)
