@@ -1,5 +1,5 @@
 ﻿using Blauhaus.Auth.Abstractions.User;
-using Blauhaus.Domain.Common.CommandHandlers;
+using Blauhaus.Domain.Abstractions.CommandHandlers;
 using Blauhaus.Graphql.HotChocolate.TestHelpers.MockBuilders;
 using Blauhaus.Graphql.Tests.TestObjects;
 

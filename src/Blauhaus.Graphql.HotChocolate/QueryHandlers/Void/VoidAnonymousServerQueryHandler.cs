@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Blauhaus.Analytics.Abstractions.Service;
-using Blauhaus.Domain.Common.CommandHandlers;
+using Blauhaus.Domain.Abstractions.CommandHandlers;
 using Blauhaus.Graphql.HotChocolate.QueryHandlers.Void._Base;
 using CSharpFunctionalExtensions;
 using HotChocolate.Resolvers;
