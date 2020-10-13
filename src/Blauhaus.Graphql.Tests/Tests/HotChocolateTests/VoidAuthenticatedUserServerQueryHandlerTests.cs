@@ -7,7 +7,7 @@ using Blauhaus.Analytics.Abstractions.Service;
 using Blauhaus.Auth.Abstractions.Builders;
 using Blauhaus.Auth.Abstractions.Errors;
 using Blauhaus.Auth.Abstractions.User;
-using Blauhaus.Domain.Common.CommandHandlers;
+using Blauhaus.Domain.Abstractions.CommandHandlers;
 using Blauhaus.Graphql.HotChocolate.QueryHandlers.Void;
 using Blauhaus.Graphql.HotChocolate.TestHelpers.MockBuilders;
 using Blauhaus.Graphql.Tests.TestObjects;
@@ -138,7 +138,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
             await Sut.HandleAsync<TestCommand>(MockResolverContext.Object, CancellationToken.None);
 
             //Assert 
-            MockAnalyticsService.VerifyTrace("Command received");
+            MockAnalyticsService.VerifyTrace("TestCommand received");
             MockAnalyticsService.VerifyTraceProperty("TestCommand", _command);
         }
 
