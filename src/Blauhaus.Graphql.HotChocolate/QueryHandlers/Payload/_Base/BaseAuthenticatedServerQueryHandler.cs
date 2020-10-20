@@ -5,6 +5,7 @@ using Blauhaus.Analytics.Abstractions.Extensions;
 using Blauhaus.Analytics.Abstractions.Service;
 using Blauhaus.Auth.Abstractions.Errors;
 using Blauhaus.Domain.Abstractions.CommandHandlers;
+using Blauhaus.Responses;
 using CSharpFunctionalExtensions;
 using HotChocolate;
 using HotChocolate.Resolvers;
@@ -19,12 +20,12 @@ namespace Blauhaus.Graphql.HotChocolate.QueryHandlers.Payload._Base
         {
         }
 
-        protected override Task<Result<TPayload>> HandleCommandAsync<TPayload, TCommand>(IResolverContext context, TCommand command, CancellationToken token)
+        protected override Task<Response<TPayload>> HandleCommandAsync<TPayload, TCommand>(IResolverContext context, TCommand command, CancellationToken token)
         {
             if (!TryExtractUser(context, out var authenticatedUser))
             {
                 context.ReportError(new ErrorBuilder().SetMessage(AuthErrors.NotAuthenticated.ToString()).Build());
-                return Task.FromResult(AnalyticsService.TraceErrorResult<TPayload>(this, AuthErrors.NotAuthenticated));
+                return Task.FromResult(AnalyticsService.TraceErrorResponse<TPayload>(this, AuthErrors.NotAuthenticated));
             };
 
             var commandHandler = context.Service<IAuthenticatedCommandHandler<TPayload, TCommand, TUser>>();

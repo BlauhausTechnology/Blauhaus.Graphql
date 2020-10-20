@@ -113,7 +113,7 @@ namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests
             var result = await Sut.HandleAsync(_commandDto, CancelToken);
 
             //Assert
-            Assert.AreEqual(error.ToString(), result.Error);
+            Assert.That(result.Error.Description.Contains("Bad Thing"));
         }
          
     }

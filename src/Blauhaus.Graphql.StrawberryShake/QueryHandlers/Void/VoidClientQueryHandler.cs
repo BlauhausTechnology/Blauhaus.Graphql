@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Blauhaus.Domain.Abstractions.CommandHandlers;
 using Blauhaus.Errors.Extensions;
 using Blauhaus.Graphql.StrawberryShake.Exceptions;
+using Blauhaus.Responses;
 using CSharpFunctionalExtensions;
 
 namespace Blauhaus.Graphql.StrawberryShake.QueryHandlers.Void
@@ -19,20 +20,20 @@ namespace Blauhaus.Graphql.StrawberryShake.QueryHandlers.Void
             _queryConverter = queryConverter;
         }
 
-        public async Task<Result> HandleAsync(TCommandDto commandInput, CancellationToken token)
+        public async Task<Response> HandleAsync(TCommandDto commandInput, CancellationToken token)
         {
             var result = await _queryConverter.GetResultAsync(commandInput, token);
             var error = result.Errors.FirstOrDefault();
             if (error == null)
             {
-                return Result.Success();
+                return Response.Success();
             }
 
             if (error.Exception == null)
             {
                 if (error.Message.IsError())
                 {
-                    return Result.Failure(error.Message);
+                    return Response.Failure(error.Message);
                 }
                 throw new GraphqlException(error);
             }

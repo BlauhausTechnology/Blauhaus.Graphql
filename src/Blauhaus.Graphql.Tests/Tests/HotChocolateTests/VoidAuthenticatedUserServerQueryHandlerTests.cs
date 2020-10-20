@@ -12,6 +12,7 @@ using Blauhaus.Graphql.HotChocolate.QueryHandlers.Void;
 using Blauhaus.Graphql.HotChocolate.TestHelpers.MockBuilders;
 using Blauhaus.Graphql.Tests.TestObjects;
 using Blauhaus.Graphql.Tests.Tests._Base;
+using Blauhaus.Responses;
 using Blauhaus.TestHelpers.MockBuilders;
 using CSharpFunctionalExtensions;
 using HotChocolate;
@@ -34,7 +35,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
 
             _command = new TestCommand { Name = "Piet"};
             MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<IAuthenticatedUser>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Result.Success());
+                .ReturnsAsync(Response.Success());
             MockResolverContext.With_Service(MockCommandHandler.Object);
             MockResolverContext.With_Command_Argument(_command); 
         }
@@ -87,7 +88,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
             //Assert
             Assert.IsFalse(result);
             MockResolverContext.Mock.Verify(x => x.ReportError(It.Is<IError>(y => y.Message == AuthErrors.NotAuthenticated.ToString())));
-            MockAnalyticsService.VerifyTrace(AuthErrors.NotAuthenticated.Code, LogSeverity.Error);
+            MockAnalyticsService.VerifyTrace(AuthErrors.NotAuthenticated.ToString(), LogSeverity.Error);
         }
 
         [Test]
@@ -102,7 +103,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
             //Assert
             Assert.IsFalse(result);
             MockResolverContext.Mock.Verify(x => x.ReportError(It.Is<IError>(y => y.Message == AuthErrors.NotAuthenticated.ToString())));
-            MockAnalyticsService.VerifyTrace(AuthErrors.NotAuthenticated.Code, LogSeverity.Error);
+            MockAnalyticsService.VerifyTrace(AuthErrors.NotAuthenticated.ToString(), LogSeverity.Error);
         }
         
         [Test]
@@ -118,7 +119,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
             //Asserrt
             Assert.IsFalse(result);
             MockResolverContext.Mock.Verify(x => x.ReportError(It.Is<IError>(y => y.Message == AuthErrors.NotAuthorized.ToString())));
-            MockAnalyticsService.VerifyTrace(AuthErrors.NotAuthorized.Code, LogSeverity.Error);
+            MockAnalyticsService.VerifyTrace(AuthErrors.NotAuthorized.ToString(), LogSeverity.Error);
         }
 
         [Test]
@@ -180,7 +181,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
         {
             //Arrange
             MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<IAuthenticatedUser>(),It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Result.Failure("Oops"));
+                .ReturnsAsync(Response.Failure("Oops"));
 
             //Act
             var result = await Sut.HandleAsync<TestCommand>(MockResolverContext.Object, CancellationToken.None);
@@ -188,7 +189,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
             //Asserrt
             Assert.IsFalse(result);
             MockResolverContext.Mock.Verify(x => x.ReportError(It.Is<IError>(y => 
-                y.Message == "Oops")));
+                y.Message.Contains("Oops"))));
         }
 
         [Test]

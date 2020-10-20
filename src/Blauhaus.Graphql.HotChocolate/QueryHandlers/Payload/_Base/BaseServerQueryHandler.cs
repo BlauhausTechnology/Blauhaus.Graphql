@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Blauhaus.Analytics.Abstractions.Extensions;
 using Blauhaus.Analytics.Abstractions.Service;
 using Blauhaus.Auth.Abstractions.Errors;
+using Blauhaus.Responses;
 using CSharpFunctionalExtensions;
 using HotChocolate;
 using HotChocolate.Resolvers;
@@ -49,7 +50,7 @@ namespace Blauhaus.Graphql.HotChocolate.QueryHandlers.Payload._Base
                     if (commandResult.IsFailure)
                     {
                         
-                        context.ReportError(new ErrorBuilder().SetMessage(commandResult.Error).Build());
+                        context.ReportError(new ErrorBuilder().SetMessage(commandResult.Error.ToString()).Build());
                         return default;
                     }
                     
@@ -69,7 +70,7 @@ namespace Blauhaus.Graphql.HotChocolate.QueryHandlers.Payload._Base
             }
         }
 
-        protected abstract Task<Result<TPayload>> HandleCommandAsync<TPayload, TCommand>(IResolverContext context, TCommand command, CancellationToken token);
+        protected abstract Task<Response<TPayload>> HandleCommandAsync<TPayload, TCommand>(IResolverContext context, TCommand command, CancellationToken token);
 
     }
 }

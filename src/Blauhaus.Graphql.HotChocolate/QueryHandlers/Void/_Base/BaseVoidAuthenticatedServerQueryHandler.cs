@@ -5,6 +5,7 @@ using Blauhaus.Analytics.Abstractions.Extensions;
 using Blauhaus.Analytics.Abstractions.Service;
 using Blauhaus.Auth.Abstractions.Errors;
 using Blauhaus.Domain.Abstractions.CommandHandlers;
+using Blauhaus.Responses;
 using CSharpFunctionalExtensions;
 using HotChocolate;
 using HotChocolate.Resolvers;
@@ -17,12 +18,12 @@ namespace Blauhaus.Graphql.HotChocolate.QueryHandlers.Void._Base
         {
         }
 
-        protected override async Task<Result<bool>> HandleCommandAsync<TCommand>(IResolverContext context, TCommand command, CancellationToken token)
+        protected override async Task<Response<bool>> HandleCommandAsync<TCommand>(IResolverContext context, TCommand command, CancellationToken token)
         {
             if (!TryExtractUser(context, out var authenticatedUser))
             {
                 context.ReportError(new ErrorBuilder().SetMessage(AuthErrors.NotAuthenticated.ToString()).Build());
-                return AnalyticsService.TraceErrorResult<bool>(this, AuthErrors.NotAuthenticated);
+                return AnalyticsService.TraceErrorResponse<bool>(this, AuthErrors.NotAuthenticated);
             };
 
             var commandHandler = context.Service<IVoidAuthenticatedCommandHandler<TCommand, TUser>>();
@@ -34,8 +35,8 @@ namespace Blauhaus.Graphql.HotChocolate.QueryHandlers.Void._Base
             var result = await commandHandler.HandleAsync(command, authenticatedUser, token);
             
             return result.IsFailure 
-                ? Result.Failure<bool>(result.Error) 
-                : Result.Success(true);
+                ? Response.Failure<bool>(result.Error) 
+                : Response.Success(true);
         }
 
         protected abstract bool TryExtractUser(IResolverContext resolverContext, out TUser user);
