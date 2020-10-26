@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Blauhaus.Analytics.TestHelpers" Version="1.2.0" />
-    <PackageReference Include="Blauhaus.Auth.TestHelpers" Version="0.9.7" />
+    <PackageReference Include="Blauhaus.Auth.TestHelpers" Version="0.10.1" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="nunit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.0.0-alpha.1">

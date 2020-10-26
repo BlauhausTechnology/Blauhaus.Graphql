@@ -31,7 +31,7 @@ namespace Blauhaus.Graphql.HotChocolate.QueryHandlers.Payload
                 return false;
             }
 
-            var extractUser = _userFactory.Create((ClaimsPrincipal) claimsPrincipal);
+            var extractUser = _userFactory.ExtractFromClaimsPrincipal((ClaimsPrincipal) claimsPrincipal);
             if (extractUser.IsFailure)
             {
                 return false;
