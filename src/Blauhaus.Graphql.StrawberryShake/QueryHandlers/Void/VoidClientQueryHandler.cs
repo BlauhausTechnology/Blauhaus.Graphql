@@ -5,7 +5,6 @@ using Blauhaus.Domain.Abstractions.CommandHandlers;
 using Blauhaus.Errors.Extensions;
 using Blauhaus.Graphql.StrawberryShake.Exceptions;
 using Blauhaus.Responses;
-using CSharpFunctionalExtensions;
 
 namespace Blauhaus.Graphql.StrawberryShake.QueryHandlers.Void
 {
