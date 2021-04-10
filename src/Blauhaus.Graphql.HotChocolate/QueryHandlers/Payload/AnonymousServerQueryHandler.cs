@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Blauhaus.Analytics.Abstractions.Service;
 using Blauhaus.Domain.Abstractions.CommandHandlers;
 using Blauhaus.Graphql.HotChocolate.QueryHandlers.Payload._Base;
+using Blauhaus.Responses;
 using CSharpFunctionalExtensions;
 using HotChocolate.Resolvers;
 
@@ -15,7 +16,7 @@ namespace Blauhaus.Graphql.HotChocolate.QueryHandlers.Payload
         {
         }
 
-        protected override Task<Result<TPayload>> HandleCommandAsync<TPayload, TCommand>(IResolverContext context, TCommand command, CancellationToken token)
+        protected override Task<Response<TPayload>> HandleCommandAsync<TPayload, TCommand>(IResolverContext context, TCommand command, CancellationToken token)
         {
             var commandHandler = context.Service<ICommandHandler<TPayload, TCommand>>();
             if (commandHandler == null)

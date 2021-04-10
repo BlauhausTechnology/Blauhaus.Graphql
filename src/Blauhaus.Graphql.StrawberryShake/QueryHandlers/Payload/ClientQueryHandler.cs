@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Blauhaus.Domain.Abstractions.CommandHandlers;
 using Blauhaus.Errors.Extensions;
 using Blauhaus.Graphql.StrawberryShake.Exceptions;
-using CSharpFunctionalExtensions;
+using Blauhaus.Responses;
 
 namespace Blauhaus.Graphql.StrawberryShake.QueryHandlers.Payload
 {
@@ -21,21 +21,21 @@ namespace Blauhaus.Graphql.StrawberryShake.QueryHandlers.Payload
             _graphqlClient = graphqlClient;
         }
 
-        public async Task<Result<TResultDto>> HandleAsync(TCommandDto commandInput, CancellationToken token)
+        public async Task<Response<TResultDto>> HandleAsync(TCommandDto commandInput, CancellationToken token)
         {
             var result = await _graphqlClient.GetResultAsync(commandInput, token);
             var error = result.Errors.FirstOrDefault();
             if (error == null)
             {
                 //todo fail if null?
-                return Result.Success(_graphqlClient.GetDtoFromResult(result));
+                return Response.Success(_graphqlClient.GetDtoFromResult(result));
             }
 
             if (error.Exception == null)
             {
                 if (error.Message.IsError())
                 {
-                    return Result.Failure<TResultDto>(error.Message);
+                    return Response.Failure<TResultDto>(error.Message);
                 }
                 throw new GraphqlException(error);
             }
