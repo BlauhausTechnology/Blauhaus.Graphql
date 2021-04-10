@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using System.Threading;
 using Blauhaus.Domain.Abstractions.CommandHandlers;
 using Blauhaus.Errors;
+using Blauhaus.Responses;
 using Blauhaus.TestHelpers.MockBuilders;
 using CSharpFunctionalExtensions;
 using Moq;
@@ -13,7 +14,7 @@ namespace Blauhaus.Graphql.HotChocolate.TestHelpers.MockBuilders
         where TMock : class, IAuthenticatedCommandHandler<TPayload, TCommand, TUser>
         where TBuilder : BaseAuthenticatedCommandHandlerMockBuilder<TBuilder, TMock, TPayload, TCommand, TUser> 
     {
-        public TBuilder Where_HandleAsync_returns(Result<TPayload> value)
+        public TBuilder Where_HandleAsync_returns(Response<TPayload> value)
         {
             Mock.Setup(x => x.HandleAsync(It.IsAny<TCommand>(), It.IsAny<TUser>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(value);
@@ -22,19 +23,19 @@ namespace Blauhaus.Graphql.HotChocolate.TestHelpers.MockBuilders
         public TBuilder Where_HandleAsync_returns(TPayload payload)
         {
             Mock.Setup(x => x.HandleAsync(It.IsAny<TCommand>(), It.IsAny<TUser>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Result.Success(payload));
+                .ReturnsAsync(Response.Success(payload));
             return this as TBuilder;
         }
         public TBuilder Where_HandleAsync_returns_error(string errorMessage)
         {
             Mock.Setup(x => x.HandleAsync(It.IsAny<TCommand>(), It.IsAny<TUser>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Result.Failure<TPayload>(errorMessage));
+                .ReturnsAsync(Response.Failure<TPayload>(errorMessage));
             return this as TBuilder;
         }
         public TBuilder Where_HandleAsync_returns_error(Error error)
         {
             Mock.Setup(x => x.HandleAsync(It.IsAny<TCommand>(), It.IsAny<TUser>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Result.Failure<TPayload>(error.ToString()));
+                .ReturnsAsync(Response.Failure<TPayload>(error.ToString()));
             return this as TBuilder;
         }
         
