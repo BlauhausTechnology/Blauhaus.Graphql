@@ -1,5 +1,4 @@
-﻿using Blauhaus.Auth.Common._Ioc;
-using Blauhaus.Auth.Server.Azure._Ioc;
+﻿using Blauhaus.Auth.Common.Ioc;
 using Blauhaus.Graphql.HotChocolate.QueryHandlers.Payload;
 using Blauhaus.Graphql.HotChocolate.QueryHandlers.Void;
 using Microsoft.Extensions.DependencyInjection;

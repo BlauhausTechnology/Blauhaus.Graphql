@@ -110,7 +110,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
         public async Task IF_command_handler_throws_UnauthorizedAccessException_SHOULD_log_exception_and_report_error()
         {
             //Arrange
-            _mockTestCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<IAuthenticatedUser>(), It.IsAny<CancellationToken>()))
+            _mockTestCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<IAuthenticatedUser>()))
                 .ThrowsAsync(new UnauthorizedAccessException());
 
             //Act

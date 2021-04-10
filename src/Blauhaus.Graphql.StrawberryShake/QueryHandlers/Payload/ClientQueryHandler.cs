@@ -21,9 +21,9 @@ namespace Blauhaus.Graphql.StrawberryShake.QueryHandlers.Payload
             _graphqlClient = graphqlClient;
         }
 
-        public async Task<Response<TResultDto>> HandleAsync(TCommandDto commandInput, CancellationToken token)
+        public async Task<Response<TResultDto>> HandleAsync(TCommandDto commandInput)
         {
-            var result = await _graphqlClient.GetResultAsync(commandInput, token);
+            var result = await _graphqlClient.GetResultAsync(commandInput);
             var error = result.Errors.FirstOrDefault();
             if (error == null)
             {

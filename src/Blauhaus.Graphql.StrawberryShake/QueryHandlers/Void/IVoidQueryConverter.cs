@@ -8,6 +8,6 @@ namespace Blauhaus.Graphql.StrawberryShake.QueryHandlers.Void
     public interface IVoidQueryConverter<TMutationResponse, TCommandDto, TCommand> : ICommandConverter<TCommandDto, TCommand>
         where TMutationResponse : class
     {
-        Task<IOperationResult<TMutationResponse>> GetResultAsync(TCommandDto commandDto, CancellationToken token);
+        Task<IOperationResult<TMutationResponse>> GetResultAsync(TCommandDto commandDto);
     }
 }

@@ -6,7 +6,6 @@ using Blauhaus.Analytics.Abstractions.Service;
 using Blauhaus.Auth.Abstractions.Errors;
 using Blauhaus.Domain.Abstractions.CommandHandlers;
 using Blauhaus.Responses;
-using CSharpFunctionalExtensions;
 using HotChocolate;
 using HotChocolate.Resolvers;
 
@@ -34,7 +33,7 @@ namespace Blauhaus.Graphql.HotChocolate.QueryHandlers.Payload._Base
                 throw new ArgumentException("No command handler found for command");
             }
 
-            return commandHandler.HandleAsync(command, authenticatedUser, token);
+            return commandHandler.HandleAsync(command, authenticatedUser);
         }
 
         protected abstract bool TryExtractUser(IResolverContext resolverContext, out TUser user);

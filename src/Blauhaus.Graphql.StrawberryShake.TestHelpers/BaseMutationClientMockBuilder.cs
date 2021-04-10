@@ -13,7 +13,7 @@ namespace Blauhaus.Graphql.StrawberryShake.TestHelpers
     {
         public TBuilder Where_GetResultAsync_returns(TMutationResult value)
         {
-            Mock.Setup(x => x.GetResultAsync(It.IsAny<TCommandDto>(), It.IsAny<CancellationToken>()))
+            Mock.Setup(x => x.GetResultAsync(It.IsAny<TCommandDto>()))
                 .ReturnsAsync(new OperationResultMockBuilder<TMutationResult>()
                     .With(x => x.Data, value).Object);
             return this as TBuilder;

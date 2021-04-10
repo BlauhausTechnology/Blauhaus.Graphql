@@ -14,7 +14,6 @@ using Blauhaus.Graphql.Tests.TestObjects;
 using Blauhaus.Graphql.Tests.Tests._Base;
 using Blauhaus.Responses;
 using Blauhaus.TestHelpers.MockBuilders;
-using CSharpFunctionalExtensions;
 using HotChocolate;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
@@ -34,7 +33,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
             base.Setup();
 
             _command = new TestCommand { Name = "Piet"};
-            MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<IAuthenticatedUser>(), It.IsAny<CancellationToken>()))
+            MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<IAuthenticatedUser>()))
                 .ReturnsAsync(Response.Success());
             MockResolverContext.With_Service(MockCommandHandler.Object);
             MockResolverContext.With_Command_Argument(_command); 
@@ -110,7 +109,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
         public async Task IF_command_handler_throws_UnauthorizedAccessException_SHOULD_log_exception_and_report_error()
         {
             //Arrange
-            MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<IAuthenticatedUser>(), It.IsAny<CancellationToken>()))
+            MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<IAuthenticatedUser>()))
                 .ThrowsAsync(new UnauthorizedAccessException());
 
             //Act
@@ -129,7 +128,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
             await Sut.HandleAsync<TestCommand>(MockResolverContext.Object, CancellationToken.None);
 
             //Assert
-            MockCommandHandler.Mock.Verify(x => x.HandleAsync(It.Is<TestCommand>(y => y.Name == "Piet"),It.IsAny<IAuthenticatedUser>(), It.IsAny<CancellationToken>()));
+            MockCommandHandler.Mock.Verify(x => x.HandleAsync(It.Is<TestCommand>(y => y.Name == "Piet"),It.IsAny<IAuthenticatedUser>()));
         }
         
         [Test]
@@ -180,7 +179,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
         public async Task IF_command_handler_fails_SHOULD_report_error()
         {
             //Arrange
-            MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<IAuthenticatedUser>(),It.IsAny<CancellationToken>()))
+            MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<IAuthenticatedUser>()))
                 .ReturnsAsync(Response.Failure("Oops"));
 
             //Act
@@ -196,7 +195,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
         public async Task IF_command_handler_throws_SHOULD_log_exception_and_rethrow()
         {
             //Arrange
-            MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<IAuthenticatedUser>(),It.IsAny<CancellationToken>()))
+            MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<IAuthenticatedUser>()))
                 .ThrowsAsync(new Exception("Oops"));
 
             //Act

@@ -37,7 +37,7 @@ namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests
                 }).Object;
 
             MockGraphqlClient.Mock.Setup(x => x.GetDtoFromResult(_operationResult)).Returns(_dto);
-            MockGraphqlClient.Mock.Setup(x => x.GetResultAsync(_commandDto, CancelToken)).ReturnsAsync(_operationResult);
+            MockGraphqlClient.Mock.Setup(x => x.GetResultAsync(_commandDto)).ReturnsAsync(_operationResult);
 
             AddService(x => MockGraphqlClient.Object);
         }
@@ -46,7 +46,7 @@ namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests
         public async Task IF_Mutation_executes_successfully_SHOULD_convert_result_to_dto_and_returns()
         {
             //Act
-            var result = await Sut.HandleAsync(_commandDto, CancelToken);
+            var result = await Sut.HandleAsync(_commandDto);
 
             //Assert
             Assert.IsTrue(result.IsSuccess);
@@ -57,47 +57,47 @@ namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests
         public void IF_Mutation_fails_with_Exception_SHOULD_throw_exception()
         {
             //Arrange
-            MockGraphqlClient.Mock.Setup(x => x.GetResultAsync(_commandDto, CancelToken))
+            MockGraphqlClient.Mock.Setup(x => x.GetResultAsync(_commandDto))
                 .ThrowsAsync(new Exception("oops"));
 
             //Act
-            Assert.ThrowsAsync<Exception>(async () => await Sut.HandleAsync(_commandDto, CancelToken), "oops");
+            Assert.ThrowsAsync<Exception>(async () => await Sut.HandleAsync(_commandDto), "oops");
         }
 
         [Test]
         public void IF_Mutation_fails_with_non_Error_error_SHOULD_throw()
         {
             //Arrange
-            MockGraphqlClient.Mock.Setup(x => x.GetResultAsync(_commandDto, CancelToken))
+            MockGraphqlClient.Mock.Setup(x => x.GetResultAsync(_commandDto))
                 .ReturnsAsync(new OperationResultMockBuilder<TestGraphqlResponse>()
                     .With_Error("oops").Object);
 
             //Act
-            Assert.ThrowsAsync<GraphqlException>(async () => await Sut.HandleAsync(_commandDto, CancelToken), "oops");
+            Assert.ThrowsAsync<GraphqlException>(async () => await Sut.HandleAsync(_commandDto), "oops");
         }
 
         [Test]
         public void IF_Mutation_fails_with_IError_with_message_extension_SHOULD_use_it_as_message()
         {
             //Arrange
-            MockGraphqlClient.Mock.Setup(x => x.GetResultAsync(_commandDto, CancelToken))
+            MockGraphqlClient.Mock.Setup(x => x.GetResultAsync(_commandDto))
                 .ReturnsAsync(new OperationResultMockBuilder<TestGraphqlResponse>()
                     .WithExtension("message", "underlying errsor message").Object);
 
             //Act
-            Assert.ThrowsAsync<GraphqlException>(async () => await Sut.HandleAsync(_commandDto, CancelToken));
+            Assert.ThrowsAsync<GraphqlException>(async () => await Sut.HandleAsync(_commandDto));
         }
 
         [Test]
         public void IF_Mutation_fails_with_multiple_non_Error_error_SHOULD_throw()
         {
             //Arrange
-            MockGraphqlClient.Mock.Setup(x => x.GetResultAsync(_commandDto, CancelToken))
+            MockGraphqlClient.Mock.Setup(x => x.GetResultAsync(_commandDto))
                 .ReturnsAsync((new OperationResultMockBuilder<TestGraphqlResponse>()
                     .With_Error("oops").Object));
 
             //Act
-            Assert.ThrowsAsync<GraphqlException>(async () => await Sut.HandleAsync(_commandDto, CancelToken));
+            Assert.ThrowsAsync<GraphqlException>(async () => await Sut.HandleAsync(_commandDto));
         }
 
         [Test]
@@ -105,12 +105,12 @@ namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests
         {
             //Arrange
             var error = Error.Create("Bad Thing");
-            MockGraphqlClient.Mock.Setup(x => x.GetResultAsync(_commandDto, CancelToken))
+            MockGraphqlClient.Mock.Setup(x => x.GetResultAsync(_commandDto))
                 .ReturnsAsync(new OperationResultMockBuilder<TestGraphqlResponse>()
                     .With_Error(error.ToString()).Object);
 
             //Act
-            var result = await Sut.HandleAsync(_commandDto, CancelToken);
+            var result = await Sut.HandleAsync(_commandDto);
 
             //Assert
             Assert.That(result.Error.Description.Contains("Bad Thing"));

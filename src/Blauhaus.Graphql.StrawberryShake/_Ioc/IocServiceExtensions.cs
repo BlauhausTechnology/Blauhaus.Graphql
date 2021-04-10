@@ -1,5 +1,5 @@
 ﻿using System.Net.Http;
-using Blauhaus.Auth.Abstractions._Ioc;
+using Blauhaus.Auth.Abstractions.Ioc;
 using Blauhaus.Domain.Abstractions.CommandHandlers;
 using Blauhaus.Domain.Abstractions.Entities;
 using Blauhaus.Domain.Client.CommandHandlers;

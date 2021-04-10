@@ -9,7 +9,6 @@ using Blauhaus.Graphql.Tests.TestObjects;
 using Blauhaus.Graphql.Tests.Tests._Base;
 using Blauhaus.Responses;
 using Blauhaus.TestHelpers.MockBuilders;
-using CSharpFunctionalExtensions;
 using HotChocolate;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
@@ -31,7 +30,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
             {
                 Name = "Piet"
             };
-            MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<CancellationToken>()))
+            MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>()))
                 .ReturnsAsync(Response.Success(new TestServerPayload{Name = "Freddie"}));
             MockResolverContext.With_Service(MockCommandHandler.Object);
             MockResolverContext.With_Command_Argument(_command); 
@@ -65,7 +64,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
             await Sut.HandleAsync<TestServerPayload, TestCommand>(MockResolverContext.Object, CancellationToken.None);
 
             //Assert
-            MockCommandHandler.Mock.Verify(x => x.HandleAsync(It.Is<TestCommand>(y => y.Name == "Piet"), It.IsAny<CancellationToken>()));
+            MockCommandHandler.Mock.Verify(x => x.HandleAsync(It.Is<TestCommand>(y => y.Name == "Piet")));
             MockAnalyticsService.VerifyTrace("TestCommand received");
             MockAnalyticsService.VerifyTraceProperty("TestCommand", _command);
         }
@@ -77,7 +76,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
             await Sut.HandleAsync<TestServerPayload, TestCommand>(MockResolverContext.Object, CancellationToken.None);
 
             //Assert
-            MockCommandHandler.Mock.Verify(x => x.HandleAsync(It.Is<TestCommand>(y => y.Name == "Piet"), It.IsAny<CancellationToken>()));
+            MockCommandHandler.Mock.Verify(x => x.HandleAsync(It.Is<TestCommand>(y => y.Name == "Piet")));
         }
 
         [Test]
@@ -117,7 +116,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
         public async Task IF_command_handler_fails_SHOULD_report_error()
         {
             //Arrange
-            MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<CancellationToken>()))
+            MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>()))
                 .ReturnsAsync(Response.Failure<TestServerPayload>("Oops"));
 
             //Act
@@ -133,7 +132,7 @@ namespace Blauhaus.Graphql.Tests.Tests.HotChocolateTests
         public async Task IF_command_handler_throws_SHOULD_log_exception_and_rethrow()
         {
             //Arrange
-            MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>(), It.IsAny<CancellationToken>()))
+            MockCommandHandler.Mock.Setup(x => x.HandleAsync(It.IsAny<TestCommand>()))
                 .ThrowsAsync(new Exception("Oops"));
 
             //Act

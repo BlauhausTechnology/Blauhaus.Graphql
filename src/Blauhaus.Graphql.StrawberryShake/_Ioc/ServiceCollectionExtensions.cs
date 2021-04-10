@@ -1,8 +1,8 @@
 ﻿using System.Net.Http;
-using Blauhaus.Auth.Abstractions._Ioc;
+using Blauhaus.Auth.Abstractions.Ioc;
 using Blauhaus.Domain.Abstractions.CommandHandlers;
-using Blauhaus.Domain.Abstractions.CommandHandlers.Sync;
 using Blauhaus.Domain.Abstractions.Entities;
+using Blauhaus.Domain.Abstractions.Sync;
 using Blauhaus.Domain.Client.CommandHandlers;
 using Blauhaus.Domain.Client.Sync.CommandHandler;
 using Blauhaus.Graphql.StrawberryShake.Config;

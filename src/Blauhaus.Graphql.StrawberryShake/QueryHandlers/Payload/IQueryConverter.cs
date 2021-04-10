@@ -10,7 +10,7 @@ namespace Blauhaus.Graphql.StrawberryShake.QueryHandlers.Payload
         where TMutationResponse : class
     {
 
-        Task<IOperationResult<TMutationResponse>> GetResultAsync(TCommandDto commandDto, CancellationToken token);
+        Task<IOperationResult<TMutationResponse>> GetResultAsync(TCommandDto commandDto);
         TModelDto? GetDtoFromResult(IOperationResult<TMutationResponse> operationResult);
     }
 }

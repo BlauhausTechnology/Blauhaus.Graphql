@@ -19,9 +19,9 @@ namespace Blauhaus.Graphql.StrawberryShake.QueryHandlers.Void
             _queryConverter = queryConverter;
         }
 
-        public async Task<Response> HandleAsync(TCommandDto commandInput, CancellationToken token)
+        public async Task<Response> HandleAsync(TCommandDto commandInput)
         {
-            var result = await _queryConverter.GetResultAsync(commandInput, token);
+            var result = await _queryConverter.GetResultAsync(commandInput);
             var error = result.Errors.FirstOrDefault();
             if (error == null)
             {
