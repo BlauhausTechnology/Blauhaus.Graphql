@@ -11,7 +11,7 @@ using HotChocolate.Resolvers;
 
 namespace Blauhaus.Graphql.HotChocolate.QueryHandlers.Payload._Base
 {
-    public abstract class BaseAuthenticatedServerQueryHandler<TUser> : BaseServerQueryHandler
+    public abstract class BaseAuthenticatedServerQueryHandler<TUser> : BaseServerQueryHandler   where TUser : notnull
     {
  
         

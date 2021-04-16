@@ -6,6 +6,6 @@ namespace Blauhaus.Graphql.HotChocolate.QueryHandlers.Void._Base
 {
     public interface IVoidServerQueryHandler
     {
-        Task<bool> HandleAsync<TCommand>(IResolverContext context, CancellationToken token);
+        Task<bool> HandleAsync<TCommand>(IResolverContext context, CancellationToken token) where TCommand : notnull;
     }
 }

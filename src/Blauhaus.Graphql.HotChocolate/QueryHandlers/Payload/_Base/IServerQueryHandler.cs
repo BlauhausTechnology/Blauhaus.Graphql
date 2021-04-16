@@ -6,6 +6,6 @@ namespace Blauhaus.Graphql.HotChocolate.QueryHandlers.Payload._Base
 {
     public interface IServerQueryHandler
     {
-        Task<TPayload> HandleAsync<TPayload, TCommand>(IResolverContext context, CancellationToken token);
+        Task<TPayload> HandleAsync<TPayload, TCommand>(IResolverContext context, CancellationToken token) where TCommand : notnull;
     }
 }

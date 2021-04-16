@@ -23,7 +23,7 @@ namespace Blauhaus.Graphql.HotChocolate.QueryHandlers.Payload._Base
             AnalyticsService = analyticsService;
         }
 
-        public async Task<TPayload> HandleAsync<TPayload, TCommand>(IResolverContext context, CancellationToken token)
+        public async Task<TPayload> HandleAsync<TPayload, TCommand>(IResolverContext context, CancellationToken token) where TCommand : notnull
         {
             try
             {
