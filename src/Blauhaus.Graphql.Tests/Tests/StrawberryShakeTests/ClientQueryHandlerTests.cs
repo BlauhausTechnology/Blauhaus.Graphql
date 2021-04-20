@@ -77,18 +77,6 @@ namespace Blauhaus.Graphql.Tests.Tests.StrawberryShakeTests
         }
 
         [Test]
-        public void IF_Mutation_fails_with_IError_with_message_extension_SHOULD_use_it_as_message()
-        {
-            //Arrange
-            MockGraphqlClient.Mock.Setup(x => x.GetResultAsync(_commandDto))
-                .ReturnsAsync(new OperationResultMockBuilder<TestGraphqlResponse>()
-                    .WithExtension("message", "underlying errsor message").Object);
-
-            //Act
-            Assert.ThrowsAsync<GraphqlException>(async () => await Sut.HandleAsync(_commandDto));
-        }
-
-        [Test]
         public void IF_Mutation_fails_with_multiple_non_Error_error_SHOULD_throw()
         {
             //Arrange
