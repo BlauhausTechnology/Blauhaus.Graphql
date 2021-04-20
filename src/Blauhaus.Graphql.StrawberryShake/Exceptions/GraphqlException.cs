@@ -6,7 +6,7 @@ namespace Blauhaus.Graphql.StrawberryShake.Exceptions
 {
     public class GraphqlException : Exception
     {
-        public GraphqlException(IError error) 
+        public GraphqlException(IClientError error) 
             : base(error.Extensions != null && error.Extensions.ContainsKey("message") ? error.Extensions["message"].ToString() : error.Message)
         {
             Extensions = error.Extensions;
